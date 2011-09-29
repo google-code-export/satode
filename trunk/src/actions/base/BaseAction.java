@@ -9,6 +9,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 
 
+import services.PerfilService;
 import services.UsuarioService;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -23,17 +24,18 @@ public class BaseAction extends ActionSupport implements ServletRequestAware,Ser
 	protected HttpServletResponse response;
 	protected String redirectUrl;
 	protected UsuarioService servusuarios;
-	//	protected ConvenioService servconvenios;
-	//	protected UbicacionService servubicacion;
-	//protected AfiliadoService servafiliado;
-	//protected RubroService servrubro;
-	//protected MovimientoService servmovimiento;
-	//protected D3Service servd3;
+	protected PerfilService servperfil;
+
 	protected SimpleDateFormat fm= new SimpleDateFormat("dd/MM/yyyy");
 	protected Usuario usuarioLogin;
 	protected boolean isPostBack;
+	protected String a;
 	
 	
+	public void setPerfilService(PerfilService servperfil) {
+		this.servperfil = servperfil;
+	}
+
 	public void setUsuarioService(UsuarioService value) {
 		servusuarios=value;
 		
@@ -82,6 +84,14 @@ public class BaseAction extends ActionSupport implements ServletRequestAware,Ser
 		}
 		public void setIsPostBack(boolean isPostBack) {
 			this.isPostBack = isPostBack;
+		}
+
+		public String getA() {
+			return a;
+		}
+
+		public void setA(String a) {
+			this.a = a;
 		}
 
 }

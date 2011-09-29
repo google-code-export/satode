@@ -30,6 +30,10 @@
 	<bean id="usuarioService" class="services.UsuarioService" scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<bean id="perfilService" class="services.PerfilService" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 	<!--
 	<bean id="afiliadoService" class="services.AfiliadoService" scope="singleton">
 		<property name="sessionFactory" ref="sessionFactory" />

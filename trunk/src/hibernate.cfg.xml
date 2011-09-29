@@ -32,6 +32,9 @@
 
 		<!-- All the entity classes for hibernate to check for annotations here-->
 		<mapping class="data.Usuario"  />
+		<mapping class="data.Perfil"  />
+		<mapping class="data.Permiso"  />
+
 	
 		</session-factory>
 </hibernate-configuration>

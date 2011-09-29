@@ -15,27 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UsuarioService extends ServiceBase {
 	
-	// So Spring can inject the session factory
-	
-	
-	private Usuario usuario;
-	
-	public Usuario getUsuarioCache(){
-		return usuario;
-	}
-	
-	public void setUsuarioCache(Usuario u){
-		usuario=u;
-	}
-	
-
-	// Shortcut for sessionFactory.getCurrentSession()
-	public Session sess() {
-		return sessionFactory.getCurrentSession();
-	}
-	
-	
-	
 	public Usuario getUsuarioById(Long id){
 		return(Usuario) sess().load(Usuario.class,id);
 	}

@@ -414,7 +414,7 @@
   <h2><decorator:title /></h2>
 </div>
 
-<div class="body">
+<div class="body" style="height: 500px">
 	<div id="container"/>
 	<decorator:body />
 </div>

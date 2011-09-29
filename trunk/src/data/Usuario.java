@@ -1,8 +1,11 @@
 package data;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,8 +17,20 @@ public class Usuario {
 	  private String usuario;
 	  private String password;
 	  private int estado;
+	  
+	  @ManyToOne(fetch= FetchType.LAZY)
+	  @JoinColumn(name = "perfil_id")
+	  private Perfil perfil;
 
 	 
+	  public Perfil getPerfil() {
+		return perfil;
+	  }
+	
+	  public void setPerfil(Perfil perfil) {
+			this.perfil = perfil;
+	  }
+	
 	  public int getEstado() {return estado;}
 	  public void setEstado(int estado) {this.estado = estado;}
 	

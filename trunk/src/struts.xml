@@ -57,12 +57,6 @@
 	</package>
 	-->
 	
-	<package name="root-redirect" namespace="/" extends="struts-default">
-		<action name="*" class="actions.usuarios.Login" >
-			<result type="redirect">usuarios/Login.action</result>
-		</action>
-	</package>
-	
 	<package name="usuarios" namespace="/usuarios" extends="struts-default">
 		<action name="*" class="actions.usuarios.{1}">
 			<result>/views/usuarios/{1}.jsp</result>
@@ -70,5 +64,9 @@
 		</action>
 	</package>
 	 
-
+    <package name="root-redirect" namespace="/" extends="struts-default">
+		<action name="*" class="actions.usuarios.Login" >
+			<result type="redirect">usuarios/Login.action</result>
+		</action>
+	</package>
 </struts>
