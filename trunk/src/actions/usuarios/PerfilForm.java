@@ -2,7 +2,10 @@ package actions.usuarios;
 
 
 
+import java.util.List;
+
 import data.Perfil;
+import data.Permiso;
 import actions.base.BaseAction;
 
 public class PerfilForm extends BaseAction {
@@ -11,6 +14,7 @@ public class PerfilForm extends BaseAction {
 	private String nombre;
 	private String descripcion;
 	private Long id;
+	private List<Permiso> permisos;
 	
 	public String execute() {
 	
@@ -21,13 +25,29 @@ public class PerfilForm extends BaseAction {
 				perfil.setNombre(nombre);
 				perfil.setDescripcion(descripcion);
 				servperfil.nuevo(perfil);
+				
+				return redirect("PerfilList.action");
 			}
+		}else{
+			permisos = servperfil.findAllPermisos();
 		}
 		
 		return SUCCESS;
 	}
 
 	
+
+	public List<Permiso> getPermisos() {
+		return permisos;
+	}
+
+
+
+	public void setPermisos(List<Permiso> permisos) {
+		this.permisos = permisos;
+	}
+
+
 
 	public String getDescripcion() {
 		return descripcion;

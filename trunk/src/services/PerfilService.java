@@ -37,4 +37,10 @@ public class PerfilService extends ServiceBase {
 		// TODO Auto-generated method stub
 		sess().save(perfil);
 	}
+
+	public List<Permiso> findAllPermisos() {
+		Criteria criteria=sess().createCriteria(Permiso.class);
+		
+		return criteria.list();
+	}
 }

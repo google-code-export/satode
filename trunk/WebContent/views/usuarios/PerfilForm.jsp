@@ -27,6 +27,17 @@
 			<input type="hidden" value="true" name="isPostBack"  />
 			<s:submit value="Guardar" id="filtro" />
 		    <s:hidden name="a" id="a" />
+		    <s:hidden name="idsPermisos" id="idsPermisos" />
+		    <s:checkboxlist list="permisos" key="clave" value="nombre" > </s:checkboxlist>
 	</s:form>
+	<table>
+	<td>
+		
+	</td>
+	<td>
+	</td>
+	</table>
+	
+	<s:a action="PerfilList.action">Cancelar</s:a>
 </body>
 </html>
