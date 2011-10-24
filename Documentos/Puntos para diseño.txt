@@ -1,0 +1,16 @@
+Herramientas
+	Listado de las herramientas a utilizar, 	justificación y licencias
+
+Arquitectura
+	Descripción y diagrama
+
+Diagrama de clases del dominio
+	Diagrama
+
+Diagrama de base de datos
+	Diagrama
+
+Relación entre clases del dominio y tablas
+
+
+
