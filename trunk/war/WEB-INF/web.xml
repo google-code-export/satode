@@ -6,19 +6,42 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
+  
+  
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>fing.satode.server.GreetingServiceImpl</servlet-class>
+    <servlet-name>usuarios</servlet-name>
+    <servlet-class>fing.satode.ui.usuarios.server.UsuarioImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/satode/greet</url-pattern>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.usuarios.Login/usuario</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>Satode.html</welcome-file>
+    <welcome-file>/views/usuarios/Login.html</welcome-file>
   </welcome-file-list>
 
+ <!-- Spring -->
+	<listener> <!-- Required for the struts2 spring plugin to work -->
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<filter> <!-- Get spring to keep the session open for the whole request, so hibernate's lazy loads work -->
+	  <filter-name>openSessionInViewFilter</filter-name>
+	  <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	  <filter-name>openSessionInViewFilter</filter-name>
+	  <url-pattern>/*</url-pattern> 
+	</filter-mapping>
+	
+	<servlet>
+		<servlet-name>init</servlet-name>
+		<servlet-class>fing.satode.ui.base.ServletInit</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
+	
 </web-app>
