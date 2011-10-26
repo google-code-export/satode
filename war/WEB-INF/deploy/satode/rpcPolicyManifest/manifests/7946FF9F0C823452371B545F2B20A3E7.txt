@@ -1,0 +1,2 @@
+serviceClass: fing.satode.client.GreetingService
+path: E9DAD5010D430AB0E5171B034E24BC00.gwt.rpc
