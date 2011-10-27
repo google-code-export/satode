@@ -20,15 +20,15 @@ public class ServletInit extends HttpServlet {
 
 	
 	public void init() throws ServletException {
+		
 		BeanFactory factory = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		SessionFactory session= (SessionFactory) factory.getBean("sessionFactory");
-		UsuarioService usuario= (UsuarioService) factory.getBean("usuarioService");
 		
 		//Session Hibernate
 		DAOBase.setSessionFactory(session);
 		
 		//Servicios
-		ServiceFactory.getInstance().setUsuarioService(usuario);
+		ServiceFactory.getInstance().setBeanFactory(factory);
 		
 		
 	}
