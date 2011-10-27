@@ -1,0 +1,2 @@
+# Module fing.satode.Satode
+# RPC service class, partial path of RPC policy file

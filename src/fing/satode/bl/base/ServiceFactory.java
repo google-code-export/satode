@@ -1,11 +1,13 @@
 package fing.satode.bl.base;
 
+import org.springframework.beans.factory.BeanFactory;
+
 import fing.satode.bl.usuarios.UsuarioService;
 
 public class ServiceFactory {
 	
 	private static ServiceFactory instance;
-	private UsuarioService usuarioService;
+	private BeanFactory beanFactory;
 	
 	private ServiceFactory(){}
 	
@@ -17,13 +19,16 @@ public class ServiceFactory {
 		return instance;
 	}
 	
+	public void setBeanFactory(BeanFactory beanFact){
+		this.beanFactory = beanFact;
+	}
+	
+	
 	public UsuarioService getUsuarioService() {
-		return usuarioService;
+		return   (UsuarioService) beanFactory.getBean("usuarioService");
 	}
 
-	public void setUsuarioService(UsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
+	
 	
 
 }

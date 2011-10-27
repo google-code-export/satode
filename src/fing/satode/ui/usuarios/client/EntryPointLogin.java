@@ -7,11 +7,20 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class EntryPointLogin implements EntryPoint {
+import fing.satode.ui.base.EntryPointBase;
+
+public class EntryPointLogin   implements EntryPoint {
+
+	public static native void setWindowHref(String url)/*-{
+		$wnd.location.href = url;
+	}-*/; 
 
 	@Override
 	public void onModuleLoad() {
@@ -37,9 +46,14 @@ public class EntryPointLogin implements EntryPoint {
 					public void onSuccess(Boolean result) {
 						// TODO Auto-generated method stub
 						if(result){
-							Window.alert("Login OK!");
+							setWindowHref("/Inicial.html");							 
 						}else{
-							Window.alert("Login ERROR!");
+							DialogBox dialogBox = new DialogBox();
+							VerticalPanel panel = new VerticalPanel();
+							panel.add(new HTML("<b>Usuario o contraseña inv&aacutelida</b>"));
+							dialogBox.add(panel);
+							dialogBox.center();
+							dialogBox.show();
 						}
 					}
 					
