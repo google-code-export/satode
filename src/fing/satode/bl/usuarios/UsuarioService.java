@@ -1,5 +1,8 @@
 package fing.satode.bl.usuarios;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
@@ -22,5 +25,11 @@ public class UsuarioService extends ServiceBase{
 		}
 		
 		return false;
+	}
+	
+							 
+	public ArrayList<Usuario> listaUsuarios() {
+		// TODO Auto-generated method stub
+		return UsuarioDAO.getInstance().listaUsuarios();
 	}
 }
