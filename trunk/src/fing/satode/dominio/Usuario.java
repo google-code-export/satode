@@ -1,5 +1,7 @@
 package fing.satode.dominio;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="usuarios")
-public class Usuario {
+public class Usuario implements Serializable{
 	  @Id @GeneratedValue
 	  private Long id;
 	  private String usuario;
