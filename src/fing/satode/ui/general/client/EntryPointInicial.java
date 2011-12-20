@@ -26,25 +26,37 @@ public class EntryPointInicial implements EntryPoint  {
 	      }
 	    };
 
+	    Command menuCommandSalir = new Command() {
+	    	 public void execute() {
+	 	        setWindowHref("../Login.html");
+	 	      }   };
+ 	    Command menuCommandUsuarios = new Command() {
+	    	 public void execute() {
+	 	        setWindowHref("/UsuarioList.html");
+	 	      }   };
+		    
 	    // Create a menu bar
 	    MenuBar menu = new MenuBar();
 	    menu.setAutoOpen(true);
-	    menu.setWidth("500px");
+	    menu.setWidth("700px");
 	    menu.setAnimationEnabled(true);
 
-	    // Create a sub menu of recent documents
-	    MenuBar recentDocsMenu = new MenuBar(true);
-	    recentDocsMenu.addItem("recentDocsMenu", menuCommand);
-	   
 	    // Create the file menu
 	    MenuBar fileMenu = new MenuBar(true);
 	    fileMenu.setAnimationEnabled(true);
-	    menu.addItem(new MenuItem("fileMenu", fileMenu));
-        fileMenu.addSeparator();
-        fileMenu.addItem("recentDocsMenu", recentDocsMenu);
-        fileMenu.addSeparator();
-        fileMenu.addItem("menuCommand", menuCommand);
+	    menu.addItem(new MenuItem("Archivo", fileMenu));
+        //fileMenu.addSeparator();
+	    //fileMenu.addItem("salir", recentDocsMenu);
+	    //fileMenu.addSeparator();
+        fileMenu.addItem("Salir", menuCommandSalir);
 
+        MenuBar seguridadMenu = new MenuBar(true);
+        seguridadMenu.setAnimationEnabled(true);
+	    menu.addItem(new MenuItem("Seguridad", seguridadMenu));
+        seguridadMenu.addSeparator();
+	    seguridadMenu.addItem("Usuarios", menuCommandUsuarios);
+
+	    
 	    // Return the menu
 	    menu.ensureDebugId("cwMenuBar");
 	    
