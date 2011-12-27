@@ -1,0 +1,2 @@
+serviceClass: fing.satode.ui.usuarios.client.IUsuario
+path: 39FD6F672948395DD627B78AE9ECC6E6.gwt.rpc

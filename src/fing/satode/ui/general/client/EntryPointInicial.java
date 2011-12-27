@@ -28,34 +28,37 @@ public class EntryPointInicial implements EntryPoint  {
 
 	    Command menuCommandSalir = new Command() {
 	    	 public void execute() {
-	 	        setWindowHref("../Login.html");
+	 	        setWindowHref("/Login.html");
 	 	      }   };
  	    Command menuCommandUsuarios = new Command() {
 	    	 public void execute() {
 	 	        setWindowHref("/UsuarioList.html");
 	 	      }   };
-		    
+	 	Command menuCommandPerfil = new Command() {
+	    	 public void execute() {
+	 	        setWindowHref("/PerfilList.html");
+	 	      }   };
+	    
 	    // Create a menu bar
 	    MenuBar menu = new MenuBar();
 	    menu.setAutoOpen(true);
-	    menu.setWidth("700px");
+	    menu.setWidth("100%");
 	    menu.setAnimationEnabled(true);
 
 	    // Create the file menu
 	    MenuBar fileMenu = new MenuBar(true);
 	    fileMenu.setAnimationEnabled(true);
 	    menu.addItem(new MenuItem("Archivo", fileMenu));
-        //fileMenu.addSeparator();
-	    //fileMenu.addItem("salir", recentDocsMenu);
-	    //fileMenu.addSeparator();
-        fileMenu.addItem("Salir", menuCommandSalir);
+       fileMenu.addItem("Salir", menuCommandSalir);
 
         MenuBar seguridadMenu = new MenuBar(true);
         seguridadMenu.setAnimationEnabled(true);
 	    menu.addItem(new MenuItem("Seguridad", seguridadMenu));
         seguridadMenu.addSeparator();
 	    seguridadMenu.addItem("Usuarios", menuCommandUsuarios);
-
+	    seguridadMenu.addSeparator();
+	    seguridadMenu.addItem("Perfiles", menuCommandPerfil);
+	   
 	    
 	    // Return the menu
 	    menu.ensureDebugId("cwMenuBar");

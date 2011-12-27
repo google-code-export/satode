@@ -32,6 +32,8 @@
 
 		<!-- All the entity classes for hibernate to check for annotations here-->
 		<mapping class="fing.satode.dominio.Usuario"  />
+		<mapping class="fing.satode.dominio.Perfil"  />
+		<mapping class="fing.satode.dominio.Permiso"  />
 			
 		</session-factory>
 </hibernate-configuration>

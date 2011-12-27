@@ -14,7 +14,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import fing.satode.ui.base.EntryPointBase;
+import fing.satode.data.UsuarioDTO;
+
 
 public class EntryPointLogin   implements EntryPoint {
 
@@ -24,6 +25,7 @@ public class EntryPointLogin   implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
+		
 		// TODO Auto-generated method stub
 		final TextBox usuario = new TextBox();
 		final PasswordTextBox password= new PasswordTextBox();
@@ -32,13 +34,28 @@ public class EntryPointLogin   implements EntryPoint {
 		RootPanel.get("usuario").add(usuario);
 		RootPanel.get("password").add(password);
 		RootPanel.get("boton").add(send);
-		
+		IUsuarioAsync serverUsuario = GWT.create(IUsuario.class);
+		serverUsuario.limpiarSession(new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				caught.printStackTrace();
+				Window.alert("ERROR AJAX");
+			}
+		});
 		send.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
-				IUsuarioAsync serverUsuario = GWT.create(IUsuario.class);
+				final IUsuarioAsync serverUsuario = GWT.create(IUsuario.class);
 				
 				serverUsuario.login(usuario.getText(), password.getText(), new AsyncCallback<Boolean>() {
 					
