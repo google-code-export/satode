@@ -38,7 +38,10 @@ public class EntryPointInicial implements EntryPoint  {
 	    	 public void execute() {
 	 	        setWindowHref("/PerfilList.html");
 	 	      }   };
-	    
+ 	 	Command menuCommandEvento = new Command() {
+	    	 public void execute() {
+	 	        setWindowHref("/EventosList.html");
+	 	      }   };   
 	    // Create a menu bar
 	    MenuBar menu = new MenuBar();
 	    menu.setAutoOpen(true);
@@ -50,6 +53,11 @@ public class EntryPointInicial implements EntryPoint  {
 	    fileMenu.setAnimationEnabled(true);
 	    menu.addItem(new MenuItem("Archivo", fileMenu));
        fileMenu.addItem("Salir", menuCommandSalir);
+
+        MenuBar eventosMenu = new MenuBar(true);
+        eventosMenu.setAnimationEnabled(true);
+	    menu.addItem(new MenuItem("Registros", eventosMenu));
+	    eventosMenu.addItem("Eventos", menuCommandEvento);
 
         MenuBar seguridadMenu = new MenuBar(true);
         seguridadMenu.setAnimationEnabled(true);

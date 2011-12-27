@@ -7,7 +7,6 @@ public class CiudadDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nombre;
-	private DepartamentoDTO departamento;
 	
 	public Long getId() {
 		return id;
@@ -21,12 +20,7 @@ public class CiudadDTO implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public DepartamentoDTO getDepartamento() {
-		return departamento;
-	}
-	public void setDepartamento(DepartamentoDTO departamento) {
-		this.departamento = departamento;
-	}
+	
 
 	
 }

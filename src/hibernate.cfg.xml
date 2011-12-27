@@ -36,6 +36,8 @@
 		<mapping class="fing.satode.dominio.Permiso"  />
 		<mapping class="fing.satode.dominio.Departamento"  />
 		<mapping class="fing.satode.dominio.Ciudad"  />
+		<mapping class="fing.satode.dominio.TipoEvento"  />
+		<mapping class="fing.satode.dominio.Evento"  />
 			
 		</session-factory>
 </hibernate-configuration>

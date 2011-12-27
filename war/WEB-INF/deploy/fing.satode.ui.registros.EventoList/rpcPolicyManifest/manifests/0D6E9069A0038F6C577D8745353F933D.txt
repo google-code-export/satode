@@ -1,0 +1,2 @@
+serviceClass: fing.satode.ui.registros.client.IEvento
+path: F3084FA505C233E2915CE7F80AA7C4C1.gwt.rpc
