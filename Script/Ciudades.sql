@@ -1,0 +1,20 @@
+ insert into ciudades(departamento_id,nombre) values(1,'Artigas');                       
+ insert into ciudades(departamento_id,nombre) values(2,'Canelones');
+ insert into ciudades(departamento_id,nombre) values(3,'Melo');
+ insert into ciudades(departamento_id,nombre) values(4,'Colonia del Sacramento');
+ insert into ciudades(departamento_id,nombre) values(5,'Durazno');
+ insert into ciudades(departamento_id,nombre) values(6,'Trinidad');
+ insert into ciudades(departamento_id,nombre) values(7,'Florida');
+ insert into ciudades(departamento_id,nombre) values(8,'Minas');
+ insert into ciudades(departamento_id,nombre) values(9,'Maldonado');
+ insert into ciudades(departamento_id,nombre) values(10,'Montevideo');
+ insert into ciudades(departamento_id,nombre) values(11,'Paysandu');
+ insert into ciudades(departamento_id,nombre) values(12,'Fray Bento');
+ insert into ciudades(departamento_id,nombre) values(13,'River');
+ insert into ciudades(departamento_id,nombre) values(14,'Roch');
+ insert into ciudades(departamento_id,nombre) values(15,'Salto');
+ insert into ciudades(departamento_id,nombre) values(16,'San José de Mayo');
+ insert into ciudades(departamento_id,nombre) values(17,'Mercedes');
+ insert into ciudades(departamento_id,nombre) values(18,'Tacuarembó');
+ insert into ciudades(departamento_id,nombre) values(19,'Treinta y Tres');
+   

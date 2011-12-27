@@ -34,6 +34,8 @@
 		<mapping class="fing.satode.dominio.Usuario"  />
 		<mapping class="fing.satode.dominio.Perfil"  />
 		<mapping class="fing.satode.dominio.Permiso"  />
+		<mapping class="fing.satode.dominio.Departamento"  />
+		<mapping class="fing.satode.dominio.Ciudad"  />
 			
 		</session-factory>
 </hibernate-configuration>
