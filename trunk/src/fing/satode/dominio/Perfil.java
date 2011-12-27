@@ -1,9 +1,8 @@
 package fing.satode.dominio;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,15 +18,11 @@ import fing.satode.data.PermisoDTO;
 
 @Entity
 @Table(name="perfiles")
-public class Perfil implements Serializable {
+public class Perfil {
 
 	@Id @GeneratedValue
 	private Long id;
-	 /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+	 
 	private String nombre;
 	  
 	  @ManyToMany(
