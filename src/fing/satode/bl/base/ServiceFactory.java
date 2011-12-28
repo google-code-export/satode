@@ -2,6 +2,7 @@ package fing.satode.bl.base;
 
 import org.springframework.beans.factory.BeanFactory;
 
+import fing.satode.bl.puntoReferencia.PuntoReferenciaService;
 import fing.satode.bl.registros.EventoService;
 import fing.satode.bl.usuarios.UsuarioService;
 
@@ -31,6 +32,10 @@ public class ServiceFactory {
 
 	public EventoService getEventoService() {
 		return   (EventoService) beanFactory.getBean("eventoService");
+	}
+	
+	public PuntoReferenciaService getPuntoReferenciaService() {
+		return   (PuntoReferenciaService) beanFactory.getBean("puntoReferenciaService");
 	}
 	
 

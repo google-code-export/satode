@@ -1,4 +1,4 @@
-package fing.satode.bl.puntoReferencias;
+package fing.satode.bl.puntoReferencia;
 
 import java.util.ArrayList;
 
