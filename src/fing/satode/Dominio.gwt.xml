@@ -4,4 +4,5 @@
 	<inherits name="com.google.gwt.user.User" />
 	<source path="data"/>
 	<source path="dominio"/>
+	<source path="ui/general/data"/>
 </module>

@@ -24,6 +24,8 @@ public class TipoEvento implements Serializable{
 	@Column(length=1000)
 	private String descripcion;
 
+	public TipoEvento(){}
+	
 	public TipoEvento(TipoEventoDTO dto){
 		setId(dto.getId());
 		setDescripcion(dto.getDescripcion());

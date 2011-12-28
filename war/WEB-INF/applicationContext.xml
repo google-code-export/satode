@@ -31,6 +31,7 @@
   	<bean id="usuarioService" class="fing.satode.bl.usuarios.UsuarioService" scope="singleton">	</bean>
   	<bean id="eventoService" class="fing.satode.bl.registros.EventoService" scope="singleton">	</bean>
 	<bean id="puntoReferenciaService" class="fing.satode.bl.registros.EventoService" scope="singleton">	</bean>
+	<bean id="basicosService" class="fing.satode.bl.basicos.BasicosService" scope="singleton">	</bean>
 	
 	
 </beans>

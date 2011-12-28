@@ -16,6 +16,8 @@ public class PuntoReferencia {
 	
 	private boolean puntoEntrada;
 
+	public PuntoReferencia(){}
+	
 	public Long getId() {
 		return id;
 	}
