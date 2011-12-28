@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import fing.satode.data.EventoDTO;
+import fing.satode.data.TipoEventoDTO;
+
 @Entity
 @Table(name="eventos")
 public class Evento implements Serializable{
@@ -94,6 +97,48 @@ public class Evento implements Serializable{
 	private int duracionMedida=1;
 	
 	private String observaciones;
+	
+	public Evento(){}
+	
+	public Evento(EventoDTO dto){
+		id=dto.getId();
+		fechaInicio=dto.getFechaInicio();
+		tipoEvento= new TipoEvento(dto.getTipoEvento());
+		ciudad= new Ciudad(dto.getCiudad()); 
+		latitudlongitud=dto.getLatitudlongitud();
+		latitud=dto.getLatitud();
+		longitud=dto.getLongitud();
+		fuente=dto.getFuente();
+		muertos=dto.getMuertos();
+		perdidasPesos=dto.getPerdidasPesos();
+		perdidasDolares=dto.getPerdidasDolares();
+		viasAfectadas=dto.getViasAfectadas();
+		otrasPerdidas=dto.getOtrasPerdidas();
+		desaparecidos=dto.getDesaparecidos();
+		cultivosBosques=dto.getCultivosBosques();
+		heridosEnfermos=dto.getHeridosEnfermos();
+		ganado=dto.getGanado();
+		centrosEducacion=dto.getCentrosEducacion();
+		reubicados=dto.getReubicados();
+		centrosHospitalarios=dto.getCentrosHospitalarios();
+		vivAfectadas=dto.getVivAfectadas();
+		evacuados=dto.getEvacuados();
+		damnificados=dto.getDamnificados();
+		vivDestruida=dto.getVivDestruida();
+		transporte=dto.getTransporte();
+		comunicaciones=dto.getComunicaciones();
+		instalacionesSocorro=dto.getInstalacionesSocorro();
+		agropecuario=dto.getAgropecuario();
+		acueducto=dto.getAcueducto();
+		alcantarillado=dto.getAlcantarillado();
+		energia=dto.getEnergia();
+		industria=dto.getIndustria();
+		salud=dto.getSalud();
+		otros=dto.getOtros();
+		duracion=dto.getDuracion();
+		duracionMedida=dto.getDuracionMedida();
+		observaciones=dto.getObservaciones();
+	}
 
 	public Long getId() {
 		return id;
@@ -391,5 +436,46 @@ public class Evento implements Serializable{
 		this.observaciones = observaciones;
 	}
 	
-	
+	public EventoDTO getDTO(){
+		EventoDTO dto= new EventoDTO();
+		dto.setId(id);
+		dto.setFechaInicio(fechaInicio);
+		dto.setTipoEvento(tipoEvento.getDTO());
+		dto.setCiudad(ciudad.getDTO());
+		dto.setLatitudlongitud(latitudlongitud);
+		dto.setLatitud(latitud);
+		dto.setLongitud(longitud);
+		dto.setFuente(fuente);
+		dto.setMuertos(muertos);
+		dto.setPerdidasPesos(perdidasPesos);
+		dto.setPerdidasDolares(perdidasDolares);
+		dto.setViasAfectadas(viasAfectadas);
+		dto.setOtrasPerdidas(otrasPerdidas);
+		dto.setDesaparecidos(desaparecidos);
+		dto.setCultivosBosques(cultivosBosques);
+		dto.setHeridosEnfermos(heridosEnfermos);
+		dto.setGanado(ganado);
+		dto.setCentrosEducacion(centrosEducacion);
+		dto.setReubicados(reubicados);
+		dto.setCentrosHospitalarios(centrosHospitalarios);
+		dto.setVivAfectadas(vivAfectadas);
+		dto.setEvacuados(evacuados);
+		dto.setDamnificados(damnificados);
+		dto.setVivDestruida(vivDestruida);
+		dto.setTransporte(transporte);
+		dto.setComunicaciones(comunicaciones);
+		dto.setInstalacionesSocorro(instalacionesSocorro);
+		dto.setAgropecuario(agropecuario);
+		dto.setAcueducto(acueducto);
+		dto.setAlcantarillado(alcantarillado);
+		dto.setEnergia(energia);
+		dto.setIndustria(industria);
+		dto.setSalud(salud);
+		dto.setOtros(otros);
+		dto.setDuracion(duracion);
+		dto.setDuracionMedida(duracionMedida);
+		dto.setObservaciones(observaciones);
+		
+		return dto;
+	}
 }

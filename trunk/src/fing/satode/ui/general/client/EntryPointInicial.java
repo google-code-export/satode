@@ -52,7 +52,7 @@ public class EntryPointInicial implements EntryPoint  {
 	    MenuBar fileMenu = new MenuBar(true);
 	    fileMenu.setAnimationEnabled(true);
 	    menu.addItem(new MenuItem("Archivo", fileMenu));
-       fileMenu.addItem("Salir", menuCommandSalir);
+        fileMenu.addItem("Salir", menuCommandSalir);
 
         MenuBar eventosMenu = new MenuBar(true);
         eventosMenu.setAnimationEnabled(true);

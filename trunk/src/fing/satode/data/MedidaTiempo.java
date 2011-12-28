@@ -18,4 +18,16 @@ public class MedidaTiempo implements Serializable{
 	public static String DIAS_TXT="Dias";
 	public static String SEMANAS_TXT="Semanas";
 	
+	public static String getTXT(int constante){
+		switch (constante) {
+		case 1: return HORAS_TXT;
+		case 2: return MINUTOS_TXT;
+		case 3: return SEGUNDOS_TXT;
+		case 4: return DIAS_TXT;
+		case 5: return SEMANAS_TXT;
+		default:
+			return "";
+		}
+	}
+	
 }

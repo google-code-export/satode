@@ -19,6 +19,8 @@ public class Ciudad implements Serializable{
 		
 		private String nombre;
 		 
+		public Ciudad(){}
+		
 		public Ciudad(CiudadDTO dto){
 			setId(dto.getId());
 			setNombre(dto.getNombre());

@@ -41,6 +41,19 @@
     <url-pattern>/fing.satode.ui.registros.EventoList/evento</url-pattern>
   </servlet-mapping>
  
+ 
+ <servlet>
+    <servlet-name>basicos</servlet-name>
+    <servlet-class>fing.satode.ui.general.server.BasicosImpl</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>basicos</servlet-name>
+    <url-pattern>/fing.satode.ui.registros.EventoList/basicos</url-pattern>
+  </servlet-mapping>
+ 
+ 
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>/views/usuarios/Login.html</welcome-file>

@@ -39,6 +39,8 @@ public class Departamento implements Serializable{
 	    )
 	private Collection<Ciudad> ciudades;
 	 
+	public Departamento(){}
+	 
 	public Departamento(DepartamentoDTO dto){
 		setId(dto.getId());
 		setNombre(dto.getNombre());

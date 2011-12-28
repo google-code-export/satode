@@ -11,6 +11,8 @@ public class Hospital extends PuntoReferencia {
 	private int capacidad;
 	private String serviciosEspeciales;
 	
+	public Hospital(){}
+	
 	public int getCapacidad() {
 		return capacidad;
 	}
