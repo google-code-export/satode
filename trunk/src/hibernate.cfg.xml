@@ -38,6 +38,7 @@
 		<mapping class="fing.satode.dominio.Ciudad"  />
 		<mapping class="fing.satode.dominio.TipoEvento"  />
 		<mapping class="fing.satode.dominio.Evento"  />
+		<mapping class="fing.satode.dominio.PuntoReferencia"  />
 			
 		</session-factory>
 </hibernate-configuration>
