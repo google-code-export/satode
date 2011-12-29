@@ -12,11 +12,11 @@ public class MedidaTiempo implements Serializable{
 	public static int DIAS=4;
 	public static int SEMANAS=5;
 	
-	public static String HORAS_TXT="Horas";
-	public static String MINUTOS_TXT="Minutos";
-	public static String SEGUNDOS_TXT="Segundos";
-	public static String DIAS_TXT="Dias";
-	public static String SEMANAS_TXT="Semanas";
+	private static String HORAS_TXT="Horas";
+	private static String MINUTOS_TXT="Minutos";
+	private static String SEGUNDOS_TXT="Segundos";
+	private static String DIAS_TXT="Dias";
+	private static String SEMANAS_TXT="Semanas";
 	
 	public static String getTXT(int constante){
 		switch (constante) {

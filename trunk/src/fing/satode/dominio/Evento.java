@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fing.satode.data.EventoDTO;
-import fing.satode.data.TipoEventoDTO;
 
 @Entity
 @Table(name="eventos")
@@ -31,6 +30,11 @@ public class Evento implements Serializable{
 	@ManyToOne
     @JoinColumn(name="ciudad_id")
 	private Ciudad ciudad;
+	
+	@ManyToOne
+    @JoinColumn(name="departamento_id")
+	private Departamento departamento;
+	
 	
 	private Boolean latitudlongitud=false;
 	
@@ -105,6 +109,7 @@ public class Evento implements Serializable{
 		fechaInicio=dto.getFechaInicio();
 		tipoEvento= new TipoEvento(dto.getTipoEvento());
 		ciudad= new Ciudad(dto.getCiudad()); 
+		setDepartamento(new Departamento(dto.getDepartamento())); 
 		latitudlongitud=dto.getLatitudlongitud();
 		latitud=dto.getLatitud();
 		longitud=dto.getLongitud();
@@ -442,6 +447,7 @@ public class Evento implements Serializable{
 		dto.setFechaInicio(fechaInicio);
 		dto.setTipoEvento(tipoEvento.getDTO());
 		dto.setCiudad(ciudad.getDTO());
+		dto.setDepartamento(getDepartamento().getDTO());
 		dto.setLatitudlongitud(latitudlongitud);
 		dto.setLatitud(latitud);
 		dto.setLongitud(longitud);
@@ -477,5 +483,13 @@ public class Evento implements Serializable{
 		dto.setObservaciones(observaciones);
 		
 		return dto;
+	}
+
+	private Departamento getDepartamento() {
+		return departamento;
+	}
+
+	private void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 }

@@ -32,6 +32,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import fing.satode.data.CiudadDTO;
 import fing.satode.data.DepartamentoDTO;
 import fing.satode.data.EventoDTO;
+import fing.satode.data.MedidaTiempo;
 import fing.satode.data.TipoEventoDTO;
 import fing.satode.ui.general.client.IBasicos;
 import fing.satode.ui.general.client.IBasicosAsync;
@@ -216,6 +217,19 @@ public class EntryPointEvento implements EntryPoint {
 	    final TextBox evacuados= new TextBox();
 	    final TextBox daminificados= new TextBox();
 	    final TextBox viviendasDestruidas= new TextBox();
+	    final ListBox transporte = new ListBox();
+	    final ListBox comunicaciones = new ListBox();
+	    final ListBox instalacionesSocorro = new ListBox();
+	    final ListBox agropecuario = new ListBox();
+	    final ListBox acueducto = new ListBox();
+	    final ListBox alcantarillado = new ListBox();
+	    final ListBox energia = new ListBox();
+	    final ListBox industria = new ListBox();
+	    final ListBox salud = new ListBox();
+	    final TextBox otros= new TextBox();
+	    final TextBox duracion= new TextBox();
+	    final ListBox duracionMedida = new ListBox();
+	    final TextBox observaciones= new TextBox();
 	    
 		public FormDialogBox(Long idEvento , String accion){
 			super();
@@ -380,13 +394,84 @@ public class EntryPointEvento implements EntryPoint {
 		
 		    gridDer.setWidget(1, 0, new Label("Damnificados"));
 		    gridDer.setWidget(1, 1,daminificados);
-		    gridDer.setWidget(1, 2,new Label("N\u00FAmero de personas que han sufrido grave da\u00F1o directamente asociado al evento en sus bienes y/o servicios individuales o colectivos. Por ejemplo destrucción parcial o total de su vivienda y sus bienes, p\u00E9rdidas en cultivos y/o en bodegas, etc. Se deben incluir tambi\u00E9n personas reubicadas. ",true));
+		    gridDer.setWidget(1, 2,new Label("N\u00FAmero de personas que han sufrido grave da\u00F1o directamente asociado al evento en sus bienes y/o servicios individuales o colectivos. Por ejemplo destrucci\u00F3n parcial o total de su vivienda y sus bienes, p\u00E9rdidas en cultivos y/o en bodegas, etc. Se deben incluir tambi\u00E9n personas reubicadas. ",true));
 		    daminificados.addKeyboardListener(new KeyNumeric());
 		
 		    gridDer.setWidget(2, 0, new Label("Viviendas destruidas"));
 		    gridDer.setWidget(2, 1,viviendasDestruidas);
 		    gridDer.setWidget(2, 2,new Label("N\u00FAmero de viviendas arrasadas, sepultadas, colapsadas o deterioradas de tal manera que no son habitables.",true));
 		    viviendasDestruidas.addKeyboardListener(new KeyNumeric());
+		
+		    gridDer.setWidget(3, 0, new Label("Transporte"));
+		    gridDer.setWidget(3, 1,transporte);
+		    gridDer.setWidget(3, 2,new Label("Corresponde con efectos del evento sobre el sector del transporte: redes viales (vehiculares, f\u00E9rreas), terminales de transporte, aeropuertos, puentes fluviales y mar\u00EDtimos, muelles, etc. afectados y/o destruidos. ",true));
+		    transporte.addItem("SI", "SI");
+		    transporte.addItem("NO", "NO");
+		    
+		    gridDer.setWidget(4, 0, new Label("Comunicaciones"));
+		    gridDer.setWidget(4, 1,comunicaciones);
+		    gridDer.setWidget(4, 2,new Label("Corresponde a da\u00F1os en el sector de comunicaciones: sobre plantas y redes telef\u00F3nicas, estaciones de radio y televisi\u00F3n, oficinas de correo y de informaci\u00F3n p\u00FAblica, servicios de internet, radiotelefon\u00EDa, comunicaciones celulares. ",true));
+		    comunicaciones.addItem("SI", "SI");
+		    comunicaciones.addItem("NO", "NO");
+		    
+		    gridDer.setWidget(5, 0, new Label("Instalaciones socorro"));
+		    gridDer.setWidget(5, 1,instalacionesSocorro);
+		    gridDer.setWidget(5, 2,new Label("Corresponde a da\u00F1os en el sector de respuesta a emergencia, espec\u00EDficamente instalaciones de los organismos de socorro: Cuerpos de bomberos, instalaciones de organismos de socorro y de entidades de orden p\u00FAblico. ",true));
+		    instalacionesSocorro.addItem("SI", "SI");
+		    instalacionesSocorro.addItem("NO", "NO");
+		  
+		    gridDer.setWidget(6, 0, new Label("Agropecuario"));
+		    gridDer.setWidget(6, 1,agropecuario);
+		    gridDer.setWidget(6, 2,new Label("Corresponde a da\u00F1os en el sector de Agropecuario: Campos de cultivos, granjas, zonas de pastoreo.",true));
+		    agropecuario.addItem("SI", "SI");
+		    agropecuario.addItem("NO", "NO");
+		  
+		    gridDer.setWidget(7, 0, new Label("Acueducto"));
+		    gridDer.setWidget(7, 1,acueducto);
+		    gridDer.setWidget(7, 2,new Label("Corresponde a da\u00F1os en el sector de Acueducto: Tomas de agua, plantas de tratamiento, acueductos y canales de conducci\u00F3n de agua potable, tanques de almacenamiento.",true));
+		    acueducto.addItem("SI", "SI");
+		    acueducto.addItem("NO", "NO");
+		  
+		    gridDer.setWidget(8, 0, new Label("Alcantarillado"));
+		    gridDer.setWidget(8, 1,alcantarillado);
+		    gridDer.setWidget(8, 2,new Label("Corresponde a da\u00F1os en el sector de Alcantarillado: Redes de disposici\u00F3n de aguas servidas y/o pluviales y sus plantas de tratamiento.",true));
+		    alcantarillado.addItem("SI", "SI");
+		    alcantarillado.addItem("NO", "NO");
+		    
+		    gridDer.setWidget(9, 0, new Label("Energ\u00EDa"));
+		    gridDer.setWidget(9, 1,energia);
+		    energia.addItem("SI", "SI");
+		    energia.addItem("NO", "NO");
+
+		    gridDer.setWidget(10, 0, new Label("Industria"));
+		    gridDer.setWidget(10, 1,industria);
+		    gridDer.setWidget(10, 2,new Label("Corresponde a da\u00F1os en el sector de industrial: Industrias de todos los tipos y tama\u00F1os. ",true));
+		    industria.addItem("SI", "SI");
+		    industria.addItem("NO", "NO");
+
+		    gridDer.setWidget(11, 0, new Label("Salud"));
+		    gridDer.setWidget(11, 1,salud);
+		    gridDer.setWidget(11, 2,new Label("Corresponde a da\u00F1os en el sector de la salud: Todo lo relacionado con el sector de salud incluyendo las redes de comunicaci\u00F3n, red de atenci\u00F3n de emergencias (ambulancias), centros de atenci\u00F3n, etc. ",true));
+		    salud.addItem("SI", "SI");
+		    salud.addItem("NO", "NO");
+
+		    gridDer.setWidget(12, 0, new Label("Otros"));
+		    gridDer.setWidget(12, 1,otros);
+		    gridDer.setWidget(12, 2,new Label("Otros davos no incluidos en la informaci\u00F3n anterior. ",true));
+
+		    gridDer.setWidget(13, 0, new Label("Duraci\u00F3n"));
+		    gridDer.setWidget(13, 1,duracion);
+		    gridDer.setWidget(13, 2,duracionMedida);
+		    duracion.addKeyboardListener(new KeyNumeric());
+		    duracionMedida.addItem(MedidaTiempo.getTXT(MedidaTiempo.SEGUNDOS),String.valueOf(MedidaTiempo.SEGUNDOS));	
+		    duracionMedida.addItem(MedidaTiempo.getTXT(MedidaTiempo.MINUTOS),String.valueOf(MedidaTiempo.MINUTOS));
+		    duracionMedida.addItem(MedidaTiempo.getTXT(MedidaTiempo.HORAS),String.valueOf(MedidaTiempo.HORAS));
+		    duracionMedida.addItem(MedidaTiempo.getTXT(MedidaTiempo.DIAS),String.valueOf(MedidaTiempo.DIAS));
+		    duracionMedida.addItem(MedidaTiempo.getTXT(MedidaTiempo.SEMANAS),String.valueOf(MedidaTiempo.SEMANAS));
+		    
+		    gridDer.setWidget(14, 0, new Label("Observaciones"));
+		    gridDer.setWidget(14, 1,observaciones);
+		    gridDer.setWidget(14, 2,new Label("Corresponde a cualquier observaci\u00F3n que se desea agregar, ya sea de las causas del evento, comentarios pertinentes, etc."));
 		
 		    cancelar.addClickHandler(new ClickHandler() {
 				
