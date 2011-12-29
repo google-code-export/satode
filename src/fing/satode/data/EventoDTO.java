@@ -15,6 +15,8 @@ public class EventoDTO implements Serializable {
 	
 	private CiudadDTO ciudad;
 	
+	private DepartamentoDTO departamento;
+	
 	private Boolean latitudlongitud=false;
 	
 	private Float latitud=0F;
@@ -375,6 +377,14 @@ public class EventoDTO implements Serializable {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public DepartamentoDTO getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(DepartamentoDTO departamento) {
+		this.departamento = departamento;
 	}
 	
 	
