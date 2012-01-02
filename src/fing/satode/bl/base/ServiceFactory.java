@@ -7,6 +7,7 @@ import fing.satode.bl.puntoReferencia.PuntoReferenciaService;
 import fing.satode.bl.registros.EventoService;
 import fing.satode.bl.usuarios.UsuarioService;
 
+
 public class ServiceFactory {
 	
 	private static ServiceFactory instance;
