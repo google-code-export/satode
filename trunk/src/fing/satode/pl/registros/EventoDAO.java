@@ -3,9 +3,9 @@ package fing.satode.pl.registros;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import fing.satode.dominio.Evento;
 import fing.satode.dominio.TipoEvento;
-import fing.satode.dominio.Usuario;
 import fing.satode.pl.base.DAOBase;
 
 public class EventoDAO extends DAOBase {
@@ -33,6 +33,21 @@ private static EventoDAO instance;
 		List list=sess().createQuery("from TipoEvento order by nombre").list();
 		ArrayList<TipoEvento> res= new ArrayList<TipoEvento>(list);
 		return res;
+	}
+
+	public void nuevoEvento(Evento evento) {
+		// TODO Auto-generated method stub
+		sess().save(evento);
+	}
+
+	public void modificarEvento(Evento evento) {
+		// TODO Auto-generated method stub
+		sess().update(evento);
+	}
+
+	public void eliminarEvento(Evento evento) {
+		// TODO Auto-generated method stub
+		sess().delete(evento);
 	}
 	
 }

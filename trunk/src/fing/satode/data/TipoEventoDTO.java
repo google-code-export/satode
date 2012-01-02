@@ -2,7 +2,9 @@ package fing.satode.data;
 
 import java.io.Serializable;
 
-public class TipoEventoDTO implements Serializable {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class TipoEventoDTO implements Serializable , IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 

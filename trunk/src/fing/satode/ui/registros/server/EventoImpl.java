@@ -29,5 +29,23 @@ public class EventoImpl extends ServerImpl implements IEvento{
 		return lista;
 	}
 
+	@Override
+	public void nuevoEvento(EventoDTO dto) {
+		// TODO Auto-generated method stub
+		 ServiceFactory.getInstance().getEventoService().nuevoEvento(dto);
+	}
+
+	@Override
+	public void modificarEvento(EventoDTO dto) {
+		// TODO Auto-generated method stub
+		ServiceFactory.getInstance().getEventoService().modificarEvento(dto);
+	}
+
+	@Override
+	public void eliminarEvento(EventoDTO dto) {
+		// TODO Auto-generated method stub
+		ServiceFactory.getInstance().getEventoService().eliminarEvento(dto);
+	}
+
 	
 }

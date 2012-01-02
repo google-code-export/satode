@@ -14,4 +14,10 @@ public interface IEventoAsync {
 
 	void listaTipoEventos(AsyncCallback<ArrayList<TipoEventoDTO>> callback);
 
+	void nuevoEvento(EventoDTO dto, AsyncCallback<Void> callback);
+
+	void modificarEvento(EventoDTO dto, AsyncCallback<Void> callback);
+
+	void eliminarEvento(EventoDTO dto, AsyncCallback<Void> callback);
+
 }

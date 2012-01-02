@@ -2,13 +2,15 @@ package fing.satode.data;
 
 import java.io.Serializable;
 
-public class MedidaTiempo implements Serializable{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class MedidaTiempo implements Serializable, IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 
-	public static int HORAS=1;
+	public static int SEGUNDOS=1;
 	public static int MINUTOS=2;
-	public static int SEGUNDOS=3;
+	public static int HORAS=3;
 	public static int DIAS=4;
 	public static int SEMANAS=5;
 	

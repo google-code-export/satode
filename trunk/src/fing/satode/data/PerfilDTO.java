@@ -3,8 +3,10 @@ package fing.satode.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class PerfilDTO implements Serializable{
+
+public class PerfilDTO implements Serializable, IsSerializable{
 	private Long id;
 	private static final long serialVersionUID = 1L;
 

@@ -2,9 +2,11 @@ package fing.satode.data;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 
 
-public class PermisoDTO implements Serializable{
+
+public class PermisoDTO implements Serializable, IsSerializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	public Long getId() {
