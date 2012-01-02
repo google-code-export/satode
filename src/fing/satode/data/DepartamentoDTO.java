@@ -3,7 +3,9 @@ package fing.satode.data;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DepartamentoDTO implements Serializable{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class DepartamentoDTO implements Serializable, IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 	

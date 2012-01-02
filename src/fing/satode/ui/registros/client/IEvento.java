@@ -16,4 +16,8 @@ public interface IEvento extends RemoteService {
 
 	public ArrayList<EventoDTO> listaEventos();
 	public ArrayList<TipoEventoDTO> listaTipoEventos();
+	public void nuevoEvento(EventoDTO dto);
+	public void modificarEvento(EventoDTO dto);
+	public void eliminarEvento(EventoDTO dto);
+	
 }

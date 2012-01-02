@@ -1,6 +1,5 @@
 package fing.satode.ui.registros.client;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -20,13 +19,11 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.KeyboardListenerAdapter;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import fing.satode.data.CiudadDTO;
@@ -141,7 +138,7 @@ public class EntryPointEvento implements EntryPoint {
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
 				caught.printStackTrace();
-				Window.alert("ERROR");
+				Window.alert("ERROR AJAX");
 			}
 		});
 		
@@ -247,6 +244,9 @@ public class EntryPointEvento implements EntryPoint {
 			vertical.add(grid);
 			vertical.add(horizontal);
 			
+			if(a=="modificar") label.setText("Modificar Evento");
+			if(a=="eliminar") label.setText("Eliminar Evento");
+			if(a=="nuevo") label.setText("Nuevo Evento");
 
 		    // Set the value in the text box when the user selects a date
 		    datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
@@ -473,6 +473,112 @@ public class EntryPointEvento implements EntryPoint {
 		    gridDer.setWidget(14, 1,observaciones);
 		    gridDer.setWidget(14, 2,new Label("Corresponde a cualquier observaci\u00F3n que se desea agregar, ya sea de las causas del evento, comentarios pertinentes, etc."));
 		
+		    if(a=="modificar" || a=="eliminar"){
+		    	
+	    		EventoDTO eventoDTO= null;
+	    		for(EventoDTO e:eventosGlobal){
+	    			if(e.getId().equals(idEvento)){
+	    				eventoDTO=e;
+	    			}
+	    		}
+	    		datePicker.setValue(eventoDTO.getFechaInicio());
+	    		int row=0;
+	    		for(TipoEventoDTO te:tiposEventosGlobal){
+	    		 	row++;
+	    		 	if(te.getId().equals(eventoDTO.getTipoEvento().getId())){
+			    		tipoEventos.setSelectedIndex(row);
+			    	}
+			    }
+	    		row=0;
+	    		DepartamentoDTO dtoDepto=null;
+			    for(DepartamentoDTO d:departamentosGlobal){
+			    	row++;
+				    if(d.getId().equals(eventoDTO.getDepartamento().getId())){
+			    		departamentos.setSelectedIndex(row);
+			    		dtoDepto=d;
+			    	}
+			    }
+			    
+			    row=0;
+			    ciudades.clear();
+				ciudades.addItem("Seleccionar","0");
+				for(CiudadDTO c:dtoDepto.getCiudades()){
+					row++;
+					ciudades.addItem(c.getNombre(),c.getId().toString());
+					if(c.getId().equals(eventoDTO.getCiudad().getId())){
+						ciudades.setSelectedIndex(row);
+					}
+				}
+			    
+			    latidud.setText(String.valueOf(eventoDTO.getLatitud()));
+			    longitud.setText(String.valueOf(eventoDTO.getLongitud()));
+			    fuente.setText(eventoDTO.getFuente());
+			    muertos.setText(String.valueOf(eventoDTO.getMuertos()));
+			    perdidasPesos.setText(String.valueOf(eventoDTO.getPerdidasPesos()));
+			    perdidasDolares.setText(String.valueOf(eventoDTO.getPerdidasDolares()));
+			    viasAfectadas.setText(String.valueOf(eventoDTO.getViasAfectadas()));
+			    desaparecidos.setText(String.valueOf(eventoDTO.getDesaparecidos()));
+			    cultivosBosques.setText(String.valueOf(eventoDTO.getCultivosBosques()));
+			    heridosEnfermos.setText(String.valueOf(eventoDTO.getHeridosEnfermos()));
+			    ganado.setText(String.valueOf(eventoDTO.getGanado()));
+			    centrosEducacion.setText(String.valueOf(eventoDTO.getCentrosEducacion()));
+			    reubicados.setText(String.valueOf(eventoDTO.getReubicados()));
+			    otrasPerdidas.setText(eventoDTO.getOtrasPerdidas());
+			    vivAfectadas.setText(String.valueOf(eventoDTO.getVivAfectadas()));
+			    evacuados.setText(String.valueOf(eventoDTO.getEvacuados()));
+			    daminificados.setText(String.valueOf(eventoDTO.getDamnificados()));
+			    viviendasDestruidas.setText(String.valueOf(eventoDTO.getVivDestruida()));
+			    transporte.setSelectedIndex(eventoDTO.getTransporte()?0:1);
+			    comunicaciones.setSelectedIndex(eventoDTO.getComunicaciones()?0:1);
+			    instalacionesSocorro.setSelectedIndex(eventoDTO.getInstalacionesSocorro()?0:1);
+			    agropecuario.setSelectedIndex(eventoDTO.getAgropecuario()?0:1);
+			    acueducto.setSelectedIndex(eventoDTO.getAcueducto()?0:1);
+			    alcantarillado.setSelectedIndex(eventoDTO.getAlcantarillado()?0:1);
+			    energia.setSelectedIndex(eventoDTO.getEnergia()?0:1);
+			    industria.setSelectedIndex(eventoDTO.getIndustria()?0:1);
+			    salud.setSelectedIndex(eventoDTO.getSalud()?0:1);
+				otros.setText(eventoDTO.getOtros());
+			    duracion.setText(String.valueOf(eventoDTO.getDuracion()));
+			    duracionMedida.setSelectedIndex(eventoDTO.getDuracionMedida()-1);	
+			    observaciones.setText(eventoDTO.getObservaciones());
+		    }
+		    if(a=="eliminar"){
+		    	datePicker.setVisible(false);
+	    		departamentos.setEnabled(false);
+			    latidud.setEnabled(false);
+			    longitud.setEnabled(false);
+			    fuente.setEnabled(false);
+			    muertos.setEnabled(false);
+			    perdidasPesos.setEnabled(false);
+			    perdidasDolares.setEnabled(false);
+			    viasAfectadas.setEnabled(false);
+			    desaparecidos.setEnabled(false);
+			    cultivosBosques.setEnabled(false);
+			    heridosEnfermos.setEnabled(false);
+			    ganado.setEnabled(false);
+			    centrosEducacion.setEnabled(false);
+			    reubicados.setEnabled(false);
+			    vivAfectadas.setEnabled(false);
+			    evacuados.setEnabled(false);
+			    daminificados.setEnabled(false);
+			    viviendasDestruidas.setEnabled(false);
+			    transporte.setEnabled(false);
+			    comunicaciones.setEnabled(false);
+			    instalacionesSocorro.setEnabled(false);
+			    agropecuario.setEnabled(false);
+			    acueducto.setEnabled(false);
+			    alcantarillado.setEnabled(false);
+			    energia.setEnabled(false);
+			    industria.setEnabled(false);
+			    salud.setEnabled(false);
+				otros.setEnabled(false);
+			    duracion.setEnabled(false);
+			    duracionMedida.setEnabled(false);
+			    observaciones.setEnabled(false);
+			    tipoEventos.setEnabled(false);
+			    ciudades.setEnabled(false);
+			    otrasPerdidas.setEnabled(false);
+		    }
 		    cancelar.addClickHandler(new ClickHandler() {
 				
 				@Override
@@ -497,7 +603,173 @@ public class EntryPointEvento implements EntryPoint {
 
 		protected void procesar() {
 			// TODO Auto-generated method stub
-			this.hide();
+			EventoDTO dto= validar();
+			if(dto!=null){
+				
+				if(a=="nuevo"){
+					dto.setId(0L);
+					
+					IEventoAsync servidorEvento=GWT.create(IEvento.class);
+					servidorEvento.nuevoEvento(dto, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+							cargarLista();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+				}else if(a=="modificar"){
+					dto.setId(id);
+					
+					IEventoAsync servidorEvento=GWT.create(IEvento.class);
+					servidorEvento.modificarEvento(dto, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+							cargarLista();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+				}else if(a=="eliminar"){
+					dto.setId(id);
+					
+					IEventoAsync servidorEvento=GWT.create(IEvento.class);
+					servidorEvento.eliminarEvento(dto, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+							cargarLista();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+				}
+				
+				this.hide();
+			}
+		}
+
+		private EventoDTO validar() {
+			// TODO Auto-generated method stub
+			EventoDTO dto =new EventoDTO();
+			
+			dto.setLatitud(getFloat(latidud.getText()));
+			dto.setLatitud(getFloat(longitud.getText()));
+			dto.setLatitudlongitud(true);
+			TipoEventoDTO tpEvento=null;
+			for(TipoEventoDTO tp:tiposEventosGlobal){
+				if(tp.getId().equals(Long.valueOf(tipoEventos.getValue(tipoEventos.getSelectedIndex())))){
+					tpEvento=tp;
+				}
+			}
+			if(tpEvento==null){
+				Window.alert("Indique tipo de evento");
+				return null;
+			}
+			dto.setTipoEvento(tpEvento);
+			
+			dto.setFechaInicio(datePicker.getValue());
+			DepartamentoDTO depto=null;
+			for(DepartamentoDTO d:departamentosGlobal){
+				if(d.getId().equals(Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex())))){
+					depto=d;
+				}
+			}
+			if(depto==null){
+				Window.alert("Indique departamento");
+				return null;
+			}
+
+			dto.setDepartamento(depto);
+
+			CiudadDTO ciudad=null;
+			for(CiudadDTO c:depto.getCiudades()){
+				if(c.getId().equals(Long.valueOf(ciudades.getValue(ciudades.getSelectedIndex())))){
+					ciudad=c;
+				}
+			}
+			if(ciudad==null){
+				Window.alert("Indique ciudad");
+				return null;
+			}
+
+			dto.setCiudad(ciudad);
+			dto.setFuente(fuente.getText());
+		    dto.setMuertos(getInt(muertos.getText()));
+		    dto.setPerdidasPesos(getFloat(perdidasPesos.getText()));
+		    dto.setPerdidasDolares(getFloat(perdidasDolares.getText()));
+		    dto.setViasAfectadas(getFloat(viasAfectadas.getText()));
+		    dto.setOtrasPerdidas(otrasPerdidas.getText());
+		    dto.setDesaparecidos(getInt(desaparecidos.getText()));
+		    dto.setCultivosBosques(getFloat(cultivosBosques.getText()));
+		    dto.setHeridosEnfermos(getInt(heridosEnfermos.getText()));
+		    dto.setGanado(getInt(ganado.getText()));
+		    dto.setCentrosEducacion(getInt(centrosEducacion.getText()));
+		    dto.setReubicados(getInt(reubicados.getText()));
+		    dto.setCentrosHospitalarios(getInt(centrosHospitalarios.getText()));
+		    dto.setVivAfectadas(getInt(vivAfectadas.getText()));
+		    dto.setEvacuados(getInt(evacuados.getText()));
+		    dto.setDamnificados(getInt(daminificados.getText()));
+		    dto.setVivDestruida(getInt(viviendasDestruidas.getText()));
+		    dto.setTransporte(getBoolean(transporte.getValue(transporte.getSelectedIndex())));
+		    dto.setComunicaciones(getBoolean(comunicaciones.getValue(comunicaciones.getSelectedIndex())));
+		    dto.setInstalacionesSocorro(getBoolean(instalacionesSocorro.getValue(instalacionesSocorro.getSelectedIndex())));
+		    dto.setAgropecuario(getBoolean(agropecuario.getValue(agropecuario.getSelectedIndex())));
+		    dto.setAcueducto(getBoolean(acueducto.getValue(acueducto.getSelectedIndex())));
+		    dto.setAlcantarillado(getBoolean(alcantarillado.getValue(alcantarillado.getSelectedIndex())));
+		    dto.setEnergia(getBoolean(energia.getValue(energia.getSelectedIndex())));
+		    dto.setIndustria(getBoolean(industria.getValue(industria.getSelectedIndex())));
+		    dto.setSalud(getBoolean(salud.getValue(salud.getSelectedIndex())));
+		    dto.setOtros(otros.getText());
+		    dto.setDuracion(getFloat(duracion.getText()));
+		    dto.setDuracionMedida(getInt(duracionMedida.getValue(duracionMedida.getSelectedIndex())));
+		    dto.setObservaciones(observaciones.getText());
+		    
+		    return dto;
+		}
+
+		private Boolean getBoolean(String text) {
+			// TODO Auto-generated method stub
+			if(text==null || text.trim().length()==0 || text.equals("NO")){
+				return false;
+			}
+			return true;
+		}
+
+		private int getInt(String text) {
+			// TODO Auto-generated method stub
+			if(text==null || text.trim().length()==0){
+				return 0;
+			}
+			return Integer.valueOf(text);
+		}
+
+		private Float getFloat(String text) {
+			// TODO Auto-generated method stub
+			if(text==null || text.trim().length()==0){
+				return 0F;
+			}
+			return Float.valueOf(text);
 		}
 	
 	}

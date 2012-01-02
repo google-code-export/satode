@@ -2,8 +2,10 @@ package fing.satode.data;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class CiudadDTO implements Serializable{
+
+public class CiudadDTO implements Serializable, IsSerializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String nombre;

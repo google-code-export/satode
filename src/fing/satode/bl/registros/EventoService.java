@@ -33,4 +33,22 @@ public class EventoService extends ServiceBase {
 		return res;
 	}
 
+	public void nuevoEvento(EventoDTO dto) {
+		// TODO Auto-generated method stub
+		Evento evento=new Evento(dto);
+		EventoDAO.getInstance().nuevoEvento(evento);
+	}
+
+	public void modificarEvento(EventoDTO dto) {
+		// TODO Auto-generated method stub
+		Evento evento=new Evento(dto);
+		EventoDAO.getInstance().modificarEvento(evento);
+	}
+
+	public void eliminarEvento(EventoDTO dto) {
+		// TODO Auto-generated method stub
+		Evento evento=new Evento(dto);
+		EventoDAO.getInstance().eliminarEvento(evento);
+	}
+
 }

@@ -3,7 +3,9 @@ package fing.satode.data;
 import java.io.Serializable;
 import java.util.Date;
 
-public class EventoDTO implements Serializable {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class EventoDTO implements Serializable, IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 
