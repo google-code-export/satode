@@ -28,4 +28,5 @@ public interface IUsuario extends RemoteService {
 	public void eliminarUsuario(UsuarioDTO usuario);
 	public UsuarioDTO buscarUsuario(String usuario);
 	public void limpiarSession();
+	public UsuarioDTO getUsuarioLogin();
 }

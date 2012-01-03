@@ -2,9 +2,8 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.4.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.4.0/distro-source/core/src/gwt-module.dtd">
 <module>
 	<inherits name="com.google.gwt.user.User" />
-	<source path="data"/>
-	<source path="dominio"/>
-	<source path="ui/general/data"/>
-	<source path="ui/registros/client"/>
-	<source path="ui/usuarios/client"/>
+	<inherits name="fing.satode.ui.general.Inicial" />
+	<source path="client" />
+	<entry-point
+		class="fing.satode.ui.desastres.client.EntryPointDesastre" />
 </module>

@@ -3,6 +3,7 @@ package fing.satode.bl.base;
 import org.springframework.beans.factory.BeanFactory;
 
 import fing.satode.bl.basicos.BasicosService;
+import fing.satode.bl.desastres.DesastresService;
 import fing.satode.bl.puntoReferencia.PuntoReferenciaService;
 import fing.satode.bl.registros.EventoService;
 import fing.satode.bl.usuarios.UsuarioService;
@@ -41,6 +42,10 @@ public class ServiceFactory {
 	
 	public BasicosService getBasicosService() {
 		return   (BasicosService) beanFactory.getBean("basicosService");
+	}
+	
+	public DesastresService getDesastresService() {
+		return   (DesastresService) beanFactory.getBean("desastresService");
 	}
 	
 }

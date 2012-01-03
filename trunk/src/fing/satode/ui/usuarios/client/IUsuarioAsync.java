@@ -38,5 +38,7 @@ public interface IUsuarioAsync {
 
 	void limpiarSession(AsyncCallback<Void> callback);
 
+	void getUsuarioLogin(AsyncCallback<UsuarioDTO> callback);
+
 
 }
