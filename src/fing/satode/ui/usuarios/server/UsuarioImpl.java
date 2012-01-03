@@ -96,5 +96,8 @@ public class UsuarioImpl extends ServerImpl implements IUsuario {
 		perThreadRequest.get().getSession().setAttribute("usuario",null);
 	}
 	
+	public UsuarioDTO getUsuarioLogin(){
+		return (UsuarioDTO)perThreadRequest.get().getSession().getAttribute("usuario");
+	}
 	
 }

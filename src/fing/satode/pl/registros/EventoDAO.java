@@ -23,7 +23,7 @@ private static EventoDAO instance;
 	}
 
 	public ArrayList<Evento> listaEventos() {
-		List list=sess().createQuery("from Evento order by fechaInicio").list();
+		List list=sess().createQuery("from Evento order by fechaInicio desc").list();
 		ArrayList<Evento> res= new ArrayList<Evento>(list);
 		return res;
 	}

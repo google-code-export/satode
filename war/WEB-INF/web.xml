@@ -6,7 +6,16 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
+   <servlet>
+    <servlet-name>desastres</servlet-name>
+    <servlet-class>fing.satode.ui.desastres.server.DesastreImpl</servlet-class>
+  </servlet>
   
+  
+  <servlet-mapping>
+    <servlet-name>desastres</servlet-name>
+    <url-pattern>/fing.satode.ui.desastres.DesastreList/desastres</url-pattern>
+  </servlet-mapping>
   
   <servlet>
     <servlet-name>usuarios</servlet-name>
@@ -17,6 +26,11 @@
   <servlet-mapping>
     <servlet-name>usuarios</servlet-name>
     <url-pattern>/fing.satode.ui.usuarios.Login/usuario</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.desastres.DesastreList/usuario</url-pattern>
   </servlet-mapping>
   
   
@@ -41,6 +55,10 @@
     <url-pattern>/fing.satode.ui.registros.EventoList/evento</url-pattern>
   </servlet-mapping>
  
+ <servlet-mapping>
+    <servlet-name>evento</servlet-name>
+    <url-pattern>/fing.satode.ui.desastres.DesastreList/evento</url-pattern>
+  </servlet-mapping>
  
  <servlet>
     <servlet-name>basicos</servlet-name>
