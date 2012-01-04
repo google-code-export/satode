@@ -33,6 +33,7 @@
 	<bean id="puntoReferenciaService" class="fing.satode.bl.puntoReferencia.PuntoReferenciaService" scope="singleton">	</bean>
 	<bean id="basicosService" class="fing.satode.bl.basicos.BasicosService" scope="singleton">	</bean>
 	<bean id="desastresService" class="fing.satode.bl.desastres.DesastresService" scope="singleton">	</bean>
+	<bean id="depositoService" class="fing.satode.bl.deposito.DepositoService" scope="singleton">	</bean>
 	
 	
 </beans>

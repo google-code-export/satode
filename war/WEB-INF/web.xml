@@ -6,6 +6,18 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
+  <servlet>
+    <servlet-name>deposito</servlet-name>
+    <servlet-class>fing.satode.ui.deposito.server.DepositoImpl</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>deposito</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.DepositoList/deposito</url-pattern>
+  </servlet-mapping>
+  
+  
    <servlet>
     <servlet-name>desastres</servlet-name>
     <servlet-class>fing.satode.ui.desastres.server.DesastreImpl</servlet-class>
@@ -70,6 +82,13 @@
     <servlet-name>basicos</servlet-name>
     <url-pattern>/fing.satode.ui.registros.EventoList/basicos</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>basicos</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.DepositoList/basicos</url-pattern>
+  </servlet-mapping>
+  
+  
  
  
   <!-- Default page to serve -->
