@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fing.satode.bl.base.ServiceFactory;
 import fing.satode.data.DepositoDTO;
+import fing.satode.data.TipoSuministroDTO;
 import fing.satode.ui.base.ServerImpl;
 import fing.satode.ui.deposito.client.IDeposito;
 
@@ -34,6 +35,30 @@ public class DepositoImpl extends ServerImpl implements IDeposito {
 	public void eliminarDeposito(DepositoDTO dto) {
 		// TODO Auto-generated method stub
 		ServiceFactory.getInstance().getDepositoService().eliminarDeposito(dto);
+	}
+
+	@Override
+	public ArrayList<TipoSuministroDTO> listaTipoSuministros() {
+		// TODO Auto-generated method stub
+		return ServiceFactory.getInstance().getDepositoService().listaTipoSuministros();
+	}
+
+	@Override
+	public void nuevoTipoSuministro(TipoSuministroDTO dto) {
+		// TODO Auto-generated method stub
+		ServiceFactory.getInstance().getDepositoService().nuevoTipoSuministro(dto);
+	}
+
+	@Override
+	public void modificarTipoSuministro(TipoSuministroDTO dto) {
+		// TODO Auto-generated method stub
+		ServiceFactory.getInstance().getDepositoService().modificarTipoSuministro(dto);
+	}
+
+	@Override
+	public void eliminarTipoSuministro(TipoSuministroDTO dto) {
+		// TODO Auto-generated method stub
+		ServiceFactory.getInstance().getDepositoService().eliminarTipoSuministro(dto);
 	}
 
 }

@@ -250,6 +250,35 @@ public class EntryPointDesastre implements EntryPoint {
 			if(a=="eliminar") label.setText("Eliminar Desastre");
 			if(a=="nuevo") label.setText("Nuevo Desastre");
 			
+			if(a=="modificar" ||a=="eliminar"){
+				DesastreDTO dto=null;
+				for(DesastreDTO d:desastreGlobal){
+					if(id.equals(d.getId())){
+						dto=d;
+						break;
+					}
+				}
+				
+				datePicker.setValue(dto.getFechaDeclaracion(), true);
+				row=1;
+				for(EventoDTO e:eventosGlobal){
+					if(e.getId().equals(dto.getEvento().getId())){
+						RadioButton radio=(RadioButton) gridEventos.getWidget(row, 0);
+						radio.setValue(true);
+						break;
+					}
+					row++;
+				}
+			}
+			
+			if(a=="eliminar"){
+				datePicker.setVisible(false);
+				for(int i=1;i<eventosGlobal.size()+1;i++){
+					RadioButton radio=(RadioButton) gridEventos.getWidget(i, 0);
+					radio.setEnabled(false);
+				}
+			}
+			
 			vertical.add(label);
 			vertical.add(grid);
 	    	vertical.add(gridEventos);
@@ -324,6 +353,12 @@ public class EntryPointDesastre implements EntryPoint {
 						}
 					});
 				}else if(a=="eliminar"){
+					for(DesastreDTO d:desastreGlobal){
+						if(id.equals(d.getId())){
+							dto=d;
+							break;
+						}
+					}
 					IDesastreAsync servidorDesastre=GWT.create(IDesastre.class);
 					
 					servidorDesastre.eliminarDesastre(dto,new AsyncCallback<Void>() {

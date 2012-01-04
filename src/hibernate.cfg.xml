@@ -41,6 +41,7 @@
 		<mapping class="fing.satode.dominio.PuntoReferencia"  />
 		<mapping class="fing.satode.dominio.Hospital"  />
 		<mapping class="fing.satode.dominio.Desastre"  />
-		<mapping class="fing.satode.dominio.Deposito"  />	
+		<mapping class="fing.satode.dominio.Deposito"  />
+		<mapping class="fing.satode.dominio.TipoSuministro"  />		
 		</session-factory>
 </hibernate-configuration>

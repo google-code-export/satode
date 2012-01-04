@@ -264,11 +264,13 @@ public class EntryPointDeposito implements EntryPoint {
 			    		departamentos.setSelectedIndex(row);
 			    		ciudades.clear();
 			    		ciudades.addItem("Seleccionar","0");
+			    		int row2=1;
 						for(CiudadDTO c:d.getCiudades()){
 							ciudades.addItem(c.getNombre(),c.getId().toString());
 							if(c.getId().equals(depositoDTO.getCiudad().getId())){
-								ciudades.setSelectedIndex(row);
+								ciudades.setSelectedIndex(row2);
 							}
+							row2++;
 						}
 				    }
 			    }
