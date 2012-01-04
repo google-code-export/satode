@@ -3,6 +3,7 @@ package fing.satode.bl.base;
 import org.springframework.beans.factory.BeanFactory;
 
 import fing.satode.bl.basicos.BasicosService;
+import fing.satode.bl.deposito.DepositoService;
 import fing.satode.bl.desastres.DesastresService;
 import fing.satode.bl.puntoReferencia.PuntoReferenciaService;
 import fing.satode.bl.registros.EventoService;
@@ -46,6 +47,10 @@ public class ServiceFactory {
 	
 	public DesastresService getDesastresService() {
 		return   (DesastresService) beanFactory.getBean("desastresService");
+	}
+	
+	public DepositoService getDepositoService() {
+		return   (DepositoService) beanFactory.getBean("depositoService");
 	}
 	
 }
