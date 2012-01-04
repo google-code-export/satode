@@ -200,7 +200,7 @@ public class EntryPointDesastre implements EntryPoint {
 	    	
 	    	   // Set the value in the text box when the user selects a date
 		    datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
-		      public void onValueChange(ValueChangeEvent event) {
+		      public void onValueChange(ValueChangeEvent<Date> event) {
 		        Date date = (Date)event.getValue();
 		        DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
 		        String dateString = format.format(date);
