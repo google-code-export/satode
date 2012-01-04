@@ -17,6 +17,10 @@
     <url-pattern>/fing.satode.ui.deposito.DepositoList/deposito</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>deposito</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.TipoSuministroList/deposito</url-pattern>
+  </servlet-mapping>
   
    <servlet>
     <servlet-name>desastres</servlet-name>
