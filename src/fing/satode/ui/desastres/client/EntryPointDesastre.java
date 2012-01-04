@@ -198,11 +198,6 @@ public class EntryPointDesastre implements EntryPoint {
 	    	id=idDesastre;
 	    	
 	    	
-	    	DateTimeFormat format2=DateTimeFormat.getFormat("dd/MM/yyyy");
-	        String dateString = format2.format(new Date());
-	        fecha.setText(dateString);
-	        datePicker.setValue(new Date());
-	        
 	    	   // Set the value in the text box when the user selects a date
 		    datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
 		      public void onValueChange(ValueChangeEvent event) {
@@ -212,7 +207,9 @@ public class EntryPointDesastre implements EntryPoint {
 		        fecha.setText(dateString);
 		      }
 		    });
-		    
+		    datePicker.setValue(new Date(), true);
+	        
+		        
 	    	grid.setWidget(0, 0, new Label("Fecha Declaracion"));
 	    	grid.setWidget(0, 1, fecha);
 	    	grid.setWidget(0, 2, datePicker);
@@ -353,7 +350,7 @@ public class EntryPointDesastre implements EntryPoint {
 			// TODO Auto-generated method stub
 			DesastreDTO dto= new DesastreDTO();
 			
-			dto.setFechaDeclaracion(datePicker.getValue());
+			dto.setFechaDeclaracion(datePicker.getValue()==null?new Date():datePicker.getValue());
 			boolean salir=false;
 			for(int i=1; i<eventosGlobal.size()+1 && !salir;i++){
 				Long idEvento=Long.valueOf(((Label)gridEventos.getWidget(i, 1)).getText());
