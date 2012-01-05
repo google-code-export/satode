@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import fing.satode.data.TipoPuntoReferencia;
+
 @Entity @Table(name="hospitales")
 @PrimaryKeyJoinColumn(name="puntoReferencia_Id")
 public class Hospital extends PuntoReferencia {
@@ -11,7 +13,16 @@ public class Hospital extends PuntoReferencia {
 	private int capacidad;
 	private String serviciosEspeciales;
 	
-	public Hospital(){}
+	
+	
+	public Hospital(boolean puntoEntrada, boolean puntoEntega, Ciudad ciudad,
+			Departamento departamento, String direccion, String telefono,
+			TipoPuntoReferencia tipo, int capacidad, String serviciosEspeciales) {
+		super(puntoEntrada, puntoEntega, ciudad, departamento, direccion,
+				telefono, tipo);
+		this.capacidad = capacidad;
+		this.serviciosEspeciales = serviciosEspeciales;
+	}
 	
 	public int getCapacidad() {
 		return capacidad;
