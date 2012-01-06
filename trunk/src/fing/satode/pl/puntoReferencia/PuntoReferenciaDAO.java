@@ -25,7 +25,7 @@ public class PuntoReferenciaDAO extends DAOBase {
 	}
 
 	public ArrayList<PuntoReferencia> listaPuntosReferencias() {
-		List list=sess().createQuery("from PuntoReferencia order by id").list();
+		List list=sess().createQuery("from PuntoReferencia order by tipo").list();
 		ArrayList<PuntoReferencia> res= new ArrayList<PuntoReferencia>(list);
 		
 		return res;
