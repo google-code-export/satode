@@ -23,4 +23,18 @@ public class TipoPuntoReferencia implements Serializable, IsSerializable{
 	public static String CUARTEL_TXT="Cuartel";
 	public static String BOMBEROS_TXT="Bomberos";
 	public static String OTROS_TXT="Otros";
+	
+	public static String getTXT(int constante){
+		switch (constante) {
+		case 1: return HOSPITAL_TXT;
+		case 2: return REFUGIO_TXT;
+		case 3: return POLICIA_TXT;
+		case 4: return CAMINERA_TXT;
+		case 5: return CUARTEL_TXT;
+		case 6: return BOMBEROS_TXT;
+		case 7: return OTROS_TXT;
+		default:
+			return "";
+		}
+	}
 }

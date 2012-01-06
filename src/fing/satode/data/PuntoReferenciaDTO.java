@@ -23,7 +23,7 @@ public class PuntoReferenciaDTO implements Serializable, IsSerializable {
 		
 		private String telefono;
 		
-		private TipoPuntoReferencia tipo;
+		private int tipo;
 
 		public Long getId() {
 			return id;
@@ -81,11 +81,11 @@ public class PuntoReferenciaDTO implements Serializable, IsSerializable {
 			this.telefono = telefono;
 		}
 
-		public TipoPuntoReferencia getTipo() {
+		public int getTipo() {
 			return tipo;
 		}
 
-		public void setTipo(TipoPuntoReferencia tipo) {
+		public void setTipo(int tipo) {
 			this.tipo = tipo;
 		}
 

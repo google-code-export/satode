@@ -35,13 +35,13 @@ public class PuntoReferencia {
 	
 	private String telefono;
 	
-	private TipoPuntoReferencia tipo;
+	private int tipo;
 
 	
 
 	public PuntoReferencia(boolean puntoEntrada, boolean puntoEntrega,
 			Ciudad ciudad, Departamento departamento, String direccion,
-			String telefono, TipoPuntoReferencia tipo) {
+			String telefono, int tipo) {
 		this.puntoEntrada = puntoEntrada;
 		this.puntoEntrega = puntoEntrega;
 		this.ciudad = ciudad;
@@ -120,11 +120,11 @@ public class PuntoReferencia {
 		this.telefono = telefono;
 	}
 
-	public TipoPuntoReferencia getTipo() {
+	public int getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoPuntoReferencia tipo) {
+	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
 	
