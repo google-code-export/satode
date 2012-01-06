@@ -17,7 +17,7 @@ public class Hospital extends PuntoReferencia {
 	
 	public Hospital(boolean puntoEntrada, boolean puntoEntega, Ciudad ciudad,
 			Departamento departamento, String direccion, String telefono,
-			TipoPuntoReferencia tipo, int capacidad, String serviciosEspeciales) {
+			int tipo, int capacidad, String serviciosEspeciales) {
 		super(puntoEntrada, puntoEntega, ciudad, departamento, direccion,
 				telefono, tipo);
 		this.capacidad = capacidad;
