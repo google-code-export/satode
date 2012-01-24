@@ -45,7 +45,7 @@ public class PuntoReferenciaDTO implements Serializable, IsSerializable {
 			return puntoEntrega;
 		}
 
-		public void setPuntoEntega(boolean puntoEntrega) {
+		public void setPuntoEntrega(boolean puntoEntrega) {
 			this.puntoEntrega = puntoEntrega;
 		}
 
