@@ -9,5 +9,5 @@
 	<source path="ui/usuarios/client"/>
 	<source path="ui/general/client"/>
 	<source path="ui/deposito/client"/>
-	
+	<source path="ui/puntoReferencias/client"/>
 </module>
