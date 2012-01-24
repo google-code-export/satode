@@ -8,13 +8,13 @@ public class TipoPuntoReferencia implements Serializable, IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 
-	public static int HOSPITAL=1;
-	public static int REFUGIO=2;
-	public static int POLICIA=3;
-	public static int CAMINERA=4;
-	public static int CUARTEL=5;
-	public static int BOMBEROS=6;
-	public static int OTROS=7;
+	public final static int HOSPITAL=1;
+	public final static int REFUGIO=2;
+	public final static int POLICIA=3;
+	public final static int CAMINERA=4;
+	public final static int CUARTEL=5;
+	public final static int BOMBEROS=6;
+	public final static int OTROS=7;
 	
 	public static String HOSPITAL_TXT="Hospital";
 	public static String REFUGIO_TXT="Refugio";
