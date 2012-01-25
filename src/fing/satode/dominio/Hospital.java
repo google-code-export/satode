@@ -27,8 +27,8 @@ public class Hospital extends PuntoReferencia {
 	}
 	
 	public Hospital(HospitalDTO dto) {
-		super(dto.isPuntoEntrada(), dto.isPuntoEntrega(), new Ciudad(dto.getCiudad()), new Departamento(dto.getDepartamento()), dto.getDireccion(),
-				dto.getTelefono(), dto.getTipo());
+		//super(dto.isPuntoEntrada(), dto.isPuntoEntrega(), new Ciudad(dto.getCiudad()), new Departamento(dto.getDepartamento()), dto.getDireccion(),dto.getTelefono(), dto.getTipo());
+		super(dto);
 		this.capacidad = dto.getCapacidad();
 		this.serviciosEspeciales = dto.getServiciosEspeciales();
 	}
@@ -37,7 +37,7 @@ public class Hospital extends PuntoReferencia {
 		HospitalDTO dto= new HospitalDTO();
 		dto.setId(this.getId());
 		dto.setDireccion(this.getDireccion());
-		dto.setTelefono(this.getDireccion());
+		dto.setTelefono(this.getTelefono());
 		dto.setPuntoEntrada(this.isPuntoEntrada());
 		dto.setPuntoEntrega(this.ispuntoEntrega());
 		dto.setTipo(this.getTipo());

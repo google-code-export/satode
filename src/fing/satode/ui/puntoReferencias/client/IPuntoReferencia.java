@@ -19,7 +19,7 @@ public interface IPuntoReferencia extends RemoteService {
 	public void nuevoPuntoReferencia(PuntoReferenciaDTO dto);
 	public void modificarPuntoReferencia(PuntoReferenciaDTO dto);
 	public void eliminarPuntoReferencia(PuntoReferenciaDTO dto);
-	public void nuevoHospital(HospitalDTO dto);
+	//public void nuevoHospital(HospitalDTO dto);
 	HospitalDTO buscarHospital(Long long1);
 	
 }

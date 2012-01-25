@@ -24,7 +24,13 @@ public class PuntoReferenciaService extends ServiceBase {
 		ArrayList<PuntoReferenciaDTO> listaDTOS= new ArrayList<PuntoReferenciaDTO>();
 		ArrayList<PuntoReferencia> listaDes= PuntoReferenciaDAO.getInstance().listaPuntosReferencias();
 		for(PuntoReferencia d: listaDes){
-			listaDTOS.add(d.getDTO());
+			switch (d.getTipo()) 
+			{
+			case TipoPuntoReferencia.HOSPITAL:
+				listaDTOS.add(((Hospital)d).getDTO());
+			break;
+			}	
+			
 		}
 		return listaDTOS;
 	}
@@ -41,10 +47,10 @@ public class PuntoReferenciaService extends ServiceBase {
 		PuntoReferenciaDAO.getInstance().nuevoPuntoReferencia(puntoReferencia);
 	}
 	
-	public void nuevoHospital(HospitalDTO dto) {
+	/*public void nuevoHospital(HospitalDTO dto) {
 		Hospital puntoReferencia= new Hospital(dto);
 		PuntoReferenciaDAO.getInstance().nuevoHospital(puntoReferencia);
-	}
+	}*/
 	
 	public HospitalDTO buscarHospital(long id) {
 		return PuntoReferenciaDAO.getInstance().buscarHospital(id).getDTO();
