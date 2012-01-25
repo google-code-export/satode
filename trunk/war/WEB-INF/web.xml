@@ -7,6 +7,19 @@
 
   <!-- Servlets -->
   <servlet>
+    <servlet-name>puntoReferencia</servlet-name>
+    <servlet-class>fing.satode.ui.puntoReferencias.server.PuntoReferenciaImpl</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>puntoReferencia</servlet-name>
+    <url-pattern>/fing.satode.ui.puntoReferencias.PuntoReferenciaList/puntoReferencia</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <servlet>
     <servlet-name>deposito</servlet-name>
     <servlet-class>fing.satode.ui.deposito.server.DepositoImpl</servlet-class>
   </servlet>
@@ -90,6 +103,11 @@
   <servlet-mapping>
     <servlet-name>basicos</servlet-name>
     <url-pattern>/fing.satode.ui.deposito.DepositoList/basicos</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>basicos</servlet-name>
+    <url-pattern>/fing.satode.ui.puntoReferencias.PuntoReferenciaList/basicos</url-pattern>
   </servlet-mapping>
   
   
