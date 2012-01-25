@@ -41,7 +41,6 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 	final VerticalPanel vertical = new VerticalPanel();
 	private ArrayList<PuntoReferenciaDTO>PuntoReferenciaGlobal;
 	private ArrayList<DepartamentoDTO> departamentosGlobal;
-	private HospitalDTO hospitalDTO;
 	private Grid puntosReferencias;
 	final Label modificarLabel= new Label("Modificar");
 	final Label eliminarLabel= new Label("Eliminar");
@@ -340,18 +339,19 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 			    
 			    gridHospital.setVisible(false);
 				gridRefugio.setVisible(false);
-				int id=Integer.valueOf(tipo.getValue(tipo.getSelectedIndex()));
+				//int id=Integer.valueOf(tipo.getValue(tipo.getSelectedIndex()));
 				
-				IPuntoReferenciaAsync servidorPuntoreferenica = GWT.create(IPuntoReferencia.class);
+				//IPuntoReferenciaAsync servidorPuntoreferenica = GWT.create(IPuntoReferencia.class);
 				
 				
 				
-				switch(id)
+				//switch(id)
+				switch(puntoReferenciaDTO.getTipo())
 				{
 
 				case TipoPuntoReferencia.HOSPITAL:
 					
-					servidorPuntoreferenica.buscarHospital(puntoReferenciaDTO.getId(),new AsyncCallback<HospitalDTO>() {
+					/*servidorPuntoreferenica.buscarHospital(puntoReferenciaDTO.getId(),new AsyncCallback<HospitalDTO>() {
 						
 						@Override
 						public void onSuccess(HospitalDTO result) {
@@ -363,12 +363,13 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}
-					});
+					});*/
 					
-					capacidad.setText(String.valueOf(hospitalDTO.getCapacidad()));
-					serviciosEspeciales.setText(hospitalDTO.getServiciosEspeciales());
-					capacidad.setEnabled(false);
-					serviciosEspeciales.setEnabled(false);
+					
+					
+					capacidad.setText(String.valueOf(((HospitalDTO)puntoReferenciaDTO).getCapacidad()));
+					serviciosEspeciales.setText(((HospitalDTO)puntoReferenciaDTO).getServiciosEspeciales());
+					
 					
 					gridHospital.setWidget(0, 0, new Label("Capacidad"));
 					gridHospital.setWidget(1, 0, new Label("Servcios Expeciales"));
@@ -407,6 +408,8 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 			    puntoEntrega.setEnabled(false);
 			    departamentos.setEnabled(false);
 			    ciudades.setEnabled(false);
+			    capacidad.setEnabled(false);
+				serviciosEspeciales.setEnabled(false);
 			    
 		    }
 			vertical.add(label);
@@ -444,74 +447,96 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 				ptoReferencia.setId(id);
 				
 				
-				HospitalDTO hospitalDTO = null;
+				IPuntoReferenciaAsync servidorPuntoReferencia= GWT.create(IPuntoReferencia.class);
 				
 				int idTipo=Integer.valueOf(tipo.getValue(tipo.getSelectedIndex()));
-				switch(idTipo)
-				{
-
-					case TipoPuntoReferencia.HOSPITAL: 
-						hospitalDTO = (HospitalDTO) ptoReferencia;
-						
-					break;
-					case TipoPuntoReferencia.REFUGIO:
-					break;
-				}
+				
 				
 				
 				if(a=="modificar"){
 					
-					IPuntoReferenciaAsync servidorPuntoReferencia= GWT.create(IPuntoReferencia.class);
 					
-					//servidorPuntoReferencia.modificarPuntoReferencia(ptoReferencia,new AsyncCallback<Void>() {
-					servidorPuntoReferencia.modificarPuntoReferencia(hospitalDTO,new AsyncCallback<Void>() {
-						
-						@Override
-						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});
+					
+					switch(idTipo)
+					{
+
+						case TipoPuntoReferencia.HOSPITAL: 
+							//hospitalDTO = (HospitalDTO) ptoReferencia;
+							servidorPuntoReferencia.modificarPuntoReferencia((HospitalDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+							
+						break;
+						case TipoPuntoReferencia.REFUGIO:
+						break;
+					}
+					
 				}else if(a== "nuevo"){
-					IPuntoReferenciaAsync servidorPuntoReferencia= GWT.create(IPuntoReferencia.class);
 					
-					servidorPuntoReferencia.nuevoPuntoReferencia(hospitalDTO,new AsyncCallback<Void>() {
-						
-						@Override
-						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});
+					switch(idTipo)
+					{
+
+						case TipoPuntoReferencia.HOSPITAL: 
+							servidorPuntoReferencia.nuevoPuntoReferencia((HospitalDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+							
+						break;
+						case TipoPuntoReferencia.REFUGIO:
+						break;
+					}
+					
+					
 				}else if(a=="eliminar"){
-					IPuntoReferenciaAsync servidorPuntoReferencia= GWT.create(IPuntoReferencia.class);
 					
-					servidorPuntoReferencia.eliminarPuntoReferencia(ptoReferencia,new AsyncCallback<Void>() {
-						
-						@Override
-						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});
+					switch(idTipo)
+					{
+
+						case TipoPuntoReferencia.HOSPITAL: 
+							servidorPuntoReferencia.eliminarPuntoReferencia((HospitalDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+							
+						break;
+						case TipoPuntoReferencia.REFUGIO:
+						break;
+					}
+					
+					
+					
 				}
 			}
 		}

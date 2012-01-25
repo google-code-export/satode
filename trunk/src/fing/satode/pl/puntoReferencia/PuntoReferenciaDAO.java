@@ -69,6 +69,8 @@ public class PuntoReferenciaDAO extends DAOBase {
 
 	public void eliminarPuntoReferencia(PuntoReferencia puntoReferencia) {
 		sess().delete(puntoReferencia);
+		//sess().createSQLQuery("delete from puntosreferencia where id =" + String.valueOf(puntoReferencia.getId())).executeUpdate();
+		
 	}
 	
 }
