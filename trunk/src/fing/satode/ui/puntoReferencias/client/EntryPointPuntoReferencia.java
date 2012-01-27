@@ -25,9 +25,16 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+
+import fing.satode.data.BomberosDTO;
+import fing.satode.data.CamineraDTO;
 import fing.satode.data.CiudadDTO;
+import fing.satode.data.CuartelDTO;
 import fing.satode.data.DepartamentoDTO;
 import fing.satode.data.HospitalDTO;
+import fing.satode.data.PROtrosDTO;
+import fing.satode.data.PoliciaDTO;
+import fing.satode.data.RefugioDTO;
 
 import fing.satode.data.PuntoReferenciaDTO;
 import fing.satode.data.TipoPuntoReferencia;
@@ -197,6 +204,16 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 		final TextBox banios = new TextBox();
 		final CheckBox techado = new CheckBox();
 		final TextBox m2ParaCarpas=new TextBox();
+		
+		//Bomberos, Policia, Cuartel, Caminera
+		final Grid grid2= new Grid(2,2);
+		final TextBox cantFuncionarios = new TextBox();
+		final TextBox cantVehiculos=new TextBox();
+		
+		//Otros
+		final Grid gridOtros= new Grid(1,2);
+		final TextBox descripcion=new TextBox();
+		
 	
 	    @SuppressWarnings("deprecation")
 		public FormDialogBox(Long idPuntoReferencia, String accion) {
@@ -260,6 +277,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 				public void onChange(ChangeEvent event) {
 					gridHospital.setVisible(false);
 					gridRefugio.setVisible(false);
+					grid2.setVisible(false);
 					int id=Integer.valueOf(tipo.getValue(tipo.getSelectedIndex()));
 					
 					switch(id)
@@ -290,13 +308,39 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 						gridRefugio.setVisible(true);
 
 					break;
+					case TipoPuntoReferencia.BOMBEROS:
+					case TipoPuntoReferencia.CAMINERA:
+					case TipoPuntoReferencia.CUARTEL:
+					case TipoPuntoReferencia.POLICIA:	
+						grid2.setWidget(0, 0, new Label("Cantidad de funcionarios"));
+						grid2.setWidget(1, 0, new Label("Cantidad de Vehiculos"));
+						
+						grid2.setWidget(0, 1, cantFuncionarios);
+						grid2.setWidget(1, 1, cantVehiculos);
+
+						grid2.setBorderWidth(1);
+						grid2.setVisible(true);
+
+					break;
+					case TipoPuntoReferencia.OTROS:	
+						gridOtros.setWidget(0, 0, new Label("Descripcion"));
+						
+						gridOtros.setWidget(0, 1, descripcion);
+					
+
+						gridOtros.setBorderWidth(1);
+						gridOtros.setVisible(true);
+					break;
+					
 					}; 
 				}
 			});
 		    
 		    capacidad.addKeyboardListener(new KeyNumeric());
 		    banios.addKeyboardListener(new KeyNumeric());
-		    
+		    m2ParaCarpas.addKeyboardListener(new KeyNumeric());
+		    cantFuncionarios.addKeyboardListener(new KeyNumeric());
+		    cantVehiculos.addKeyboardListener(new KeyNumeric());
 				    
 		    if (a == "modificar" || a == "eliminar" ){
 		    	
@@ -339,33 +383,13 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 			    
 			    gridHospital.setVisible(false);
 				gridRefugio.setVisible(false);
-				//int id=Integer.valueOf(tipo.getValue(tipo.getSelectedIndex()));
+				grid2.setVisible(false);
+				gridOtros.setVisible(false);
 				
-				//IPuntoReferenciaAsync servidorPuntoreferenica = GWT.create(IPuntoReferencia.class);
-				
-				
-				
-				//switch(id)
 				switch(puntoReferenciaDTO.getTipo())
 				{
 
 				case TipoPuntoReferencia.HOSPITAL:
-					
-					/*servidorPuntoreferenica.buscarHospital(puntoReferenciaDTO.getId(),new AsyncCallback<HospitalDTO>() {
-						
-						@Override
-						public void onSuccess(HospitalDTO result) {
-							hospitalDTO=result;
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});*/
-					
-					
 					
 					capacidad.setText(String.valueOf(((HospitalDTO)puntoReferenciaDTO).getCapacidad()));
 					serviciosEspeciales.setText(((HospitalDTO)puntoReferenciaDTO).getServiciosEspeciales());
@@ -383,7 +407,79 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 					
 					
 				break;
+				case TipoPuntoReferencia.BOMBEROS:
+					cantFuncionarios.setText(String.valueOf(((BomberosDTO)puntoReferenciaDTO).getCantidadFuncionarios()));
+					cantVehiculos.setText(String.valueOf(((BomberosDTO)puntoReferenciaDTO).getCantidadVehiculos()));
+					
+					grid2.setWidget(0, 0, new Label("Cantidad de funcionarios"));
+					grid2.setWidget(1, 0, new Label("Cantidad de Vehiculos"));
+					
+					grid2.setWidget(0, 1, cantFuncionarios);
+					grid2.setWidget(1, 1, cantVehiculos);
+
+					grid2.setBorderWidth(1);
+					grid2.setVisible(true);
+				break;	
+				case TipoPuntoReferencia.CAMINERA:
+					cantFuncionarios.setText(String.valueOf(((CamineraDTO)puntoReferenciaDTO).getCantidadFuncionarios()));
+					cantVehiculos.setText(String.valueOf(((CamineraDTO)puntoReferenciaDTO).getCantidadVehiculos()));
+					
+					grid2.setWidget(0, 0, new Label("Cantidad de funcionarios"));
+					grid2.setWidget(1, 0, new Label("Cantidad de Vehiculos"));
+					
+					grid2.setWidget(0, 1, cantFuncionarios);
+					grid2.setWidget(1, 1, cantVehiculos);
+
+					grid2.setBorderWidth(1);
+					grid2.setVisible(true);
+				break;	
+				case TipoPuntoReferencia.CUARTEL:
+					cantFuncionarios.setText(String.valueOf(((CuartelDTO)puntoReferenciaDTO).getCantidadFuncionarios()));
+					cantVehiculos.setText(String.valueOf(((CuartelDTO)puntoReferenciaDTO).getCantidadVehiculos()));
+					
+					grid2.setWidget(0, 0, new Label("Cantidad de funcionarios"));
+					grid2.setWidget(1, 0, new Label("Cantidad de Vehiculos"));
+					
+					grid2.setWidget(0, 1, cantFuncionarios);
+					grid2.setWidget(1, 1, cantVehiculos);
+
+					grid2.setBorderWidth(1);
+					grid2.setVisible(true);
+				break;	
+				case TipoPuntoReferencia.POLICIA:
+					
+					cantFuncionarios.setText(String.valueOf(((PoliciaDTO)puntoReferenciaDTO).getCantidadFuncionarios()));
+					cantVehiculos.setText(String.valueOf(((PoliciaDTO)puntoReferenciaDTO).getCantidadVehiculos()));
+					
+					grid2.setWidget(0, 0, new Label("Cantidad de funcionarios"));
+					grid2.setWidget(1, 0, new Label("Cantidad de Vehiculos"));
+					
+					grid2.setWidget(0, 1, cantFuncionarios);
+					grid2.setWidget(1, 1, cantVehiculos);
+
+					grid2.setBorderWidth(1);
+					grid2.setVisible(true);
+				break;	
+
+				case TipoPuntoReferencia.OTROS:	
+					
+					descripcion.setText(String.valueOf(((PROtrosDTO)puntoReferenciaDTO).getDescripcion()));
+					gridOtros.setWidget(0, 0, new Label("Descripcion"));
+					
+					gridOtros.setWidget(0, 1, descripcion);
+				
+
+					gridOtros.setBorderWidth(1);
+					gridOtros.setVisible(true);
+				break;
 				case TipoPuntoReferencia.REFUGIO:
+					
+					capacidad.setText(String.valueOf(((RefugioDTO)puntoReferenciaDTO).getCapacidad()));
+					banios.setText(String.valueOf(((RefugioDTO)puntoReferenciaDTO).getBanios()));
+					techado.setChecked(((RefugioDTO)puntoReferenciaDTO).isTechado());
+					m2ParaCarpas.setText(String.valueOf(((RefugioDTO)puntoReferenciaDTO).getM2ParaCarpas()));
+					
+					
 					gridRefugio.setWidget(0, 0, new Label("Capacidad"));
 					gridRefugio.setWidget(1, 0, new Label("Ba\u00F1os"));
 					gridRefugio.setWidget(2, 0, new Label("Techado"));
@@ -397,6 +493,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 					gridRefugio.setVisible(true);
 
 				break;
+				
 				}; 
 			    
 		    }
@@ -410,12 +507,20 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 			    ciudades.setEnabled(false);
 			    capacidad.setEnabled(false);
 				serviciosEspeciales.setEnabled(false);
+				banios.setEnabled(false);
+				techado.setEnabled(false);
+				m2ParaCarpas.setEnabled(false);
+				cantFuncionarios.setEnabled(false);
+				cantVehiculos.setEnabled(false);
+				descripcion.setEnabled(false);
 			    
 		    }
 			vertical.add(label);
 			vertical.add(grid);
 			vertical.add(gridHospital);
 			vertical.add(gridRefugio);
+			vertical.add(grid2);
+			vertical.add(gridOtros);
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
 			vertical.add(horizontal);
@@ -461,7 +566,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 					{
 
 						case TipoPuntoReferencia.HOSPITAL: 
-							//hospitalDTO = (HospitalDTO) ptoReferencia;
+							
 							servidorPuntoReferencia.modificarPuntoReferencia((HospitalDTO) ptoReferencia,new AsyncCallback<Void>() {
 								
 								@Override
@@ -479,6 +584,106 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 							
 						break;
 						case TipoPuntoReferencia.REFUGIO:
+							
+							servidorPuntoReferencia.modificarPuntoReferencia((RefugioDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.BOMBEROS:
+							
+							servidorPuntoReferencia.modificarPuntoReferencia((BomberosDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.CAMINERA:
+							
+							servidorPuntoReferencia.modificarPuntoReferencia((CamineraDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.CUARTEL:
+							
+							servidorPuntoReferencia.modificarPuntoReferencia((CuartelDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.OTROS:
+							
+							servidorPuntoReferencia.modificarPuntoReferencia((PROtrosDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.POLICIA:
+							
+							servidorPuntoReferencia.modificarPuntoReferencia((PoliciaDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
 						break;
 					}
 					
@@ -505,6 +710,100 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 							
 						break;
 						case TipoPuntoReferencia.REFUGIO:
+							servidorPuntoReferencia.nuevoPuntoReferencia((RefugioDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.BOMBEROS:
+							servidorPuntoReferencia.nuevoPuntoReferencia((BomberosDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.CAMINERA:
+							servidorPuntoReferencia.nuevoPuntoReferencia((CamineraDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.CUARTEL:
+							servidorPuntoReferencia.nuevoPuntoReferencia((CuartelDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.OTROS:
+							servidorPuntoReferencia.nuevoPuntoReferencia((PROtrosDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.POLICIA:
+							servidorPuntoReferencia.nuevoPuntoReferencia((PoliciaDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
 						break;
 					}
 					
@@ -532,6 +831,100 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 							
 						break;
 						case TipoPuntoReferencia.REFUGIO:
+							servidorPuntoReferencia.eliminarPuntoReferencia((RefugioDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.BOMBEROS:
+							servidorPuntoReferencia.eliminarPuntoReferencia((BomberosDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.CAMINERA:
+							servidorPuntoReferencia.eliminarPuntoReferencia((CamineraDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.CUARTEL:
+							servidorPuntoReferencia.eliminarPuntoReferencia((CuartelDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.OTROS:
+							servidorPuntoReferencia.eliminarPuntoReferencia((PROtrosDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						break;
+						case TipoPuntoReferencia.POLICIA:
+							servidorPuntoReferencia.eliminarPuntoReferencia((PoliciaDTO) ptoReferencia,new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									cargarLista();
+									hide();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
 						break;
 					}
 					
@@ -608,6 +1001,235 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 						}
 					}
 					return hospitalDTO;
+				case( TipoPuntoReferencia.REFUGIO):
+					
+					RefugioDTO refugioDTO= new RefugioDTO();
+				
+					if(capacidad.getText().trim().length()==0){
+						Window.alert("Indique Capacidad");
+						return null;
+					}
+					refugioDTO.setCapacidad(Integer.valueOf(capacidad.getText()));
+					
+					if(banios.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de banios");
+						return null;
+					}
+					refugioDTO.setBanios(Integer.valueOf(banios.getText()));
+					
+					if(m2ParaCarpas.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de metros cuadrados para carpas");
+						return null;
+					}
+					refugioDTO.setM2ParaCarpas(Integer.valueOf(m2ParaCarpas.getText()));
+					
+					refugioDTO.setTipo(id);
+					
+					
+					refugioDTO.setPuntoEntrada(puntoEntrada.isChecked());
+					refugioDTO.setPuntoEntrega(puntoEntrega.isChecked());
+					refugioDTO.setDireccion(direccion.getText());
+					refugioDTO.setTelefono(telefono.getText());
+					idDep=Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex()));
+					
+					for(DepartamentoDTO d:departamentosGlobal){
+						if(idDep.equals(d.getId())){
+							refugioDTO.setDepartamento(d);
+						}
+					}
+					
+					idCiu=Long.valueOf(ciudades.getValue(ciudades.getSelectedIndex()));
+					for(CiudadDTO c:refugioDTO.getDepartamento().getCiudades()){
+						if(idCiu.equals(c.getId())){
+							refugioDTO.setCiudad(c);
+						}
+					}
+					return refugioDTO;
+				case( TipoPuntoReferencia.BOMBEROS):
+					
+					BomberosDTO bomberosDTO= new BomberosDTO();
+				
+					if(cantFuncionarios.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de funcionarios");
+						return null;
+					}
+					bomberosDTO.setCantidadFuncionarios(Integer.valueOf(cantFuncionarios.getText()));
+					
+					if(cantVehiculos.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de vehiculos");
+						return null;
+					}
+					bomberosDTO.setCantidadVehiculos(Integer.valueOf(cantVehiculos.getText()));
+					
+					bomberosDTO.setTipo(id);
+					
+					
+					bomberosDTO.setPuntoEntrada(puntoEntrada.isChecked());
+					bomberosDTO.setPuntoEntrega(puntoEntrega.isChecked());
+					bomberosDTO.setDireccion(direccion.getText());
+					bomberosDTO.setTelefono(telefono.getText());
+					idDep=Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex()));
+					
+					for(DepartamentoDTO d:departamentosGlobal){
+						if(idDep.equals(d.getId())){
+							bomberosDTO.setDepartamento(d);
+						}
+					}
+					
+					idCiu=Long.valueOf(ciudades.getValue(ciudades.getSelectedIndex()));
+					for(CiudadDTO c:bomberosDTO.getDepartamento().getCiudades()){
+						if(idCiu.equals(c.getId())){
+							bomberosDTO.setCiudad(c);
+						}
+					}
+					return bomberosDTO;
+				case( TipoPuntoReferencia.CAMINERA):
+					
+					CamineraDTO camineraDTO= new CamineraDTO();
+				
+					if(cantFuncionarios.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de funcionarios");
+						return null;
+					}
+					camineraDTO.setCantidadFuncionarios(Integer.valueOf(cantFuncionarios.getText()));
+					
+					if(cantVehiculos.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de vehiculos");
+						return null;
+					}
+					camineraDTO.setCantidadVehiculos(Integer.valueOf(cantVehiculos.getText()));
+					
+					camineraDTO.setTipo(id);
+					
+					
+					camineraDTO.setPuntoEntrada(puntoEntrada.isChecked());
+					camineraDTO.setPuntoEntrega(puntoEntrega.isChecked());
+					camineraDTO.setDireccion(direccion.getText());
+					camineraDTO.setTelefono(telefono.getText());
+					idDep=Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex()));
+					
+					for(DepartamentoDTO d:departamentosGlobal){
+						if(idDep.equals(d.getId())){
+							camineraDTO.setDepartamento(d);
+						}
+					}
+					
+					idCiu=Long.valueOf(ciudades.getValue(ciudades.getSelectedIndex()));
+					for(CiudadDTO c:camineraDTO.getDepartamento().getCiudades()){
+						if(idCiu.equals(c.getId())){
+							camineraDTO.setCiudad(c);
+						}
+					}
+					return camineraDTO;
+				case( TipoPuntoReferencia.CUARTEL):
+					
+					CuartelDTO cuartelDTO = new CuartelDTO();
+				
+					if(cantFuncionarios.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de funcionarios");
+						return null;
+					}
+					cuartelDTO.setCantidadFuncionarios(Integer.valueOf(cantFuncionarios.getText()));
+					
+					if(cantVehiculos.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de vehiculos");
+						return null;
+					}
+					cuartelDTO.setCantidadVehiculos(Integer.valueOf(cantVehiculos.getText()));
+					
+					cuartelDTO.setTipo(id);
+					
+					
+					cuartelDTO.setPuntoEntrada(puntoEntrada.isChecked());
+					cuartelDTO.setPuntoEntrega(puntoEntrega.isChecked());
+					cuartelDTO.setDireccion(direccion.getText());
+					cuartelDTO.setTelefono(telefono.getText());
+					idDep=Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex()));
+					
+					for(DepartamentoDTO d:departamentosGlobal){
+						if(idDep.equals(d.getId())){
+							cuartelDTO.setDepartamento(d);
+						}
+					}
+					
+					idCiu=Long.valueOf(ciudades.getValue(ciudades.getSelectedIndex()));
+					for(CiudadDTO c:cuartelDTO.getDepartamento().getCiudades()){
+						if(idCiu.equals(c.getId())){
+							cuartelDTO.setCiudad(c);
+						}
+					}
+					return cuartelDTO;
+				case( TipoPuntoReferencia.POLICIA):
+					
+					PoliciaDTO policiaDTO = new PoliciaDTO();
+				
+					if(cantFuncionarios.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de funcionarios");
+						return null;
+					}
+					policiaDTO.setCantidadFuncionarios(Integer.valueOf(cantFuncionarios.getText()));
+					
+					if(cantVehiculos.getText().trim().length()==0){
+						Window.alert("Indique la cantidad de vehiculos");
+						return null;
+					}
+					policiaDTO.setCantidadVehiculos(Integer.valueOf(cantVehiculos.getText()));
+					
+					policiaDTO.setTipo(id);
+					
+					
+					policiaDTO.setPuntoEntrada(puntoEntrada.isChecked());
+					policiaDTO.setPuntoEntrega(puntoEntrega.isChecked());
+					policiaDTO.setDireccion(direccion.getText());
+					policiaDTO.setTelefono(telefono.getText());
+					idDep=Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex()));
+					
+					for(DepartamentoDTO d:departamentosGlobal){
+						if(idDep.equals(d.getId())){
+							policiaDTO.setDepartamento(d);
+						}
+					}
+					
+					idCiu=Long.valueOf(ciudades.getValue(ciudades.getSelectedIndex()));
+					for(CiudadDTO c:policiaDTO.getDepartamento().getCiudades()){
+						if(idCiu.equals(c.getId())){
+							policiaDTO.setCiudad(c);
+						}
+					}
+					return policiaDTO;
+				case( TipoPuntoReferencia.OTROS):
+					
+					PROtrosDTO otrosDTO = new PROtrosDTO();
+				
+					if(descripcion.getText().trim().length()==0){
+						Window.alert("Indique la descripcion");
+						return null;
+					}
+					otrosDTO.setDescripcion(descripcion.getText());
+					
+					otrosDTO.setTipo(id);
+					
+					
+					otrosDTO.setPuntoEntrada(puntoEntrada.isChecked());
+					otrosDTO.setPuntoEntrega(puntoEntrega.isChecked());
+					otrosDTO.setDireccion(direccion.getText());
+					otrosDTO.setTelefono(telefono.getText());
+					idDep=Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex()));
+					
+					for(DepartamentoDTO d:departamentosGlobal){
+						if(idDep.equals(d.getId())){
+							otrosDTO.setDepartamento(d);
+						}
+					}
+					
+					idCiu=Long.valueOf(ciudades.getValue(ciudades.getSelectedIndex()));
+					for(CiudadDTO c:otrosDTO.getDepartamento().getCiudades()){
+						if(idCiu.equals(c.getId())){
+							otrosDTO.setCiudad(c);
+						}
+					}
+					return otrosDTO;	
+					
 				default: 
 					Window.alert("Indique Tipo");
 					return null;

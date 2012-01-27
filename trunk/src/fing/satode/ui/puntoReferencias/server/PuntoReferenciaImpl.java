@@ -28,12 +28,6 @@ public class PuntoReferenciaImpl extends ServerImpl implements IPuntoReferencia{
 		
 	}
 	
-	/*@Override
-	public void nuevoHospital(HospitalDTO dto) {
-		ServiceFactory.getInstance().getPuntoReferenciaService().nuevoHospital(dto);
-		
-	}*/
-
 	@Override
 	public void modificarPuntoReferencia(PuntoReferenciaDTO dto) {
 		ServiceFactory.getInstance().getPuntoReferenciaService().modificarPuntoReferencia(dto);
@@ -46,10 +40,5 @@ public class PuntoReferenciaImpl extends ServerImpl implements IPuntoReferencia{
 		
 	}
 	
-	@Override
-	public HospitalDTO buscarHospital(Long id) {
-		return ServiceFactory.getInstance().getPuntoReferenciaService().buscarHospital(id);
-	}
-
-	
+		
 }

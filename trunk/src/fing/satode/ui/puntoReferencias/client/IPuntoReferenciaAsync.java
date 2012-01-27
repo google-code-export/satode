@@ -21,8 +21,5 @@ public interface IPuntoReferenciaAsync {
 	void modificarPuntoReferencia(PuntoReferenciaDTO dto,
 			AsyncCallback<Void> callback);
 
-	//void nuevoHospital(HospitalDTO dto, AsyncCallback<Void> callback);
-
-	void buscarHospital(Long long1, AsyncCallback<HospitalDTO> callback);
 
 }
