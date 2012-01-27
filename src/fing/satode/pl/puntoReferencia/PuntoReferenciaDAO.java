@@ -5,8 +5,14 @@ import java.util.List;
 
 
 import fing.satode.data.TipoPuntoReferencia;
+import fing.satode.dominio.Bomberos;
+import fing.satode.dominio.Caminera;
+import fing.satode.dominio.Cuartel;
 import fing.satode.dominio.Hospital;
+import fing.satode.dominio.PROtros;
+import fing.satode.dominio.Policia;
 import fing.satode.dominio.PuntoReferencia;
+import fing.satode.dominio.Refugio;
 import fing.satode.pl.base.DAOBase;
 
 public class PuntoReferenciaDAO extends DAOBase {
@@ -49,28 +55,42 @@ public class PuntoReferenciaDAO extends DAOBase {
 		case TipoPuntoReferencia.HOSPITAL:
 			Hospital hospital = (Hospital) puntoReferencia;
 			sess().save(hospital);
-		break;	
+		break;
+		case TipoPuntoReferencia.REFUGIO:
+			Refugio refugio = (Refugio) puntoReferencia;
+			sess().save(refugio);
+		break;
+		case TipoPuntoReferencia.CAMINERA:
+			Caminera caminera = (Caminera) puntoReferencia;
+			sess().save(caminera);
+		break;
+		case TipoPuntoReferencia.BOMBEROS:
+			Bomberos bomberos = (Bomberos) puntoReferencia;
+			sess().save(bomberos);
+		break;
+		case TipoPuntoReferencia.CUARTEL:
+			Cuartel cuartel = (Cuartel) puntoReferencia;
+			sess().save(cuartel);
+		break;
+		case TipoPuntoReferencia.OTROS:
+			PROtros otros = (PROtros) puntoReferencia;
+			sess().save(otros);
+		break;
+		case TipoPuntoReferencia.POLICIA:
+			Policia policia = (Policia) puntoReferencia;
+			sess().save(policia);
+		break;
 		}
-		//sess().save(puntoReferencia);
+		
 	}
 	
-	public void nuevoHospital(Hospital puntoReferencia) {
-		sess().save(puntoReferencia);
-	}
 	
-	public Hospital buscarHospital (Long id){
-		return (Hospital) sess().createQuery(" from Hospital where puntoReferencia_Id ='"+ id +"'").uniqueResult();
-	}
-
-
 	public void modificarPuntoReferencia(PuntoReferencia puntoReferencia) {
 		sess().update(puntoReferencia);
 	}
 
 	public void eliminarPuntoReferencia(PuntoReferencia puntoReferencia) {
 		sess().delete(puntoReferencia);
-		//sess().createSQLQuery("delete from puntosreferencia where id =" + String.valueOf(puntoReferencia.getId())).executeUpdate();
-		
 	}
 	
 }

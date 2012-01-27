@@ -188,8 +188,7 @@ public class EntryPointDeposito implements EntryPoint {
 	
 	    @SuppressWarnings("deprecation")
 		public FormDialogBox(Long idDeposito, String accion) {
-			// TODO Auto-generated constructor stub
-	    	a=accion;
+			a=accion;
 	    	id=idDeposito;
 	    	
 	    	if(a=="modificar") label.setText("Modificar Deposito");
