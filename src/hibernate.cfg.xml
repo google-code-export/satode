@@ -48,6 +48,7 @@
 		<mapping class="fing.satode.dominio.PROtros"  />
 		<mapping class="fing.satode.dominio.Desastre"  />
 		<mapping class="fing.satode.dominio.Deposito"  />
-		<mapping class="fing.satode.dominio.TipoSuministro"  />		
+		<mapping class="fing.satode.dominio.TipoSuministro"  />
+		<mapping class="fing.satode.dominio.Suministro"  />		
 		</session-factory>
 </hibernate-configuration>
