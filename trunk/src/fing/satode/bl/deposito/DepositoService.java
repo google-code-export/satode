@@ -6,10 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
 import fing.satode.data.DepositoDTO;
+import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.dominio.Deposito;
+import fing.satode.dominio.Suministro;
 import fing.satode.dominio.TipoSuministro;
 import fing.satode.pl.deposito.DepositoDAO;
+import fing.satode.pl.deposito.SuministroDAO;
 import fing.satode.pl.deposito.TipoSuministroDAO;
 
 
@@ -17,7 +20,6 @@ import fing.satode.pl.deposito.TipoSuministroDAO;
 public class DepositoService extends ServiceBase {
 	
 	public ArrayList<DepositoDTO> listaDepositos() {
-		// TODO Auto-generated method stub
 		ArrayList<DepositoDTO> listaDTOS= new ArrayList<DepositoDTO>();
 		ArrayList<Deposito> listaDes= DepositoDAO.getInstance().listaDepositos();
 		for(Deposito d: listaDes){
@@ -27,25 +29,21 @@ public class DepositoService extends ServiceBase {
 	}
 
 	public void nuevoDeposito(DepositoDTO dto) {
-		// TODO Auto-generated method stub
 		Deposito deposito= new Deposito(dto);
 		DepositoDAO.getInstance().nuevoDeposito(deposito);
 	}
 
 	public void modificarDeposito(DepositoDTO dto) {
-		// TODO Auto-generated method stub
 		Deposito deposito= new Deposito(dto);
 		DepositoDAO.getInstance().modificarDeposito(deposito);
 	}
 
 	public void eliminarDeposito(DepositoDTO dto) {
-		// TODO Auto-generated method stub
 		Deposito deposito= new Deposito(dto);
 		DepositoDAO.getInstance().eliminarDeposito(deposito);
 	}
 
 	public ArrayList<TipoSuministroDTO> listaTipoSuministros() {
-		// TODO Auto-generated method stub
 		ArrayList<TipoSuministroDTO> listaDTOS= new ArrayList<TipoSuministroDTO>();
 		ArrayList<TipoSuministro> listaDes= TipoSuministroDAO.getInstance().listaTipoSuministros();
 		for(TipoSuministro d: listaDes){
@@ -55,21 +53,44 @@ public class DepositoService extends ServiceBase {
 	}
 
 	public void nuevoTipoSuministro(TipoSuministroDTO dto) {
-		// TODO Auto-generated method stub
 		TipoSuministro tiposuministro= new TipoSuministro(dto);
 		TipoSuministroDAO.getInstance().nuevoTipoSuministro(tiposuministro);
 	}
 
 	public void modificarTipoSuministro(TipoSuministroDTO dto) {
-		// TODO Auto-generated method stub
 		TipoSuministro tiposuministro= new TipoSuministro(dto);
 		TipoSuministroDAO.getInstance().modificarTipoSuministro(tiposuministro);
 	}
 
 	public void eliminarTipoSuministro(TipoSuministroDTO dto) {
-		// TODO Auto-generated method stub
 		TipoSuministro tiposuministro= new TipoSuministro(dto);
 		TipoSuministroDAO.getInstance().eliminarTipoSuministro(tiposuministro);
+	}
+	
+	
+	
+	public ArrayList<SuministroDTO> listaSuministros() {
+		ArrayList<SuministroDTO> listaDTOS= new ArrayList<SuministroDTO>();
+		ArrayList<Suministro> lista= SuministroDAO.getInstance().listaSuministros();
+		for(Suministro d: lista){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
+	
+	public void nuevoSuministro(SuministroDTO dto) {
+		Suministro suministro= new Suministro(dto);
+		SuministroDAO.getInstance().nuevoSuministro(suministro);
+	}
+
+	public void modificarSuministro(SuministroDTO dto) {
+		Suministro suministro= new Suministro(dto);
+		SuministroDAO.getInstance().modificarSuministro(suministro);
+	}
+
+	public void eliminarSuministro(SuministroDTO dto) {
+		Suministro suministro= new Suministro(dto);
+		SuministroDAO.getInstance().eliminarSuministro(suministro);
 	}
 	
 }
