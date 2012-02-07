@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import fing.satode.data.DepositoDTO;
+import fing.satode.data.DonacionDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 
@@ -36,5 +37,17 @@ public interface IDepositoAsync {
 	void modificarSuministro(SuministroDTO dto, AsyncCallback<Void> callback);
 
 	void nuevoSuministro(SuministroDTO dto, AsyncCallback<Void> callback);
+
+	void listaDonaciones(AsyncCallback<ArrayList<DonacionDTO>> callback);
+
+	void nuevoDonacion(DonacionDTO dto, AsyncCallback<Void> callback);
+
+	void modificarDonacion(DonacionDTO dto, AsyncCallback<Void> callback);
+
+	void eliminarDonacion(DonacionDTO dto, AsyncCallback<Void> callback);
+
+	void confirmar(DonacionDTO dto, AsyncCallback<Void> callback);
+
+	
 
 }

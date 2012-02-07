@@ -23,9 +23,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 import fing.satode.data.CiudadDTO;
+import fing.satode.data.DepositoDTO;
+import fing.satode.data.DonacionDTO;
 import fing.satode.data.EstadoSuministro;
+import fing.satode.data.EventoDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.dominio.TipoSuministro;
@@ -34,13 +38,20 @@ import fing.satode.ui.general.data.KeyNumeric;
 public class EntryPointSuministro implements EntryPoint {
 
 	final Button nuevoB = new Button("Nuevo");
+	final Button confirmar = new Button("Confirmar");
 	final VerticalPanel vertical = new VerticalPanel();
-	private ArrayList<SuministroDTO> suministrosGlobal;
+	private ArrayList<DonacionDTO> donacionesGlobal;
 	private ArrayList<TipoSuministroDTO> tipoSuministrosGlobal;
-	private Grid sumninistros;
+	private ArrayList<DepositoDTO> depositosGlobal;
+	private Grid donaciones;
 	final Label modificarLabel= new Label("Modificar");
 	final Label eliminarLabel= new Label("Eliminar");
-	
+	public static Grid gridSuministros= new Grid(4,2);
+	public static DonacionDTO donacionDTO;
+	public static  Grid suministros;
+	private static Long numerador=10000000000L;
+	private static Long baseNumerador=10000000000L;
+	  
 	@Override
 	public void onModuleLoad() {
 		
@@ -58,68 +69,101 @@ public class EntryPointSuministro implements EntryPoint {
 	}
 	
 	private void cargarLista() {
-		RootPanel.get("suministros").clear();
+		RootPanel.get("donaciones").clear();
 		vertical.clear();
-		RootPanel.get("suministros").add(vertical);
+		RootPanel.get("donaciones").add(vertical);
 		
 		IDepositoAsync servidorDepositos= GWT.create(IDeposito.class);
 		
-		servidorDepositos.listaSuministros(new AsyncCallback<ArrayList<SuministroDTO>>() {
+		servidorDepositos.listaDonaciones(new AsyncCallback<ArrayList<DonacionDTO>>() {
 			
 			@Override
-			public void onSuccess(ArrayList<SuministroDTO> result) {
-				suministrosGlobal=result;
-				sumninistros = new Grid(result.size()+1,7);
+			public void onSuccess(ArrayList<DonacionDTO> result) {
+				donacionesGlobal=result;
+				donaciones = new Grid(result.size()+1,7);
 				
-				sumninistros.setWidget(0, 0, new Label("ID"));
-				sumninistros.setWidget(0, 1, new Label("Tipo de suministro"));
-				sumninistros.setWidget(0, 2, new Label("Cantidad"));
-				sumninistros.setWidget(0, 3, new Label("Estado"));
-				sumninistros.setWidget(0, 4, new Label("Fecha de Vencimiento"));
-				sumninistros.setWidget(0, 5, modificarLabel);
-				sumninistros.setWidget(0, 6, eliminarLabel);
+				donaciones.setWidget(0, 0, new Label("ID"));
+				donaciones.setWidget(0, 1, new Label("Fecha"));
+				donaciones.setWidget(0, 2, new Label("Donante"));
+				donaciones.setWidget(0, 3, new Label("Deposito"));
+				donaciones.setWidget(0, 4, modificarLabel);
+				donaciones.setWidget(0, 5, eliminarLabel);
+				donaciones.setWidget(0, 6, new Label("Confirmar"));
 				
 				for(int i=0;i<7;i++){
-					sumninistros.getCellFormatter().setStyleName(0,i, "tbl-cab");
+					donaciones.getCellFormatter().setStyleName(0,i, "tbl-cab");
 				}
 				
-				sumninistros.setBorderWidth(1);
+				donaciones.setBorderWidth(1);
 				int row=1;
-				for(SuministroDTO s: result){
-					sumninistros.setWidget(row, 0, new Label(s.getId().toString()));
-					sumninistros.setWidget(row, 1, new Label(s.getTipo().getNombre()));
-					sumninistros.setWidget(row, 2, new Label(String.valueOf(s.getCantidad())));
-					sumninistros.setWidget(row, 3, new Label(EstadoSuministro.getTXT(s.getEstado())));
-					DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
-				    String dateString = format.format(s.getFechaVencimiento());
-					
-					sumninistros.setWidget(row, 4, new Label(dateString));
+				DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+				for(DonacionDTO s: result){
+					donaciones.setWidget(row, 0, new Label(s.getId().toString()));
+					donaciones.setWidget(row, 1, new Label(format.format(s.getFecha())));
+					donaciones.setWidget(row, 2, new Label(s.getDonante()));
+					donaciones.setWidget(row, 3, new Label(s.getDeposito().getCiudad().getNombre()+"-"+ s.getDeposito().getDireccion()));
 					final Long id= s.getId();
-					final Image modificarI= new Image("/images/modificar.png");
-					modificarI.addClickHandler(new ClickHandler() {
+					if(!s.isImpactarCuentas()){
+						final Image modificarI= new Image("/images/modificar.png");
+						modificarI.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								FormDialogBox dialog= new FormDialogBox(id, "modificar");
+								dialog.show();
+							}
+						});
 						
-						@Override
-						public void onClick(ClickEvent event) {
-							FormDialogBox dialog= new FormDialogBox(id, "modificar");
-							dialog.show();
-						}
-					});
-					
-					final Image eliminarI= new Image("/images/eliminar.png");
-					
-					eliminarI.addClickHandler(new ClickHandler() {
+						final Image eliminarI= new Image("/images/eliminar.png");
 						
-						@Override
-						public void onClick(ClickEvent event) {
-							FormDialogBox dialog= new FormDialogBox(id, "eliminar");
-							dialog.show();
-						}
-					});
-					sumninistros.setWidget(row, 5, modificarI);
-					sumninistros.setWidget(row, 6, eliminarI);
+						eliminarI.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								FormDialogBox dialog= new FormDialogBox(id, "eliminar");
+								dialog.show();
+							}
+						});
+						
+						confirmar.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								// TODO Auto-generated method stub
+								DonacionDTO dto=null;
+								for(DonacionDTO d:donacionesGlobal){
+									if(d.getId().equals(id)){
+										dto=d;
+									}
+								}
+								
+								IDepositoAsync servidorDepositos= GWT.create(IDeposito.class);
+								
+								servidorDepositos.confirmar(dto, new AsyncCallback<Void>() {
+									
+									@Override
+									public void onSuccess(Void result) {
+										// TODO Auto-generated method stub
+										cargarLista();
+									}
+									
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+										caught.printStackTrace();
+										Window.alert("ERROR AJAX");
+									}
+								});
+							}
+						});
+						
+						donaciones.setWidget(row, 4, modificarI);
+						donaciones.setWidget(row, 5, eliminarI);
+						donaciones.setWidget(row, 6, confirmar);
+					}
 					row++;
 				}
-				vertical.add(sumninistros);
+				vertical.add(donaciones);
 				
 			}
 			
@@ -146,6 +190,22 @@ public class EntryPointSuministro implements EntryPoint {
 			}
 		});
 		
+		servidorDepositos.listaDepositos(new AsyncCallback<ArrayList<DepositoDTO>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<DepositoDTO> result) {
+				// TODO Auto-generated method stub
+				depositosGlobal=result;
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				caught.printStackTrace();
+				Window.alert("ERROR AJAX");
+				
+			}
+		});
 		
 		
 		
@@ -159,10 +219,286 @@ public class EntryPointSuministro implements EntryPoint {
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
 		final Label label = new Label();
+	  
+	    final Grid gridFecha= new Grid(1,2);
+	    final DatePicker datePicker = new DatePicker();
+	    final TextBox donante =new TextBox();
+	    final TextBox fecha= new TextBox();
+	    final ListBox depositos=new ListBox();
+	   
+	    final Button cancelar= new Button("Cancelar");
+		final Button aceptar= new Button("Aceptar");
+		final Button nuevoB = new Button("Nuevo");
+		
+		public FormDialogBox(Long idSuministro, String accion) {
+			a=accion;
+			id=idSuministro;
+			
+			datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			      public void onValueChange(ValueChangeEvent<Date> event) {
+			        Date date = (Date)event.getValue();
+			        DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+			        String dateString = format.format(date);
+			        fecha.setText(dateString);
+			      }
+			    });
+			    datePicker.setValue(new Date(), true);
+		    	
+		    	if(a=="modificar") label.setText("Modificar Donacion");
+				if(a=="eliminar") label.setText("Eliminar Donacion");
+				if(a=="nuevo") label.setText("Nuevo Donacion");
+				
+				gridSuministros.setWidget(0, 0, new Label("Fecha"));
+				gridSuministros.setWidget(1, 0, new Label("Donante"));
+				gridSuministros.setWidget(2, 0, new Label("Deposito"));
+				
+				gridFecha.setWidget(0, 0, fecha);
+				gridFecha.setWidget(0, 1, datePicker);
+				gridSuministros.setWidget(0, 1, gridFecha);
+				gridSuministros.setWidget(1, 1, donante);
+				
+				depositos.addItem("Seleccionar", "0");
+				for(DepositoDTO d: depositosGlobal){
+					depositos.addItem(d.getId()+"-"+d.getCiudad().getNombre()+"-"+d.getDireccion(),String.valueOf(d.getId()));
+				}
+				gridSuministros.setWidget(2, 1,depositos);
+				
+				gridSuministros.setBorderWidth(1);
+		    	
+				nuevoB.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						FormDialogSuministroBox dialog= new FormDialogSuministroBox(null, "nuevo");
+						dialog.show();
+					}
+				});
+				
+				gridSuministros.setWidget(3, 1,nuevoB);
+				
+				suministros= new Grid(1, 5);
+			    suministros.setWidget(0, 0, new Label("Tipo Suministro"));
+			    suministros.setWidget(0, 1, new Label("Estado"));
+			    suministros.setWidget(0, 2, new Label("Cantidad"));
+			    suministros.setWidget(0, 3, new Label("Modificar"));
+			    suministros.setWidget(0, 4, new Label("Eliminar"));
+			    gridSuministros.setWidget(3, 0, suministros);
+			    for(int i=0;i<5;i++){
+					suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
+				}
+				donacionDTO=new DonacionDTO();
+				
+				if (a == "modificar" || a == "eliminar" ){
+					for(DonacionDTO e:donacionesGlobal){
+		    			if(e.getId().equals(id)){
+		    				donacionDTO=e;
+		    			}
+		    		}
+		    		
+			    	donante.setText(donacionDTO.getDonante());
+				    DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+				    datePicker.setValue(donacionDTO.getFecha());
+				    
+				    depositos.clear();
+				    depositos.addItem("Seleccionar", "0");
+				    int index=1;
+					for(DepositoDTO d: depositosGlobal){
+						depositos.addItem(d.getId()+"-"+d.getCiudad().getNombre()+"-"+d.getDireccion(),String.valueOf(d.getId()));
+						if(d.getId().equals(donacionDTO.getDeposito().getId())){
+							depositos.setSelectedIndex(index);
+						}
+						index++;
+					}
+					
+				    suministros= new Grid(donacionDTO.getSuministros().size()+1, 5);
+				    suministros.setWidget(0, 0, new Label("Tipo Suministro"));
+				    suministros.setWidget(0, 1, new Label("Estado"));
+				    suministros.setWidget(0, 2, new Label("Cantidad"));
+				    suministros.setWidget(0, 3, new Label("Modificar"));
+				    suministros.setWidget(0, 4, new Label("Eliminar"));
+				    gridSuministros.setWidget(3, 0, suministros);
+				    
+					for(int i=0;i<5;i++){
+						suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
+					}
+					
+					suministros.setBorderWidth(1);
+					
+					int row=1;
+					for(SuministroDTO s: donacionDTO.getSuministros()){
+						suministros.setWidget(row, 0, new Label(s.getTipo().getNombre()));
+						suministros.setWidget(row, 1, new Label(EstadoSuministro.getTXT(s.getEstado())));
+						suministros.setWidget(row, 2, new Label(String.valueOf(s.getCantidad())));
+						final SuministroDTO sum= s;
+						final Image modificarI= new Image("/images/modificar.png");
+						modificarI.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar");
+								dialog.show();
+							}
+						});
+						
+						final Image eliminarI= new Image("/images/eliminar.png");
+						
+						eliminarI.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar");
+								dialog.show();
+							}
+						});
+						if(a == "modificar" ){
+							suministros.setWidget(row, 3, modificarI);
+							suministros.setWidget(row, 4, eliminarI);
+						}
+						row++;
+					}
+			    }
+			    
+			    if ( a == "eliminar" ){
+			    	donante.setEnabled(false);
+			    	fecha.setEnabled(false);
+			    	depositos.setEnabled(false);
+			    	nuevoB.setEnabled(false);
+			    }
+			    
+				vertical.add(label);
+				vertical.add(gridSuministros);
+		    	horizontal.add(aceptar);
+				horizontal.add(cancelar);
+				vertical.add(horizontal);
+				
+				cancelar.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						FormDialogBox.this.hide();
+					}
+				});
+				
+				aceptar.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						FormDialogBox.this.procesar();
+					}
+				});
+					
+				setAnimationEnabled(true);
+				add(vertical);
+				center();
+		}
+		
+		protected void procesar() {
+			DonacionDTO dto=validar();
+			
+			if(dto!=null){
+				for(SuministroDTO s: dto.getSuministros()){
+					if(s.getId()>=baseNumerador){
+						s.setId(null);
+					}
+				}
+				dto.setId(id);
+				if(a=="modificar"){
+					
+					IDepositoAsync servidorDeposito=GWT.create(IDeposito.class);
+					
+					servidorDeposito.modificarDonacion(dto,new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							cargarLista();
+							hide();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+				}else if(a== "nuevo"){
+					IDepositoAsync servidorDeposito=GWT.create(IDeposito.class);
+					
+					servidorDeposito.nuevoDonacion(dto, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+							cargarLista();
+							hide();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+					
+				}else if(a=="eliminar"){
+					IDepositoAsync servidorDeposito=GWT.create(IDeposito.class);
+					
+					servidorDeposito.eliminarDonacion(dto, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+							cargarLista();
+							hide();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+				}
+			}
+		}
+		
+		private DonacionDTO validar() {
+			DonacionDTO dto= donacionDTO;
+			
+			if(donante.getText().trim().length()== 0){
+				Window.alert("Indique Donante");
+				return null;
+			}
+			
+			if(depositos.getSelectedIndex()<1){
+				Window.alert("Indique Deposito destino");
+				return null;
+			}
+			
+			dto.setFecha(datePicker.getValue());
+			dto.setDonante(donante.getText());
+			
+			for(DepositoDTO d: depositosGlobal){
+				if( d.getId().equals( Long.valueOf(depositos.getValue(depositos.getSelectedIndex()) ))){
+					dto.setDeposito(d);
+				}
+			}
+			
+			return dto;
+		}
+		
+			
+	}
+	
+	public class FormDialogSuministroBox extends DialogBox{
+		private String a;
+		private SuministroDTO suministro;
+		final HorizontalPanel horizontal= new HorizontalPanel();
+		final VerticalPanel vertical= new VerticalPanel();
+		final Label label = new Label();
 	    final Grid grid= new Grid(4,2);
 	    final Grid gridFecha= new Grid(1,2);
-	    
-	
 		
 	    final ListBox tipoSuministro= new ListBox();
 	    final TextBox cantidad =new TextBox();
@@ -175,10 +511,9 @@ public class EntryPointSuministro implements EntryPoint {
 		
 	
 	    @SuppressWarnings("deprecation")
-		public FormDialogBox(Long idSuministro, String accion) {
+		public FormDialogSuministroBox(SuministroDTO sum, String accion) {
 			a=accion;
-	    	id=idSuministro;
-	    	
+	    	suministro=sum;
 	    	 // Set the value in the text box when the user selects a date
 		    datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
 		      public void onValueChange(ValueChangeEvent<Date> event) {
@@ -221,27 +556,20 @@ public class EntryPointSuministro implements EntryPoint {
 			
 			if (a == "modificar" || a == "eliminar" ){
 		    	
-		    	SuministroDTO suministroDTO= null;
-	    		for(SuministroDTO s:suministrosGlobal){
-	    			if(s.getId().equals(id)){
-	    				suministroDTO=s;
-	    			}
-	    		}
-	    		
-	    		int row=0;
+		    	int row=0;
 	    		boolean salir = false;
 	    		while (!salir) {
 					row++;
-					if(tipoSuministro.getValue(row).equals(String.valueOf(suministroDTO.getTipo().getId()))){
+					if(tipoSuministro.getValue(row).equals(String.valueOf(sum.getTipo().getId()))){
 						tipoSuministro.setSelectedIndex(row);
 						salir = true;
 					}
 				}
 	    		
-	    		cantidad.setText(String.valueOf(suministroDTO.getCantidad()));
-			    estado.setSelectedIndex(suministroDTO.getEstado());
+	    		cantidad.setText(String.valueOf(sum.getCantidad()));
+			    estado.setSelectedIndex(sum.getEstado());
 			    DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
-			    fechavencimiento.setText(format.format(suministroDTO.getFechaVencimiento()));
+			    fechavencimiento.setText(format.format(sum.getFechaVencimiento()));
 			    
 		    }
 		    
@@ -262,7 +590,7 @@ public class EntryPointSuministro implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					FormDialogBox.this.hide();
+					FormDialogSuministroBox.this.hide();
 				}
 			});
 			
@@ -270,7 +598,7 @@ public class EntryPointSuministro implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					FormDialogBox.this.procesar();
+					FormDialogSuministroBox.this.procesar();
 				}
 			});
 				
@@ -282,60 +610,76 @@ public class EntryPointSuministro implements EntryPoint {
 		protected void procesar() {
 			SuministroDTO dto=validar();
 			if(dto!=null){
-				dto.setId(id);
+			
 				if(a=="modificar"){
-					
-					IDepositoAsync servidorDeposito=GWT.create(IDeposito.class);
-					
-					servidorDeposito.modificarSuministro(dto,new AsyncCallback<Void>() {
-						
-						@Override
-						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
+					dto.setId(suministro.getId());
+					for(SuministroDTO s:donacionDTO.getSuministros()){
+						if(s.getId().equals(dto.getId())){
+							s.setCantidad(dto.getCantidad());
+							s.setEstado(dto.getEstado());
+							s.setFechaVencimiento(dto.getFechaVencimiento());
+							s.setTipo(dto.getTipo());
 						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});
+					}
 				}else if(a== "nuevo"){
-					IDepositoAsync servidorDeposito=GWT.create(IDeposito.class);
-					
-					servidorDeposito.nuevoSuministro(dto,new AsyncCallback<Void>() {
-						
-						@Override
-						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});
+					dto.setId(numerador++);
+					donacionDTO.getSuministros().add(dto);
 				}else if(a=="eliminar"){
-					IDepositoAsync servidorDeposito=GWT.create(IDeposito.class);
-					
-					servidorDeposito.eliminarSuministro(dto,new AsyncCallback<Void>() {
-						
-						@Override
-						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
+					dto.setId(suministro.getId());
+					SuministroDTO del=null;
+					for(SuministroDTO s:donacionDTO.getSuministros()){
+						if(s.getId().equals(dto.getId())){
+							del=s;
 						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});
+					}
+					donacionDTO.getSuministros().remove(del);
 				}
+				
+				   suministros= new Grid(donacionDTO.getSuministros().size()+1, 5);
+				    suministros.setWidget(0, 0, new Label("Tipo Suministro"));
+				    suministros.setWidget(0, 1, new Label("Estado"));
+				    suministros.setWidget(0, 2, new Label("Cantidad"));
+				    suministros.setWidget(0, 3, new Label("Modificar"));
+				    suministros.setWidget(0, 4, new Label("Eliminar"));
+				    gridSuministros.setWidget(3, 0, suministros);
+				    
+					for(int i=0;i<5;i++){
+						suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
+					}
+					
+					suministros.setBorderWidth(1);
+					
+					int row=1;
+					for(SuministroDTO s: donacionDTO.getSuministros()){
+						suministros.setWidget(row, 0, new Label(s.getTipo().getNombre()));
+						suministros.setWidget(row, 1, new Label(EstadoSuministro.getTXT(s.getEstado())));
+						suministros.setWidget(row, 2, new Label(String.valueOf(s.getCantidad())));
+						final SuministroDTO sum= s;
+						final Image modificarI= new Image("/images/modificar.png");
+						modificarI.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar");
+								dialog.show();
+							}
+						});
+						
+						final Image eliminarI= new Image("/images/eliminar.png");
+						
+						eliminarI.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar");
+								dialog.show();
+							}
+						});
+						suministros.setWidget(row, 3, modificarI);
+						suministros.setWidget(row, 4, eliminarI);
+						row++;
+					}
+					hide();
 			}
 		}
 
@@ -373,8 +717,8 @@ public class EntryPointSuministro implements EntryPoint {
 			
 		}
 		
-		
 	}
+
 
 
 }
