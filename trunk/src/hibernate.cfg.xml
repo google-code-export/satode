@@ -28,7 +28,7 @@
 
 
 		<!-- Echo all executed SQL to stdout for debugging -->
-		<property name="show_sql">false</property>
+		<property name="show_sql">true</property>
 
 		<!-- All the entity classes for hibernate to check for annotations here-->
 		<mapping class="fing.satode.dominio.Usuario"  />
@@ -49,6 +49,9 @@
 		<mapping class="fing.satode.dominio.Desastre"  />
 		<mapping class="fing.satode.dominio.Deposito"  />
 		<mapping class="fing.satode.dominio.TipoSuministro"  />
-		<mapping class="fing.satode.dominio.Suministro"  />		
+		<mapping class="fing.satode.dominio.Suministro"  />
+		<mapping class="fing.satode.dominio.Donacion"  />			
+		<mapping class="fing.satode.dominio.CuentaCorrienteSuministro"  />
+		
 		</session-factory>
 </hibernate-configuration>

@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import fing.satode.data.DepositoDTO;
+import fing.satode.data.DonacionDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 
@@ -27,9 +28,16 @@ public interface IDeposito extends RemoteService {
 	public void modificarTipoSuministro(TipoSuministroDTO dto);
 	public void eliminarTipoSuministro(TipoSuministroDTO dto);
 	
+	
 	public ArrayList<SuministroDTO> listaSuministros();
 	public void nuevoSuministro(SuministroDTO dto);
 	public void modificarSuministro(SuministroDTO dto);
 	public void eliminarSuministro(SuministroDTO dto);
+
+	public ArrayList<DonacionDTO> listaDonaciones();
+	public void nuevoDonacion(DonacionDTO dto);
+	public void modificarDonacion(DonacionDTO dto);
+	public void eliminarDonacion(DonacionDTO dto);
 	
+	public void confirmar(DonacionDTO dto);
 }
