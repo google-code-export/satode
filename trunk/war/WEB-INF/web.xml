@@ -6,10 +6,26 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
+  
+  <servlet>
+    <servlet-name>Necesidad</servlet-name>
+    <servlet-class>fing.satode.ui.necesidades.server.NecesidadImpl</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>Necesidad</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.NecesidadList/Necesidad</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>puntoReferencia</servlet-name>
     <servlet-class>fing.satode.ui.puntoReferencias.server.PuntoReferenciaImpl</servlet-class>
   </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>puntoReferencia</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.NecesidadList/puntoReferencia</url-pattern>
+  </servlet-mapping>
   
   
   <servlet-mapping>
@@ -45,6 +61,11 @@
     <url-pattern>/fing.satode.ui.deposito.SuministroList/deposito</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>deposito</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.NecesidadList/deposito</url-pattern>
+  </servlet-mapping>
+  
   
    <servlet>
     <servlet-name>desastres</servlet-name>
@@ -55,6 +76,10 @@
   <servlet-mapping>
     <servlet-name>desastres</servlet-name>
     <url-pattern>/fing.satode.ui.desastres.DesastreList/desastres</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>desastres</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.NecesidadList/desastres</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -73,6 +98,10 @@
     <url-pattern>/fing.satode.ui.desastres.DesastreList/usuario</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.NecesidadList/usuario</url-pattern>
+  </servlet-mapping>
   
   <servlet-mapping>
     <servlet-name>usuarios</servlet-name>
