@@ -21,5 +21,8 @@ public interface IPuntoReferenciaAsync {
 	void modificarPuntoReferencia(PuntoReferenciaDTO dto,
 			AsyncCallback<Void> callback);
 
+	
+		void listPuntoEntrada(AsyncCallback<ArrayList<PuntoReferenciaDTO>> callback);
+
 
 }

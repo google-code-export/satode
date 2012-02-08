@@ -39,6 +39,12 @@ public class PuntoReferenciaImpl extends ServerImpl implements IPuntoReferencia{
 		ServiceFactory.getInstance().getPuntoReferenciaService().eliminarPuntoReferencia(dto);
 		
 	}
+
+	@Override
+	public ArrayList<PuntoReferenciaDTO> listPuntoEntrada() {
+		// TODO Auto-generated method stub
+		return ServiceFactory.getInstance().getPuntoReferenciaService().listPuntoEntrada();
+	}
 	
 		
 }

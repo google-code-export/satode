@@ -22,6 +22,7 @@ import fing.satode.dominio.PROtros;
 import fing.satode.dominio.Policia;
 import fing.satode.dominio.PuntoReferencia;
 import fing.satode.dominio.Refugio;
+import fing.satode.dominio.Util;
 import fing.satode.pl.puntoReferencia.PuntoReferenciaDAO;
 
 
@@ -32,125 +33,42 @@ public class PuntoReferenciaService extends ServiceBase {
 		
 		ArrayList<PuntoReferenciaDTO> listaDTOS= new ArrayList<PuntoReferenciaDTO>();
 		ArrayList<PuntoReferencia> listaDes= PuntoReferenciaDAO.getInstance().listaPuntosReferencias();
+		
 		for(PuntoReferencia d: listaDes){
-			switch (d.getTipo()) 
-			{
-			case TipoPuntoReferencia.HOSPITAL:
-				listaDTOS.add(((Hospital)d).getDTO());
-			break;
-			case TipoPuntoReferencia.REFUGIO:
-				listaDTOS.add(((Refugio)d).getDTO());
-			break;
-			case TipoPuntoReferencia.BOMBEROS:
-				listaDTOS.add(((Bomberos)d).getDTO());
-			break;
-			case TipoPuntoReferencia.CAMINERA:
-				listaDTOS.add(((Caminera)d).getDTO());
-			break;
-			case TipoPuntoReferencia.CUARTEL:
-				listaDTOS.add(((Cuartel)d).getDTO());
-			break;
-			case TipoPuntoReferencia.OTROS:
-				listaDTOS.add(((PROtros)d).getDTO());
-			break;
-			case TipoPuntoReferencia.POLICIA:
-				listaDTOS.add(((Policia)d).getDTO());
-			break;
-			
-			}
-			
-			
+			listaDTOS.add(Util.crearPuntoReferenciaDTO(d));	
 		}
+		
 		return listaDTOS;
 	}
 	
 
 	public void nuevoPuntoReferencia(PuntoReferenciaDTO dto) {
-		PuntoReferencia puntoReferencia = null;
-		switch (dto.getTipo()) 
-		{
-		case TipoPuntoReferencia.HOSPITAL:
-			puntoReferencia = new Hospital((HospitalDTO)dto);
-		break;
-		case TipoPuntoReferencia.REFUGIO:
-			puntoReferencia = new Refugio((RefugioDTO)dto);
-		break;
-		case TipoPuntoReferencia.BOMBEROS:
-			puntoReferencia = new Bomberos((BomberosDTO)dto);
-		break;
-		case TipoPuntoReferencia.CAMINERA:
-			puntoReferencia = new Caminera((CamineraDTO)dto);
-		break;
-		case TipoPuntoReferencia.CUARTEL:
-			puntoReferencia = new Cuartel((CuartelDTO)dto);
-		break;
-		case TipoPuntoReferencia.OTROS:
-			puntoReferencia = new PROtros((PROtrosDTO)dto);
-		break;
-		case TipoPuntoReferencia.POLICIA:
-			puntoReferencia = new Policia((PoliciaDTO)dto);
-		break;
-		}
+		PuntoReferencia puntoReferencia = Util.crearPuntoReferencia(dto);
 		PuntoReferenciaDAO.getInstance().nuevoPuntoReferencia(puntoReferencia);
 	}
 	
 	
 	public void modificarPuntoReferencia(PuntoReferenciaDTO dto) {
-		PuntoReferencia puntoReferencia = null;
-		switch (dto.getTipo()) 
-		{
-		case TipoPuntoReferencia.HOSPITAL:
-			puntoReferencia = new Hospital((HospitalDTO)dto);
-		break;
-		case TipoPuntoReferencia.REFUGIO:
-			puntoReferencia = new Refugio((RefugioDTO)dto);
-		break;
-		case TipoPuntoReferencia.BOMBEROS:
-			puntoReferencia = new Bomberos((BomberosDTO)dto);
-		break;
-		case TipoPuntoReferencia.CAMINERA:
-			puntoReferencia = new Caminera((CamineraDTO)dto);
-		break;
-		case TipoPuntoReferencia.CUARTEL:
-			puntoReferencia = new Cuartel((CuartelDTO)dto);
-		break;
-		case TipoPuntoReferencia.OTROS:
-			puntoReferencia = new PROtros((PROtrosDTO)dto);
-		break;
-		case TipoPuntoReferencia.POLICIA:
-			puntoReferencia = new Policia((PoliciaDTO)dto);
-		break;
-		}
+		PuntoReferencia puntoReferencia = Util.crearPuntoReferencia(dto);
 		PuntoReferenciaDAO.getInstance().modificarPuntoReferencia(puntoReferencia);
 	}
 
 	public void eliminarPuntoReferencia(PuntoReferenciaDTO dto) {
-		PuntoReferencia puntoReferencia = null;
-		switch (dto.getTipo()) 
-		{
-		case TipoPuntoReferencia.HOSPITAL:
-			puntoReferencia = new Hospital((HospitalDTO)dto);
-		break;
-		case TipoPuntoReferencia.REFUGIO:
-			puntoReferencia = new Refugio((RefugioDTO)dto);
-		break;
-		case TipoPuntoReferencia.BOMBEROS:
-			puntoReferencia = new Bomberos((BomberosDTO)dto);
-		break;
-		case TipoPuntoReferencia.CAMINERA:
-			puntoReferencia = new Caminera((CamineraDTO)dto);
-		break;
-		case TipoPuntoReferencia.CUARTEL:
-			puntoReferencia = new Cuartel((CuartelDTO)dto);
-		break;
-		case TipoPuntoReferencia.OTROS:
-			puntoReferencia = new PROtros((PROtrosDTO)dto);
-		break;
-		case TipoPuntoReferencia.POLICIA:
-			puntoReferencia = new Policia((PoliciaDTO)dto);
-		break;
-		}
+		PuntoReferencia puntoReferencia = Util.crearPuntoReferencia(dto);
 		PuntoReferenciaDAO.getInstance().eliminarPuntoReferencia(puntoReferencia);
+	}
+
+
+
+
+	public ArrayList<PuntoReferenciaDTO> listPuntoEntrada() {
+		// TODO Auto-generated method stub
+		ArrayList<PuntoReferencia> lista=PuntoReferenciaDAO.getInstance().listPuntoEntrada();
+		ArrayList<PuntoReferenciaDTO> res=new ArrayList<PuntoReferenciaDTO>();
+		for(PuntoReferencia p:lista){
+			res.add(p.getDTO());
+		}
+		return res;
 	}
 
 	
