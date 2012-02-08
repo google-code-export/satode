@@ -21,5 +21,6 @@ public interface IPuntoReferencia extends RemoteService {
 	public void eliminarPuntoReferencia(PuntoReferenciaDTO dto);
 	
 	public ArrayList<PuntoReferenciaDTO> listPuntoEntrada();
+	public ArrayList<PuntoReferenciaDTO> listPuntoEntrega();
 	
 }

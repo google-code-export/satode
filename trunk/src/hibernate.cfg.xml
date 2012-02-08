@@ -52,6 +52,8 @@
 		<mapping class="fing.satode.dominio.Suministro"  />
 		<mapping class="fing.satode.dominio.Donacion"  />			
 		<mapping class="fing.satode.dominio.CuentaCorrienteSuministro"  />
+		<mapping class="fing.satode.dominio.Necesidad"  />
+		<mapping class="fing.satode.dominio.SolicitudSuministro"  />
 		
 		</session-factory>
 </hibernate-configuration>

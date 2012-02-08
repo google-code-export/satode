@@ -71,6 +71,16 @@ public class PuntoReferenciaService extends ServiceBase {
 		return res;
 	}
 
+
+	public ArrayList<PuntoReferenciaDTO> listPuntoEntrega() {
+		ArrayList<PuntoReferencia> lista=PuntoReferenciaDAO.getInstance().listPuntoEntrega();
+		ArrayList<PuntoReferenciaDTO> res=new ArrayList<PuntoReferenciaDTO>();
+		for(PuntoReferencia p:lista){
+			res.add(p.getDTO());
+		}
+		return res;
+	}
+
 	
 
 

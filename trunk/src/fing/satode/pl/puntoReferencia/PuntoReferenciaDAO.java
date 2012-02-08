@@ -94,8 +94,13 @@ public class PuntoReferenciaDAO extends DAOBase {
 	}
 
 	public ArrayList<PuntoReferencia> listPuntoEntrada() {
-		// TODO Auto-generated method stub
 		List list=sess().createQuery("from PuntoReferencia where puntoEntrada="+true+" ").list();
+		ArrayList<PuntoReferencia> res= new ArrayList<PuntoReferencia>(list);
+		return res;
+	}
+
+	public ArrayList<PuntoReferencia> listPuntoEntrega() {
+		List list=sess().createQuery("from PuntoReferencia where puntoEntrega="+true+" ").list();
 		ArrayList<PuntoReferencia> res= new ArrayList<PuntoReferencia>(list);
 		return res;
 	}
