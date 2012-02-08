@@ -8,23 +8,20 @@ import fing.satode.bl.base.ServiceBase;
 import fing.satode.data.BomberosDTO;
 import fing.satode.data.CamineraDTO;
 import fing.satode.data.CuartelDTO;
-import fing.satode.data.DepositoDTO;
 import fing.satode.data.HospitalDTO;
 import fing.satode.data.PROtrosDTO;
 import fing.satode.data.PoliciaDTO;
 import fing.satode.data.PuntoReferenciaDTO;
 import fing.satode.data.RefugioDTO;
-import fing.satode.data.TipoPuntoReferencia;
+import fing.satode.constantes.TipoPuntoReferencia;
 import fing.satode.dominio.Bomberos;
 import fing.satode.dominio.Caminera;
 import fing.satode.dominio.Cuartel;
-import fing.satode.dominio.Deposito;
 import fing.satode.dominio.Hospital;
 import fing.satode.dominio.PROtros;
 import fing.satode.dominio.Policia;
 import fing.satode.dominio.PuntoReferencia;
 import fing.satode.dominio.Refugio;
-import fing.satode.pl.deposito.DepositoDAO;
 import fing.satode.pl.puntoReferencia.PuntoReferenciaDAO;
 
 

@@ -23,16 +23,12 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
-import com.sun.java.swing.plaf.windows.resources.windows;
 
-import fing.satode.data.CiudadDTO;
+import fing.satode.constantes.EstadoSuministro;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
-import fing.satode.data.EstadoSuministro;
-import fing.satode.data.EventoDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
-import fing.satode.dominio.TipoSuministro;
 import fing.satode.ui.general.data.KeyNumeric;
 
 public class EntryPointSuministro implements EntryPoint {
@@ -296,7 +292,6 @@ public class EntryPointSuministro implements EntryPoint {
 		    		}
 		    		
 			    	donante.setText(donacionDTO.getDonante());
-				    DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
 				    datePicker.setValue(donacionDTO.getFecha());
 				    
 				    depositos.clear();

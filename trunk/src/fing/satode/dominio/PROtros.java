@@ -4,11 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import fing.satode.data.BomberosDTO;
-import fing.satode.data.HospitalDTO;
 import fing.satode.data.PROtrosDTO;
-import fing.satode.data.PuntoReferenciaDTO;
-import fing.satode.data.TipoPuntoReferencia;
 
 @Entity @Table(name="otros")
 @PrimaryKeyJoinColumn(name="puntoReferencia_Id")

@@ -1,4 +1,4 @@
-package fing.satode.data;
+package fing.satode.constantes;
 
 import java.io.Serializable;
 

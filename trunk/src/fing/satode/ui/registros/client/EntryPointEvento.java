@@ -29,7 +29,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import fing.satode.data.CiudadDTO;
 import fing.satode.data.DepartamentoDTO;
 import fing.satode.data.EventoDTO;
-import fing.satode.data.MedidaTiempo;
+import fing.satode.constantes.MedidaTiempo;
 import fing.satode.data.TipoEventoDTO;
 import fing.satode.ui.general.client.IBasicos;
 import fing.satode.ui.general.client.IBasicosAsync;
