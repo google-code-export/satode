@@ -53,6 +53,14 @@ public class EntryPointInicial implements EntryPoint  {
 	    Command menuCommandTipoSuministro = new Command() {
 	    	 public void execute() {
 	 	        setWindowHref("/TipoSuministroList.html");}};// Create a menu bar
+        
+	 	Command menuCommandPuntoReferencia = new Command() {
+	    	 public void execute() {
+	 	        setWindowHref("/PuntoReferenciaList.html");}};// Create a menu bar
+
+	 	Command menuCommandDoaciones = new Command() {
+	    	 public void execute() {
+	 	        setWindowHref("/SuministroList.html");}};// Create a menu bar
 	 	        
 	    MenuBar menu = new MenuBar();
 	    menu.setAutoOpen(true);
@@ -75,6 +83,7 @@ public class EntryPointInicial implements EntryPoint  {
 	    menu.addItem(new MenuItem("Deposito", depositoMenu));
 	    depositoMenu.addItem("Deposito Mantenimiento", menuCommandDeposito);
 	    depositoMenu.addItem("Tipo Suministro Mantenimiento", menuCommandTipoSuministro);
+	    depositoMenu.addItem("Donaciones", menuCommandDoaciones);
 	    
 	    MenuBar desastresMenu = new MenuBar(true);
 	    desastresMenu.setAnimationEnabled(true);
@@ -89,6 +98,10 @@ public class EntryPointInicial implements EntryPoint  {
 	    seguridadMenu.addSeparator();
 	    seguridadMenu.addItem("Perfiles", menuCommandPerfil);
 	   
+	    MenuBar basicosMenu = new MenuBar(true);
+	    basicosMenu.setAnimationEnabled(true);
+	    menu.addItem(new MenuItem("Basicos", basicosMenu));
+	    basicosMenu.addItem("Punto Referencia Mantenimiento", menuCommandPuntoReferencia);
 	    
 	    // Return the menu
 	    menu.ensureDebugId("cwMenuBar");
