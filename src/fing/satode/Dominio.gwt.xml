@@ -4,6 +4,7 @@
 	<inherits name="com.google.gwt.user.User" />
 	<source path="data"/>
 	<source path="dominio"/>
+	<source path="constantes"/>
 	<source path="ui/general/data"/>
 	<source path="ui/registros/client"/>
 	<source path="ui/usuarios/client"/>

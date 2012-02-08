@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import fing.satode.data.TipoPuntoReferencia;
+import fing.satode.constantes.TipoPuntoReferencia;
 import fing.satode.dominio.Bomberos;
 import fing.satode.dominio.Caminera;
 import fing.satode.dominio.Cuartel;

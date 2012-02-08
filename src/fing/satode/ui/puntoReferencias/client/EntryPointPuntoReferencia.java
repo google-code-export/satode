@@ -37,7 +37,7 @@ import fing.satode.data.PoliciaDTO;
 import fing.satode.data.RefugioDTO;
 
 import fing.satode.data.PuntoReferenciaDTO;
-import fing.satode.data.TipoPuntoReferencia;
+import fing.satode.constantes.TipoPuntoReferencia;
 import fing.satode.ui.general.client.IBasicos;
 import fing.satode.ui.general.client.IBasicosAsync;
 import fing.satode.ui.general.data.KeyNumeric;
@@ -1253,12 +1253,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 			
 		}
 		
-		private Float getFloat(String text) {
-			if(text==null || text.trim().length()==0){
-				return 0F;
-			}
-			return Float.valueOf(text);
-		}
+		
 	}
 
 }

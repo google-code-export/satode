@@ -9,9 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import fing.satode.data.DepositoDTO;
 import fing.satode.data.PuntoReferenciaDTO;
-import fing.satode.data.TipoPuntoReferencia;
 
 @Entity @Table(name="puntosreferencia")
 @Inheritance(strategy=InheritanceType.JOINED)
