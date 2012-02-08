@@ -17,6 +17,7 @@ public class DonacionDTO  implements Serializable, IsSerializable {
 	private boolean impactarCuentas;
 	private ArrayList<SuministroDTO>  suministros;
 	private DepositoDTO deposito;
+	private PuntoReferenciaDTO puntoEntrada;
 	
 	
 	public DepositoDTO getDeposito() {
@@ -62,6 +63,14 @@ public class DonacionDTO  implements Serializable, IsSerializable {
 	}
 	public void setSuministros(ArrayList<SuministroDTO> suministros) {
 		this.suministros = suministros;
+	}
+
+	public PuntoReferenciaDTO getPuntoEntrada() {
+		return puntoEntrada;
+	}
+
+	public void setPuntoEntrada(PuntoReferenciaDTO puntoEntrada) {
+		this.puntoEntrada = puntoEntrada;
 	}
 	
 	

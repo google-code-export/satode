@@ -27,9 +27,12 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import fing.satode.constantes.EstadoSuministro;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
+import fing.satode.data.PuntoReferenciaDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.ui.general.data.KeyNumeric;
+import fing.satode.ui.puntoReferencias.client.IPuntoReferencia;
+import fing.satode.ui.puntoReferencias.client.IPuntoReferenciaAsync;
 
 public class EntryPointSuministro implements EntryPoint {
 
@@ -38,11 +41,12 @@ public class EntryPointSuministro implements EntryPoint {
 	final VerticalPanel vertical = new VerticalPanel();
 	private ArrayList<DonacionDTO> donacionesGlobal;
 	private ArrayList<TipoSuministroDTO> tipoSuministrosGlobal;
+	private ArrayList<PuntoReferenciaDTO> puntosReferenciaGlobal;
 	private ArrayList<DepositoDTO> depositosGlobal;
 	private Grid donaciones;
 	final Label modificarLabel= new Label("Modificar");
 	final Label eliminarLabel= new Label("Eliminar");
-	public static Grid gridSuministros= new Grid(4,2);
+	public static Grid gridSuministros= new Grid(5,2);
 	public static DonacionDTO donacionDTO;
 	public static  Grid suministros;
 	private static Long numerador=10000000000L;
@@ -76,17 +80,18 @@ public class EntryPointSuministro implements EntryPoint {
 			@Override
 			public void onSuccess(ArrayList<DonacionDTO> result) {
 				donacionesGlobal=result;
-				donaciones = new Grid(result.size()+1,7);
+				donaciones = new Grid(result.size()+1,8);
 				
 				donaciones.setWidget(0, 0, new Label("ID"));
 				donaciones.setWidget(0, 1, new Label("Fecha"));
 				donaciones.setWidget(0, 2, new Label("Donante"));
 				donaciones.setWidget(0, 3, new Label("Deposito"));
-				donaciones.setWidget(0, 4, modificarLabel);
-				donaciones.setWidget(0, 5, eliminarLabel);
-				donaciones.setWidget(0, 6, new Label("Confirmar"));
+				donaciones.setWidget(0, 4, new Label("Punto Entrada"));
+				donaciones.setWidget(0, 5, modificarLabel);
+				donaciones.setWidget(0, 6, eliminarLabel);
+				donaciones.setWidget(0, 7, new Label("Confirmar"));
 				
-				for(int i=0;i<7;i++){
+				for(int i=0;i<8;i++){
 					donaciones.getCellFormatter().setStyleName(0,i, "tbl-cab");
 				}
 				
@@ -98,6 +103,7 @@ public class EntryPointSuministro implements EntryPoint {
 					donaciones.setWidget(row, 1, new Label(format.format(s.getFecha())));
 					donaciones.setWidget(row, 2, new Label(s.getDonante()));
 					donaciones.setWidget(row, 3, new Label(s.getDeposito().getCiudad().getNombre()+"-"+ s.getDeposito().getDireccion()));
+					donaciones.setWidget(row, 4, new Label(s.getPuntoEntrada().getCiudad().getNombre()+"-"+ s.getPuntoEntrada().getDireccion()));
 					final Long id= s.getId();
 					if(!s.isImpactarCuentas()){
 						final Image modificarI= new Image("/images/modificar.png");
@@ -153,9 +159,9 @@ public class EntryPointSuministro implements EntryPoint {
 							}
 						});
 						
-						donaciones.setWidget(row, 4, modificarI);
-						donaciones.setWidget(row, 5, eliminarI);
-						donaciones.setWidget(row, 6, confirmar);
+						donaciones.setWidget(row, 5, modificarI);
+						donaciones.setWidget(row, 6, eliminarI);
+						donaciones.setWidget(row, 7, confirmar);
 					}
 					row++;
 				}
@@ -203,8 +209,23 @@ public class EntryPointSuministro implements EntryPoint {
 			}
 		});
 		
+		IPuntoReferenciaAsync serverPuntoRef=GWT.create(IPuntoReferencia.class);
 		
-		
+		serverPuntoRef.listPuntoEntrada(new AsyncCallback<ArrayList<PuntoReferenciaDTO>>() {
+			
+			@Override
+			public void onSuccess(ArrayList<PuntoReferenciaDTO> result) {
+				// TODO Auto-generated method stub
+				puntosReferenciaGlobal=result;
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				caught.printStackTrace();
+				Window.alert("ERROR AJAX");
+			}
+		});
 		
 	
 	}
@@ -221,6 +242,7 @@ public class EntryPointSuministro implements EntryPoint {
 	    final TextBox donante =new TextBox();
 	    final TextBox fecha= new TextBox();
 	    final ListBox depositos=new ListBox();
+	    final ListBox puntoEntrada=new ListBox();
 	   
 	    final Button cancelar= new Button("Cancelar");
 		final Button aceptar= new Button("Aceptar");
@@ -247,6 +269,7 @@ public class EntryPointSuministro implements EntryPoint {
 				gridSuministros.setWidget(0, 0, new Label("Fecha"));
 				gridSuministros.setWidget(1, 0, new Label("Donante"));
 				gridSuministros.setWidget(2, 0, new Label("Deposito"));
+				gridSuministros.setWidget(3, 0, new Label("Punto de Entrada"));
 				
 				gridFecha.setWidget(0, 0, fecha);
 				gridFecha.setWidget(0, 1, datePicker);
@@ -259,6 +282,12 @@ public class EntryPointSuministro implements EntryPoint {
 				}
 				gridSuministros.setWidget(2, 1,depositos);
 				
+				puntoEntrada.addItem("Seleccionar", "0");
+				for(PuntoReferenciaDTO d: puntosReferenciaGlobal){
+					puntoEntrada.addItem(d.getId()+"-"+d.getCiudad().getNombre()+"-"+d.getDireccion(),String.valueOf(d.getId()));
+				}
+				gridSuministros.setWidget(3, 1,puntoEntrada);
+				
 				gridSuministros.setBorderWidth(1);
 		    	
 				nuevoB.addClickHandler(new ClickHandler() {
@@ -270,7 +299,7 @@ public class EntryPointSuministro implements EntryPoint {
 					}
 				});
 				
-				gridSuministros.setWidget(3, 1,nuevoB);
+				gridSuministros.setWidget(4, 1,nuevoB);
 				
 				suministros= new Grid(1, 5);
 			    suministros.setWidget(0, 0, new Label("Tipo Suministro"));
@@ -278,7 +307,7 @@ public class EntryPointSuministro implements EntryPoint {
 			    suministros.setWidget(0, 2, new Label("Cantidad"));
 			    suministros.setWidget(0, 3, new Label("Modificar"));
 			    suministros.setWidget(0, 4, new Label("Eliminar"));
-			    gridSuministros.setWidget(3, 0, suministros);
+			    gridSuministros.setWidget(4, 0, suministros);
 			    for(int i=0;i<5;i++){
 					suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
 				}
@@ -305,13 +334,24 @@ public class EntryPointSuministro implements EntryPoint {
 						index++;
 					}
 					
+				    puntoEntrada.clear();
+				    puntoEntrada.addItem("Seleccionar", "0");
+				    index=1;
+					for(PuntoReferenciaDTO d: puntosReferenciaGlobal){
+						puntoEntrada.addItem(d.getId()+"-"+d.getCiudad().getNombre()+"-"+d.getDireccion(),String.valueOf(d.getId()));
+						if(d.getId().equals(donacionDTO.getPuntoEntrada().getId())){
+							puntoEntrada.setSelectedIndex(index);
+						}
+						index++;
+					}
+					
 				    suministros= new Grid(donacionDTO.getSuministros().size()+1, 5);
 				    suministros.setWidget(0, 0, new Label("Tipo Suministro"));
 				    suministros.setWidget(0, 1, new Label("Estado"));
 				    suministros.setWidget(0, 2, new Label("Cantidad"));
 				    suministros.setWidget(0, 3, new Label("Modificar"));
 				    suministros.setWidget(0, 4, new Label("Eliminar"));
-				    gridSuministros.setWidget(3, 0, suministros);
+				    gridSuministros.setWidget(4, 0, suministros);
 				    
 					for(int i=0;i<5;i++){
 						suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
@@ -471,12 +511,23 @@ public class EntryPointSuministro implements EntryPoint {
 				return null;
 			}
 			
+			if(puntoEntrada.getSelectedIndex()<1){
+				Window.alert("Indique Punto Entrada");
+				return null;
+			}
+			
 			dto.setFecha(datePicker.getValue());
 			dto.setDonante(donante.getText());
 			
 			for(DepositoDTO d: depositosGlobal){
 				if( d.getId().equals( Long.valueOf(depositos.getValue(depositos.getSelectedIndex()) ))){
 					dto.setDeposito(d);
+				}
+			}
+			
+			for(PuntoReferenciaDTO d: puntosReferenciaGlobal){
+				if( d.getId().equals( Long.valueOf(puntoEntrada.getValue(puntoEntrada.getSelectedIndex()) ))){
+					dto.setPuntoEntrada(d);
 				}
 			}
 			
@@ -636,7 +687,7 @@ public class EntryPointSuministro implements EntryPoint {
 				    suministros.setWidget(0, 2, new Label("Cantidad"));
 				    suministros.setWidget(0, 3, new Label("Modificar"));
 				    suministros.setWidget(0, 4, new Label("Eliminar"));
-				    gridSuministros.setWidget(3, 0, suministros);
+				    gridSuministros.setWidget(4, 0, suministros);
 				    
 					for(int i=0;i<5;i++){
 						suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");

@@ -17,7 +17,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.jasper.tagplugins.jstl.Otherwise;
+
+import fing.satode.constantes.TipoPuntoReferencia;
 import fing.satode.data.DonacionDTO;
+import fing.satode.data.PuntoReferenciaDTO;
 import fing.satode.data.SuministroDTO;
 
 @Entity
@@ -43,7 +47,12 @@ public class Donacion implements Serializable {
     @JoinColumn(name="deposito_id")
 	private Deposito deposito;
 	
- public Donacion(){}
+	@ManyToOne
+    @JoinColumn(name="puntoReferencia_id")
+	private PuntoReferencia puntoEntrada;
+	
+	
+	public Donacion(){}
 	 
 	 public Donacion(DonacionDTO dto){
 		 id=dto.getId();
@@ -55,6 +64,8 @@ public class Donacion implements Serializable {
 			 suministros.add(new Suministro(dtoSum));
 		 }
 		 deposito= new Deposito(dto.getDeposito());
+		 puntoEntrada= Util.crearPuntoReferencia(dto.getPuntoEntrada());
+			
 	 }
 	 
 	 
@@ -110,6 +121,14 @@ public class Donacion implements Serializable {
 		this.suministros = suministros;
 	}
 	 
+	public PuntoReferencia getPuntoEntrada() {
+		return puntoEntrada;
+	}
+
+	public void setPuntoEntrada(PuntoReferencia puntoEntrada) {
+		this.puntoEntrada = puntoEntrada;
+	}
+
 	public DonacionDTO getDTO(){
 		DonacionDTO dto= new DonacionDTO();
 		dto.setFecha(fecha);
@@ -122,7 +141,7 @@ public class Donacion implements Serializable {
 		dto.setSuministros(lista);
 		dto.setImpactarCuentas(impactarCuentas);
 		dto.setDeposito(deposito.getDTO());
-		
+		dto.setPuntoEntrada(Util.crearPuntoReferenciaDTO(puntoEntrada));
 		return dto;
 	}
 	 
