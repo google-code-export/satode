@@ -7,6 +7,7 @@
 	<source path="constantes"/>
 	<source path="ui/general/data"/>
 	<source path="ui/registros/client"/>
+	<source path="ui/desastres/client"/>
 	<source path="ui/usuarios/client"/>
 	<source path="ui/general/client"/>
 	<source path="ui/deposito/client"/>

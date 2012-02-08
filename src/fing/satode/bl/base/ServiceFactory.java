@@ -5,6 +5,7 @@ import org.springframework.beans.factory.BeanFactory;
 import fing.satode.bl.basicos.BasicosService;
 import fing.satode.bl.deposito.DepositoService;
 import fing.satode.bl.desastres.DesastresService;
+import fing.satode.bl.necesidades.NecesidadService;
 import fing.satode.bl.puntoReferencia.PuntoReferenciaService;
 import fing.satode.bl.registros.EventoService;
 import fing.satode.bl.usuarios.UsuarioService;
@@ -51,6 +52,10 @@ public class ServiceFactory {
 	
 	public DepositoService getDepositoService() {
 		return   (DepositoService) beanFactory.getBean("depositoService");
+	}
+	
+	public NecesidadService getNecesidadService() {
+		return   (NecesidadService) beanFactory.getBean("necesidadService");
 	}
 	
 }

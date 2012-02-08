@@ -45,6 +45,12 @@ public class PuntoReferenciaImpl extends ServerImpl implements IPuntoReferencia{
 		// TODO Auto-generated method stub
 		return ServiceFactory.getInstance().getPuntoReferenciaService().listPuntoEntrada();
 	}
+
+	@Override
+	public ArrayList<PuntoReferenciaDTO> listPuntoEntrega() {
+		// TODO Auto-generated method stub
+		return ServiceFactory.getInstance().getPuntoReferenciaService().listPuntoEntrega();
+	}
 	
 		
 }
