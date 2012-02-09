@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -28,5 +29,15 @@ public class Energia implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(UTE, getTXT(UTE)));
+		res.add(new ItemConstante(CARGADOR, getTXT(CARGADOR)));
+		res.add(new ItemConstante(OTROTIPO, getTXT(OTROTIPO)));
+		res.add(new ItemConstante(NOTIENE, getTXT(NOTIENE)));
+		
+		return res;
 	}
 }

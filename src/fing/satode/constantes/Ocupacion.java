@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -34,5 +35,17 @@ public class Ocupacion implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(OCUPADAMORADORESPRESENTES, getTXT(OCUPADAMORADORESPRESENTES)));
+		res.add(new ItemConstante(OCUPADAMORADORESAUSENTES, getTXT(OCUPADAMORADORESAUSENTES)));
+		res.add(new ItemConstante(ENCONTRUCCION, getTXT(ENCONTRUCCION)));
+		res.add(new ItemConstante(ALQUILEROVENTA, getTXT(ALQUILEROVENTA)));
+		res.add(new ItemConstante(LOCALNOVIVIENDA, getTXT(LOCALNOVIVIENDA)));
+		res.add(new ItemConstante(OTRACONDICION, getTXT(OTRACONDICION)));
+		
+		return res;
 	}
 }

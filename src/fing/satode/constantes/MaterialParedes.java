@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -37,5 +38,18 @@ public class MaterialParedes implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(LADRILLO, getTXT(LADRILLO)));
+		res.add(new ItemConstante(BLOQUE, getTXT(BLOQUE)));
+		res.add(new ItemConstante(MADERAYCHAPA, getTXT(MADERAYCHAPA)));
+		res.add(new ItemConstante(ADOBETERRONFAJINA, getTXT(ADOBETERRONFAJINA)));
+		res.add(new ItemConstante(MATERIALDEDESECHO, getTXT(MATERIALDEDESECHO)));
+		res.add(new ItemConstante(LONAYNYLON, getTXT(LONAYNYLON)));
+		res.add(new ItemConstante(OTRO, getTXT(OTRO)));
+		
+		return res;
 	}
 }

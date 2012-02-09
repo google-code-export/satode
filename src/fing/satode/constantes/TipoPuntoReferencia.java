@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -36,5 +37,18 @@ public class TipoPuntoReferencia implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(HOSPITAL, getTXT(HOSPITAL)));
+		res.add(new ItemConstante(REFUGIO, getTXT(REFUGIO)));
+		res.add(new ItemConstante(POLICIA, getTXT(POLICIA)));
+		res.add(new ItemConstante(CAMINERA, getTXT(CAMINERA)));
+		res.add(new ItemConstante(CUARTEL, getTXT(CUARTEL)));
+		res.add(new ItemConstante(BOMBEROS, getTXT(BOMBEROS)));
+		res.add(new ItemConstante(OTROS, getTXT(OTROS)));
+		
+		return res;
 	}
 }

@@ -31,6 +31,7 @@ public class EstadoNecesidad implements Serializable, IsSerializable{
 		}
 	}
 	
+	
 	public static ArrayList<ItemConstante> getItems(){
 		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
 		res.add(new ItemConstante(INGRESADA, getTXT(INGRESADA)));

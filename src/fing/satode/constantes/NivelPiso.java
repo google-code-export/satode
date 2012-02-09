@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -25,5 +26,14 @@ public class NivelPiso implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(PORDEBAJOCALLE, getTXT(PORDEBAJOCALLE)));
+		res.add(new ItemConstante(IGUALCALLE, getTXT(IGUALCALLE)));
+		res.add(new ItemConstante(RENCIMACALLE50CM, getTXT(RENCIMACALLE50CM)));
+		
+		return res;
 	}
 }

@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -37,5 +38,18 @@ public class MaterialTecho implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(LOSAHORMIGONCONPROTECCION, getTXT(LOSAHORMIGONCONPROTECCION)));
+		res.add(new ItemConstante(LOSAHORMIGONSINPROTECCION, getTXT(LOSAHORMIGONSINPROTECCION)));
+		res.add(new ItemConstante(CHAPACONCIELORRASO, getTXT(CHAPACONCIELORRASO)));
+		res.add(new ItemConstante(CHAPASINCIELORRASO, getTXT(CHAPASINCIELORRASO)));
+		res.add(new ItemConstante(PAJA, getTXT(PAJA)));
+		res.add(new ItemConstante(MATERIALDEDESECHO, getTXT(MATERIALDEDESECHO)));
+		res.add(new ItemConstante(OTROS, getTXT(OTROS)));
+		
+		return res;
 	}
 }
