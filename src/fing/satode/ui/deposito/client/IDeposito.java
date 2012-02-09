@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
 import fing.satode.data.SuministroDTO;
@@ -40,4 +41,7 @@ public interface IDeposito extends RemoteService {
 	public void eliminarDonacion(DonacionDTO dto);
 	
 	public void confirmar(DonacionDTO dto);
+	
+	public ArrayList<CuentaCorrienteSuministroDTO> buscarCuentaCorrienteSuministro(Long idDeposito,Long idTipoSuministro);
+	
 }

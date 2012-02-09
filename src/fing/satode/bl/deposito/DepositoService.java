@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
+import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
 import fing.satode.data.SuministroDTO;
@@ -15,6 +16,7 @@ import fing.satode.dominio.Deposito;
 import fing.satode.dominio.Donacion;
 import fing.satode.dominio.Suministro;
 import fing.satode.dominio.TipoSuministro;
+import fing.satode.pl.deposito.CuentaCorrienteSuministroDAO;
 import fing.satode.pl.deposito.DepositoDAO;
 import fing.satode.pl.deposito.DonacionDAO;
 import fing.satode.pl.deposito.SuministroDAO;
@@ -133,11 +135,21 @@ public class DepositoService extends ServiceBase {
 		Donacion donacion= new Donacion(dto);
 		donacion.setImpactarCuentas(true);
 		for(Suministro s: donacion.getSuministros()){
-			CuentaCorrienteSuministro cuenta= DonacionDAO.getInstance().getCuentaCorriente(s,donacion.getDeposito());
+			CuentaCorrienteSuministro cuenta= CuentaCorrienteSuministroDAO.getInstance().getCuentaCorriente(s,donacion.getDeposito());
 			cuenta.setCantidad(cuenta.getCantidad()+s.getCantidad());
-			DonacionDAO.getInstance().modificarCuentaCorriente(cuenta);
+			CuentaCorrienteSuministroDAO.getInstance().modificarCuentaCorriente(cuenta);
 		}
 		DonacionDAO.getInstance().modificarDonacion(donacion);
+	}
+
+	public ArrayList<CuentaCorrienteSuministroDTO> buscarCuentaCorrienteSuministro(
+			Long idDeposito, Long idTipoSuministro) {
+		ArrayList<CuentaCorrienteSuministroDTO> listaDTOS= new ArrayList<CuentaCorrienteSuministroDTO>();
+		ArrayList<CuentaCorrienteSuministro> lista= CuentaCorrienteSuministroDAO.getInstance().buscarCuentaCorrienteSuministro(idDeposito,idTipoSuministro);
+		for(CuentaCorrienteSuministro d: lista){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
 	}
 	
 }

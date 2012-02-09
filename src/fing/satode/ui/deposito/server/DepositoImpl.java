@@ -3,6 +3,7 @@ package fing.satode.ui.deposito.server;
 import java.util.ArrayList;
 
 import fing.satode.bl.base.ServiceFactory;
+import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
 import fing.satode.data.SuministroDTO;
@@ -105,6 +106,13 @@ public class DepositoImpl extends ServerImpl implements IDeposito {
 	public void confirmar(DonacionDTO dto) {
 		// TODO Auto-generated method stub
 		ServiceFactory.getInstance().getDepositoService().confirmar(dto);
+	}
+
+	@Override
+	public ArrayList<CuentaCorrienteSuministroDTO> buscarCuentaCorrienteSuministro(
+			Long idDeposito, Long idTipoSuministro) {
+		// TODO Auto-generated method stub
+		return ServiceFactory.getInstance().getDepositoService().buscarCuentaCorrienteSuministro(idDeposito,idTipoSuministro);
 	}
 
 }
