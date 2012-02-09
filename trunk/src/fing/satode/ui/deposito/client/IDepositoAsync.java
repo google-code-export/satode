@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
 import fing.satode.data.SuministroDTO;
@@ -47,6 +48,10 @@ public interface IDepositoAsync {
 	void eliminarDonacion(DonacionDTO dto, AsyncCallback<Void> callback);
 
 	void confirmar(DonacionDTO dto, AsyncCallback<Void> callback);
+
+	void buscarCuentaCorrienteSuministro(Long idDeposito,
+			Long idTipoSuministro,
+			AsyncCallback<ArrayList<CuentaCorrienteSuministroDTO>> callback);
 
 	
 

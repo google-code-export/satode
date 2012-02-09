@@ -60,7 +60,8 @@ public class EntryPointNecesidad implements EntryPoint {
 	private ArrayList<PuntoReferenciaDTO> puntosReferenciaGlobal;
 	final Label modificarLabel= new Label("Modificar");
 	final Label eliminarLabel= new Label("Eliminar");
-	public static Grid gridFormulario = new Grid(5,2);
+	final Label ver= new Label("Ver");
+	public static Grid gridFormulario = new Grid(6,2);
 	public static  Grid suministros;
 	private static ListBox desastres;
 	private static ListBox estados;
@@ -68,6 +69,7 @@ public class EntryPointNecesidad implements EntryPoint {
 	private static Long numerador=10000000000L;
 	private static Long baseNumerador=10000000000L;
 	private UsuarioDTO usuarioGlobal;
+	private static ListBox recursosLocales=new ListBox();
 	
 	@Override
 	public void onModuleLoad() {
@@ -200,8 +202,8 @@ public class EntryPointNecesidad implements EntryPoint {
 			public void onSuccess(ArrayList<NecesidadDTO> result) {
 				necesidadesGlobal=result;
 				
-				Grid gridPrincipal= new Grid(result.size()+1,8);
-				for(int i=0;i<8;i++){
+				Grid gridPrincipal= new Grid(result.size()+1,10);
+				for(int i=0;i<10;i++){
 					gridPrincipal.getCellFormatter().setStyleName(0,i, "tbl-cab");
 				}
 				gridPrincipal.setBorderWidth(1);
@@ -211,8 +213,10 @@ public class EntryPointNecesidad implements EntryPoint {
 				gridPrincipal.setWidget(0, 3, new Label("Punto Entrega"));
 				gridPrincipal.setWidget(0, 4, new Label("Descripcion"));
 				gridPrincipal.setWidget(0, 5, new Label("Estado"));
-				gridPrincipal.setWidget(0, 6, modificarLabel);
-				gridPrincipal.setWidget(0, 7, eliminarLabel);
+				gridPrincipal.setWidget(0, 6, new Label("Usuario"));
+				gridPrincipal.setWidget(0, 7, ver);
+				gridPrincipal.setWidget(0, 8, modificarLabel);
+				gridPrincipal.setWidget(0, 9, eliminarLabel);
 				
 				vertical.add(gridPrincipal);
 				
@@ -225,8 +229,19 @@ public class EntryPointNecesidad implements EntryPoint {
 					gridPrincipal.setWidget(row, 3, new Label(s.getId().toString()+"-"+s.getPuntoEntrega().getCiudad().getNombre()+"-"+s.getPuntoEntrega().getDireccion()));
 					gridPrincipal.setWidget(row, 4, new Label(s.getDescripcion()));
 					gridPrincipal.setWidget(row, 5, new Label(EstadoNecesidad.getTXT(s.getEstado())));
+					gridPrincipal.setWidget(row, 6, new Label(s.getUsuarioCreador().getNombreCompleto()));
 					
 					final Long id= s.getId();
+					
+					final Image verI= new Image("/images/LOCATE.bmp");
+						verI.addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							FormDialogBox dialog= new FormDialogBox(id, "ver");
+							dialog.show();
+						}
+					});
 					
 					final Image modificarI= new Image("/images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
@@ -248,10 +263,10 @@ public class EntryPointNecesidad implements EntryPoint {
 							dialog.show();
 						}
 					});
-					
+					gridPrincipal.setWidget(row, 7, verI);
 					if(s.getEstado()==EstadoNecesidad.INGRESADA){
-						gridPrincipal.setWidget(row, 6, modificarI);
-						gridPrincipal.setWidget(row, 7, eliminarI);
+						gridPrincipal.setWidget(row, 8, modificarI);
+						gridPrincipal.setWidget(row, 9, eliminarI);
 					}
 					
 					row++;
@@ -281,6 +296,7 @@ public class EntryPointNecesidad implements EntryPoint {
 	    final TextBox descripcion =new TextBox();
 	    final TextBox fecha= new TextBox();
 	    final ListBox desastres=new ListBox();
+	    
 	    final ListBox puntoEntrega=new ListBox();
 	   
 	    final Button cancelar= new Button("Cancelar");
@@ -305,11 +321,13 @@ public class EntryPointNecesidad implements EntryPoint {
 	    	if(a=="modificar") label.setText("Modificar Necesidad");
 			if(a=="eliminar") label.setText("Eliminar Necesidad");
 			if(a=="nuevo") label.setText("Nuevo Necesidad");
+			if(a=="ver") label.setText("Ver Necesidad");
 			
 			gridFormulario.setWidget(0, 0, new Label("Fecha"));
 			gridFormulario.setWidget(1, 0, new Label("Desastre"));
 			gridFormulario.setWidget(2, 0, new Label("Punto de Entrega"));
 			gridFormulario.setWidget(3, 0, new Label("Descripcion"));
+			gridFormulario.setWidget(4, 0, new Label("Recursos Locales"));
 			gridFormulario.setBorderWidth(1);
 			
 			gridFecha.setWidget(0, 0, fecha);
@@ -330,6 +348,13 @@ public class EntryPointNecesidad implements EntryPoint {
 			gridFormulario.setWidget(2, 1, puntoEntrega);
 			
 			gridFormulario.setWidget(3, 1, descripcion);
+			
+			recursosLocales.clear();
+			recursosLocales.setEnabled(true);
+			recursosLocales.addItem("NO", "NO");
+			recursosLocales.addItem("SI", "SI");
+			gridFormulario.setWidget(4, 1, recursosLocales);
+			
 			necesidadDTO= new NecesidadDTO();
 			
 			suministros= new Grid(1, 4);
@@ -343,9 +368,9 @@ public class EntryPointNecesidad implements EntryPoint {
 			}
 			
 		    
-		    gridFormulario.setWidget(4, 0, suministros);
+		    gridFormulario.setWidget(5, 0, suministros);
 			    
-			gridFormulario.setWidget(4, 1, nuevoB);
+			gridFormulario.setWidget(5, 1, nuevoB);
 			 
 			nuevoB.addClickHandler(new ClickHandler() {
 				
@@ -356,7 +381,7 @@ public class EntryPointNecesidad implements EntryPoint {
 				}
 			});
 			
-			if (a == "modificar" || a == "eliminar" ){
+			if (a == "modificar" || a == "eliminar" || a=="ver"){
 				for(NecesidadDTO e:necesidadesGlobal){
 	    			if(e.getId().equals(id)){
 	    				necesidadDTO=e;
@@ -388,13 +413,15 @@ public class EntryPointNecesidad implements EntryPoint {
 					index++;
 				}
 				
+				recursosLocales.setSelectedIndex(necesidadDTO.isRecursosLocales()?1:0);
+				
 			    suministros= new Grid(necesidadDTO.getSolicitudesSuministros().size()+1, 4);
 			    suministros.setWidget(0, 0, new Label("Tipo Suministro"));
 			    suministros.setWidget(0, 1, new Label("Cantidad"));
 			    suministros.setWidget(0, 2, new Label("Modificar"));
 			    suministros.setWidget(0, 3, new Label("Eliminar"));
 			    
-			    gridFormulario.setWidget(4, 0, suministros);
+			    gridFormulario.setWidget(5, 0, suministros);
 			    
 				for(int i=0;i<4;i++){
 					suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
@@ -435,12 +462,15 @@ public class EntryPointNecesidad implements EntryPoint {
 				}
 		    }
 			
-			  if ( a == "eliminar" ){
+			  if ( a == "eliminar" || a=="ver"){
 			    	descripcion.setEnabled(false);
 			    	fecha.setEnabled(false);
 			    	desastres.setEnabled(false);
 			    	nuevoB.setEnabled(false);
 			    	puntoEntrega.setEnabled(false);
+			    	aceptar.setEnabled(false);
+			    	recursosLocales.setEnabled(false);
+			    	datePicker.setVisible(false);
 			    }
 			
 			
@@ -478,6 +508,9 @@ public class EntryPointNecesidad implements EntryPoint {
 				for(SolicitudSuministroDTO s: dto.getSolicitudesSuministros()){
 					if(s.getId()>=baseNumerador){
 						s.setId(null);
+					}
+					if(!dto.isRecursosLocales()){
+						s.setCosto(0);
 					}
 				}
 				dto.setId(id);
@@ -564,6 +597,7 @@ public class EntryPointNecesidad implements EntryPoint {
 			
 			dto.setFecha(datePicker.getValue());
 			dto.setDescripcion(descripcion.getText());
+			dto.setRecursosLocales(recursosLocales.getSelectedIndex()==1);
 			
 			for(DesastreDTO d: desastreGlobal){
 				if( d.getId().equals( Long.valueOf(desastres.getValue(desastres.getSelectedIndex()) ))){
@@ -587,10 +621,11 @@ public class EntryPointNecesidad implements EntryPoint {
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
 		final Label label = new Label();
-	    final Grid grid= new Grid(2,2);
+	    final Grid grid= new Grid(3,2);
 	    
 	    final ListBox tipoSuministro= new ListBox();
 	    final TextBox cantidad =new TextBox();
+	    final TextBox costo =new TextBox();
 	    final Button cancelar= new Button("Cancelar");
 		final Button aceptar= new Button("Aceptar");
 		
@@ -614,7 +649,11 @@ public class EntryPointNecesidad implements EntryPoint {
 			grid.setBorderWidth(1);
 	    	
 			cantidad.addKeyboardListener(new KeyNumeric());
-			
+			costo.addKeyboardListener(new KeyNumeric());
+			if(recursosLocales.getSelectedIndex()==1){
+				grid.setWidget(2, 0, new Label("Costo en pesos"));
+				grid.setWidget(2, 1, costo);
+			}
 			tipoSuministro.addItem("Seleccionar","0");
 			for (TipoSuministroDTO dto : tipoSuministrosGlobal) {
 				tipoSuministro.addItem(dto.getNombre(), dto.getId().toString());
@@ -633,7 +672,7 @@ public class EntryPointNecesidad implements EntryPoint {
 				}
 	    		
 	    		cantidad.setText(String.valueOf(sum.getCantidad()));
-			    
+			    costo.setText(String.valueOf(sum.getCosto()));
 		    }
 		    
 		    if ( a == "eliminar" ){
@@ -678,6 +717,7 @@ public class EntryPointNecesidad implements EntryPoint {
 						if(s.getId().equals(dto.getId())){
 							s.setCantidad(dto.getCantidad());
 							s.setTipoSuministro(dto.getTipoSuministro());
+							s.setCosto(dto.getCosto());
 						}
 					}
 				}else if(a== "nuevo"){
@@ -700,7 +740,7 @@ public class EntryPointNecesidad implements EntryPoint {
 				    suministros.setWidget(0, 2, new Label("Modificar"));
 				    suministros.setWidget(0, 3, new Label("Eliminar"));
 				    
-				    gridFormulario.setWidget(4, 0, suministros);
+				    gridFormulario.setWidget(5, 0, suministros);
 				    
 					for(int i=0;i<4;i++){
 						suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
@@ -760,6 +800,15 @@ public class EntryPointNecesidad implements EntryPoint {
 				Window.alert("Indique Cantidad");
 				return null;
 			}
+			
+			if(recursosLocales.getSelectedIndex()==1){
+				if(costo.getText().trim().length()==0){
+					Window.alert("Indique Costo");
+					return null;
+				}
+				dto.setCosto(Float.valueOf(costo.getText()));
+			}
+			
 			dto.setCantidad(Integer.valueOf(cantidad.getText()));
 			
 			

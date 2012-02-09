@@ -47,23 +47,5 @@ public class DonacionDAO extends DAOBase {
 		sess().delete(donacion);
 	}
 
-	public CuentaCorrienteSuministro getCuentaCorriente(Suministro s,
-			Deposito deposito) {
-		CuentaCorrienteSuministro cuenta=(CuentaCorrienteSuministro)sess().createQuery("from CuentaCorrienteSuministro where deposito.id="+deposito.getId()+" and tipoSuministro.id="+s.getTipo().getId()+"").uniqueResult();
-		if(cuenta==null){
-			cuenta = new CuentaCorrienteSuministro();
-			cuenta.setTipoSuministro(s.getTipo());
-			cuenta.setCantidad(0);
-			cuenta.setDeposito(deposito);
-			Long id=(Long)sess().save(cuenta);
-			cuenta.setId(id);
-		}
-				
-		return cuenta;
-	}
-
-	public void modificarCuentaCorriente(CuentaCorrienteSuministro cuenta) {
-		// TODO Auto-generated method stub
-		sess().update(cuenta);
-	}
+	
 }
