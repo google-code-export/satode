@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -30,5 +31,16 @@ public class CategoriaVivienda implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(SUNTUARIA, getTXT(SUNTUARIA)));
+		res.add(new ItemConstante(CONFORTABLE, getTXT(CONFORTABLE)));
+		res.add(new ItemConstante(BUENA, getTXT(BUENA)));
+		res.add(new ItemConstante(ECONOMICA, getTXT(ECONOMICA)));
+		res.add(new ItemConstante(PRECARIA, getTXT(PRECARIA)));
+		
+		return res;
 	}
 }

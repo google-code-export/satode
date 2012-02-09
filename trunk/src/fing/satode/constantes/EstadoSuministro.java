@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -24,5 +25,13 @@ public class EstadoSuministro implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(BUENO, getTXT(BUENO)));
+		res.add(new ItemConstante(INTERMENDIO, getTXT(INTERMENDIO)));
+		res.add(new ItemConstante(MALO, getTXT(MALO)));
+		return res;
 	}
 }

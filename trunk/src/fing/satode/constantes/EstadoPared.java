@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -28,5 +29,15 @@ public class EstadoPared implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(TODASREVOCADAS, getTXT(TODASREVOCADAS)));
+		res.add(new ItemConstante(MAYORIAREVOCADAS, getTXT(MAYORIAREVOCADAS)));
+		res.add(new ItemConstante(MAYORIASINREVOCAR, getTXT(MAYORIASINREVOCAR)));
+		res.add(new ItemConstante(TODASSINREVOCAR, getTXT(TODASSINREVOCAR)));
+		
+		return res;
 	}
 }

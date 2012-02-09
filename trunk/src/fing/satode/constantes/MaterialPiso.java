@@ -1,6 +1,7 @@
 package fing.satode.constantes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -37,5 +38,18 @@ public class MaterialPiso implements Serializable, IsSerializable{
 		default:
 			return "";
 		}
+	}
+	
+	public static ArrayList<ItemConstante> getItems(){
+		ArrayList<ItemConstante> res= new ArrayList<ItemConstante>();
+		res.add(new ItemConstante(MADERA, getTXT(MADERA)));
+		res.add(new ItemConstante(BALDOSA, getTXT(BALDOSA)));
+		res.add(new ItemConstante(MONOLITICO, getTXT(MONOLITICO)));
+		res.add(new ItemConstante(HORMIGON, getTXT(HORMIGON)));
+		res.add(new ItemConstante(LADRILLO, getTXT(LADRILLO)));
+		res.add(new ItemConstante(TIERRAOCASCOTE, getTXT(TIERRAOCASCOTE)));
+		res.add(new ItemConstante(OTROS, getTXT(OTROS)));
+		
+		return res;
 	}
 }
