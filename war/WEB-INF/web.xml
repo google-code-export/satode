@@ -17,6 +17,11 @@
     <url-pattern>/fing.satode.ui.necesidades.NecesidadList/Necesidad</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>Necesidad</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.GestionNecesidad/Necesidad</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <servlet-name>puntoReferencia</servlet-name>
     <servlet-class>fing.satode.ui.puntoReferencias.server.PuntoReferenciaImpl</servlet-class>
@@ -25,6 +30,11 @@
    <servlet-mapping>
     <servlet-name>puntoReferencia</servlet-name>
     <url-pattern>/fing.satode.ui.necesidades.NecesidadList/puntoReferencia</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>puntoReferencia</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.GestionNecesidad/puntoReferencia</url-pattern>
   </servlet-mapping>
   
   
@@ -71,6 +81,11 @@
     <url-pattern>/fing.satode.ui.necesidades.NecesidadList/deposito</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>deposito</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.GestionNecesidad/deposito</url-pattern>
+  </servlet-mapping>
+  
   
    <servlet>
     <servlet-name>desastres</servlet-name>
@@ -86,7 +101,10 @@
     <servlet-name>desastres</servlet-name>
     <url-pattern>/fing.satode.ui.necesidades.NecesidadList/desastres</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>desastres</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.GestionNecesidad/desastres</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>usuarios</servlet-name>
     <servlet-class>fing.satode.ui.usuarios.server.UsuarioImpl</servlet-class>
@@ -106,6 +124,11 @@
   <servlet-mapping>
     <servlet-name>usuarios</servlet-name>
     <url-pattern>/fing.satode.ui.necesidades.NecesidadList/usuario</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.necesidades.GestionNecesidad/usuario</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
