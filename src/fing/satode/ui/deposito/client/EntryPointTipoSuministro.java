@@ -127,7 +127,7 @@ public class EntryPointTipoSuministro implements EntryPoint {
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
 		final Label label = new Label();
-	    final Grid grid= new Grid(8,2);
+	    final Grid grid= new Grid(4,2);
 	    final TextBox nombre=new TextBox();
 	    final TextBox descripcion=new TextBox();
 	    final ListBox refrigeracion= new ListBox();
@@ -147,7 +147,7 @@ public class EntryPointTipoSuministro implements EntryPoint {
 			grid.setWidget(0, 0, new Label("Nombre"));
 			grid.setWidget(1, 0, new Label("Descripci\u00F3n"));
 			grid.setWidget(2, 0, new Label("Refrigeraci\u00F3n"));
-			grid.setWidget(3, 0, new Label("Vencie"));
+			grid.setWidget(3, 0, new Label("Vence"));
 			
 			grid.setWidget(0, 1, nombre);
 			grid.setWidget(1, 1, descripcion);

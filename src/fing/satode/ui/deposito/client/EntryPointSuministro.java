@@ -13,6 +13,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,6 +23,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import fing.satode.constantes.EstadoSuministro;
@@ -584,8 +586,28 @@ public class EntryPointSuministro implements EntryPoint {
 			grid.setWidget(1, 1, cantidad);
 			grid.setWidget(2, 1, estado);
 			
-			gridFecha.setWidget(0, 0, fechavencimiento);
-			gridFecha.setWidget(0, 1, datePicker);
+			tipoSuministro.addChangeListener(new ChangeListener() {
+				
+				@Override
+				public void onChange(Widget sender) {
+					// TODO Auto-generated method stub
+					TipoSuministroDTO tipo=null;
+					for(TipoSuministroDTO t:tipoSuministrosGlobal){
+						if(t.getId().equals(Long.valueOf(tipoSuministro.getValue(tipoSuministro.getSelectedIndex())))){
+							if(t.getFechaVencimiento()){
+								gridFecha.setWidget(0, 0, fechavencimiento);
+								gridFecha.setWidget(0, 1, datePicker);
+								grid.setWidget(3, 0, new Label("Vencimiento"));
+							}else{
+								gridFecha.setWidget(0, 0, new Label(""));
+								gridFecha.setWidget(0, 1, new Label(""));
+								grid.setWidget(3, 0, new Label(""));
+							}
+						}
+					}
+				}
+			});
+			
 			grid.setWidget(3, 1, gridFecha);
 			grid.setBorderWidth(1);
 	    	
@@ -613,7 +635,7 @@ public class EntryPointSuministro implements EntryPoint {
 				}
 	    		
 	    		cantidad.setText(String.valueOf(sum.getCantidad()));
-			    estado.setSelectedIndex(sum.getEstado());
+			    estado.setSelectedIndex(sum.getEstado()-1);
 			    DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
 			    fechavencimiento.setText(format.format(sum.getFechaVencimiento()));
 			    
@@ -739,6 +761,17 @@ public class EntryPointSuministro implements EntryPoint {
 			for (TipoSuministroDTO t : tipoSuministrosGlobal) {
 				if(t.getId().equals(Long.valueOf(tipoSuministro.getValue(tipoSuministro.getSelectedIndex())))){
 					dto.setTipo(t);
+					
+					if(t.getFechaVencimiento()){
+						if(fechavencimiento.getText().trim().length()==0){
+							Window.alert("Indique Fecha de vencimiento");
+							return null;
+						}
+						DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+					    
+						dto.setFechaVencimiento(format.parse(fechavencimiento.getText()));
+						
+					}
 				}
 			}
 			
@@ -749,13 +782,6 @@ public class EntryPointSuministro implements EntryPoint {
 			dto.setCantidad(Integer.valueOf(cantidad.getText()));
 			
 			
-			if(fechavencimiento.getText().trim().length()==0){
-				Window.alert("Indique Fecha de vencimiento");
-				return null;
-			}
-			DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
-		    
-			dto.setFechaVencimiento(format.parse(fechavencimiento.getText()));
 			
 			dto.setEstado(estado.getSelectedIndex()+1);
 			

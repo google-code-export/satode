@@ -45,7 +45,7 @@ public class Necesidad {
 	private int estado;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="solicitudSuministro_id")
+	@JoinColumn(name="necesidad_id")
 	private Collection<SolicitudSuministro> solicitudesSuministros;
 
 	
