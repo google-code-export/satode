@@ -8,7 +8,6 @@ import javax.persistence.OneToOne;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-import fing.satode.dominio.Hacinamiento;
 import fing.satode.dominio.Inundacion;
 import fing.satode.dominio.ProblemasVivienda;
 
