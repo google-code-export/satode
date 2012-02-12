@@ -11,7 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import fing.satode.data.DatosViviendaDTO;
 import fing.satode.data.EventoDTO;
+import fing.satode.data.HacinamientoDTO;
+import fing.satode.data.InundacionDTO;
+import fing.satode.data.ProblemasViviendaDTO;
 
 @Entity
 @Table(name="datosviviendas")
@@ -56,30 +60,78 @@ public class DatosVivienda implements Serializable{
 	 
 	
 	//Atributos
-	private String ObsMaterialParedes;
-	private String ObsProcedenciaAgua;
-	private String ObsSanitaria;
-	private String ObsBasura;
-	private String ObsMaterialPared;
-	private String ObsMaterialTecho;
+	private String obsMaterialParedes;
+	private String obsProcedenciaAgua;
+	private String obsSanitaria;
+	private String obsBasura;
+	private String obsMaterialTecho;
 	
 	
 	public DatosVivienda(){}
 	
 	public DatosVivienda(DatosViviendaDTO dto){
 		id=dto.getId();
-		duracionMedida=dto.getDuracionMedida();
-		observaciones=dto.getObservaciones();
+		conservacionVivienda=dto.getConservacionVivienda();
+		problemasVivienda = new ProblemasVivienda(dto.getProblemasVivienda());
+		hacinamiento= new Hacinamiento(dto.getHacinamiento());
+		inundacion = new Inundacion(dto.getInundacion());
+
+		banios = dto.getBanios();
+		propietarioOtras = dto.getPropietarioOtras();
+		tenenciaVivienda = dto.getTenenciaVivienda();
+		mudarse = dto.getMudarse();
+		procedenciaAguaConsumo = dto.getProcedenciaAguaConsumo();
+		procedenciaAguaVivienda = dto.getProcedenciaAguaVivienda();
+		basura = dto.getBasura();
+		categoriaVivienda = dto.getCategoriaVivienda();
+		sanitario = dto.getSanitario();
+		estadoTerminacion = dto.getEstadoTerminacion();
+		energia= dto.getEnergia();
+		materialParedes= dto.getMaterialParedes();
+		estadoPared=dto.getEstadoPared();
+		ocupacion= dto.getOcupacion();
+		materialTecho= dto.getMaterialTecho();
+		materialPiso= dto.getMaterialPiso();
+		 
+		
+		obsMaterialParedes= dto.getObsMaterialParedes();
+		obsProcedenciaAgua = dto.getObsProcedenciaAgua();
+		obsSanitaria= dto.getObsSanitaria();
+		obsBasura= dto.getObsBasura();
+		obsMaterialTecho= dto.getObsMaterialTecho();
+		
 	}
 
 	
 	
-	public EventoDTO getDTO(){
+	public DatosViviendaDTO getDTO(){
 		DatosViviendaDTO dto= new DatosViviendaDTO();
 		dto.setId(id);
-		dto.setFechaInicio(fechaInicio);
-		
-		
+		dto.setConservacionVivienda(conservacionVivienda);
+		dto.setProblemasVivienda(problemasVivienda.getDTO());
+		dto.setHacinamiento(hacinamiento.getDTO());
+		dto.setInundacion(inundacion.getDTO());
+		dto.setBanios(banios);
+		dto.setPropietarioOtras(propietarioOtras);
+		dto.setTenenciaVivienda(tenenciaVivienda);
+		dto.setMudarse(mudarse);
+		dto.setProcedenciaAguaConsumo( procedenciaAguaConsumo);
+		dto.setProcedenciaAguaVivienda( procedenciaAguaVivienda);
+		dto.setBasura( basura);
+		dto.setCategoriaVivienda( categoriaVivienda);
+		dto.setSanitario( sanitario);
+		dto.setEstadoTerminacion( estadoTerminacion);
+		dto.setEnergia( energia);
+		dto.setMaterialParedes( materialParedes);
+		dto.setEstadoPared( estadoPared);
+		dto.setOcupacion( ocupacion);
+		dto.setMaterialTecho( materialTecho);
+		dto.setMaterialPiso( materialPiso);
+		dto.setObsMaterialParedes( obsMaterialParedes);
+		dto.setObsProcedenciaAgua( obsProcedenciaAgua);
+		dto.setObsSanitaria(obsSanitaria );
+		dto.setObsBasura( obsBasura);
+		dto.setObsMaterialTecho(obsMaterialTecho);
 		return dto;
 	}
 
@@ -252,51 +304,44 @@ public class DatosVivienda implements Serializable{
 	}
 
 	public String getObsMaterialParedes() {
-		return ObsMaterialParedes;
+		return obsMaterialParedes;
 	}
 
 	public void setObsMaterialParedes(String obsMaterialParedes) {
-		ObsMaterialParedes = obsMaterialParedes;
+		obsMaterialParedes = obsMaterialParedes;
 	}
 
 	public String getObsProcedenciaAgua() {
-		return ObsProcedenciaAgua;
+		return obsProcedenciaAgua;
 	}
 
 	public void setObsProcedenciaAgua(String obsProcedenciaAgua) {
-		ObsProcedenciaAgua = obsProcedenciaAgua;
+		obsProcedenciaAgua = obsProcedenciaAgua;
 	}
 
 	public String getObsSanitaria() {
-		return ObsSanitaria;
+		return obsSanitaria;
 	}
 
 	public void setObsSanitaria(String obsSanitaria) {
-		ObsSanitaria = obsSanitaria;
+		obsSanitaria = obsSanitaria;
 	}
 
 	public String getObsBasura() {
-		return ObsBasura;
+		return obsBasura;
 	}
 
 	public void setObsBasura(String obsBasura) {
-		ObsBasura = obsBasura;
+		obsBasura = obsBasura;
 	}
 
-	public String getObsMaterialPared() {
-		return ObsMaterialPared;
-	}
-
-	public void setObsMaterialPared(String obsMaterialPared) {
-		ObsMaterialPared = obsMaterialPared;
-	}
-
+	
 	public String getObsMaterialTecho() {
-		return ObsMaterialTecho;
+		return obsMaterialTecho;
 	}
 
 	public void setObsMaterialTecho(String obsMaterialTecho) {
-		ObsMaterialTecho = obsMaterialTecho;
+		obsMaterialTecho = obsMaterialTecho;
 	}
 	
 	

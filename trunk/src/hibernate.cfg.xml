@@ -58,5 +58,13 @@
 		<mapping class="fing.satode.dominio.PlanSuministro"  />
 		<mapping class="fing.satode.dominio.SolicitudEnvio"  />
 		<mapping class="fing.satode.dominio.SolicitudEnvioSuministro"  />
+		<mapping class="fing.satode.dominio.Parcela"  />
+		<mapping class="fing.satode.dominio.TipoParcela"  />
+		<mapping class="fing.satode.dominio.UnidadParcela"  />
+		<mapping class="fing.satode.dominio.Foto"  />
+		<mapping class="fing.satode.dominio.DatosVivienda"  />
+		<mapping class="fing.satode.dominio.ProblemasVivienda"  />
+		<mapping class="fing.satode.dominio.Hacinamiento"  />
+		<mapping class="fing.satode.dominio.Inundacion"  />
 		</session-factory>
 </hibernate-configuration>
