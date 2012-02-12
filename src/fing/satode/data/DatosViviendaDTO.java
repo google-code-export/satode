@@ -47,7 +47,6 @@ private Long id;
 	private String ObsProcedenciaAgua;
 	private String ObsSanitaria;
 	private String ObsBasura;
-	private String ObsMaterialPared;
 	private String ObsMaterialTecho;
 	public Long getId() {
 		return id;
@@ -199,12 +198,7 @@ private Long id;
 	public void setObsBasura(String obsBasura) {
 		ObsBasura = obsBasura;
 	}
-	public String getObsMaterialPared() {
-		return ObsMaterialPared;
-	}
-	public void setObsMaterialPared(String obsMaterialPared) {
-		ObsMaterialPared = obsMaterialPared;
-	}
+	
 	public String getObsMaterialTecho() {
 		return ObsMaterialTecho;
 	}
