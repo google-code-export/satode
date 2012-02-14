@@ -40,7 +40,7 @@ public interface IDepositoAsync {
 	void nuevoSuministro(SuministroDTO dto, AsyncCallback<Void> callback);
 
 	void listaDonaciones(AsyncCallback<ArrayList<DonacionDTO>> callback);
-
+	
 	void nuevoDonacion(DonacionDTO dto, AsyncCallback<Void> callback);
 
 	void modificarDonacion(DonacionDTO dto, AsyncCallback<Void> callback);
