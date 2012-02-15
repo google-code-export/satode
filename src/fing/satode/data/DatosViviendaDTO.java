@@ -43,11 +43,12 @@ private Long id;
 	 
 	
 	//Atributos
-	private String ObsMaterialParedes;
-	private String ObsProcedenciaAgua;
-	private String ObsSanitaria;
-	private String ObsBasura;
-	private String ObsMaterialTecho;
+	private String obsMaterialParedes;
+	private String obsProcedenciaAgua;
+	private String obsSanitaria;
+	private String obsBasura;
+	private String obsMaterialTecho;
+	
 	public Long getId() {
 		return id;
 	}
@@ -175,35 +176,35 @@ private Long id;
 		this.materialPiso = materialPiso;
 	}
 	public String getObsMaterialParedes() {
-		return ObsMaterialParedes;
+		return obsMaterialParedes;
 	}
 	public void setObsMaterialParedes(String obsMaterialParedes) {
-		ObsMaterialParedes = obsMaterialParedes;
+		obsMaterialParedes = obsMaterialParedes;
 	}
 	public String getObsProcedenciaAgua() {
-		return ObsProcedenciaAgua;
+		return obsProcedenciaAgua;
 	}
 	public void setObsProcedenciaAgua(String obsProcedenciaAgua) {
-		ObsProcedenciaAgua = obsProcedenciaAgua;
+		obsProcedenciaAgua = obsProcedenciaAgua;
 	}
 	public String getObsSanitaria() {
-		return ObsSanitaria;
+		return obsSanitaria;
 	}
 	public void setObsSanitaria(String obsSanitaria) {
-		ObsSanitaria = obsSanitaria;
+		obsSanitaria = obsSanitaria;
 	}
 	public String getObsBasura() {
-		return ObsBasura;
+		return obsBasura;
 	}
 	public void setObsBasura(String obsBasura) {
-		ObsBasura = obsBasura;
+		obsBasura = obsBasura;
 	}
 	
 	public String getObsMaterialTecho() {
-		return ObsMaterialTecho;
+		return obsMaterialTecho;
 	}
 	public void setObsMaterialTecho(String obsMaterialTecho) {
-		ObsMaterialTecho = obsMaterialTecho;
+		obsMaterialTecho = obsMaterialTecho;
 	}
 	
 	

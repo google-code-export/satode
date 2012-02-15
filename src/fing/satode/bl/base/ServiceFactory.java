@@ -6,6 +6,7 @@ import fing.satode.bl.basicos.BasicosService;
 import fing.satode.bl.deposito.DepositoService;
 import fing.satode.bl.desastres.DesastresService;
 import fing.satode.bl.necesidades.NecesidadService;
+import fing.satode.bl.propiedadesSiniestradas.PropiedadesSinietradasService;
 import fing.satode.bl.puntoReferencia.PuntoReferenciaService;
 import fing.satode.bl.registros.EventoService;
 import fing.satode.bl.usuarios.UsuarioService;
@@ -56,6 +57,10 @@ public class ServiceFactory {
 	
 	public NecesidadService getNecesidadService() {
 		return   (NecesidadService) beanFactory.getBean("necesidadService");
+	}
+	
+	public PropiedadesSinietradasService getPropiedadesSiniestradasService() {
+		return   (PropiedadesSinietradasService) beanFactory.getBean("propiedadesSinietradasService");
 	}
 	
 }
