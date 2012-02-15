@@ -22,6 +22,7 @@
     <url-pattern>/fing.satode.ui.necesidades.GestionNecesidad/Necesidad</url-pattern>
   </servlet-mapping>
   
+     
   <servlet>
     <servlet-name>puntoReferencia</servlet-name>
     <servlet-class>fing.satode.ui.puntoReferencias.server.PuntoReferenciaImpl</servlet-class>
@@ -157,10 +158,23 @@
     <url-pattern>/fing.satode.ui.desastres.DesastreList/evento</url-pattern>
   </servlet-mapping>
  
+  <servlet>
+    <servlet-name>propiedadesSiniestradas</servlet-name>
+    <servlet-class>fing.satode.ui.propiedadesSiniestradas.server.PropiedadesSiniestradasImpl</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>propiedadesSiniestradas</servlet-name>
+    <url-pattern>/fing.satode.ui.propiedadesSiniestradas.PropiedadesSiniestradasList/propiedadesSiniestradas</url-pattern>
+  </servlet-mapping>
+ 
+ 
  <servlet>
     <servlet-name>basicos</servlet-name>
     <servlet-class>fing.satode.ui.general.server.BasicosImpl</servlet-class>
   </servlet>
+  
+  
   
   
   <servlet-mapping>
