@@ -3,6 +3,7 @@ package fing.satode.pl.necesidades;
 import java.util.ArrayList;
 import java.util.List;
 
+import fing.satode.dominio.GestionNecesidad;
 import fing.satode.dominio.Necesidad;
 import fing.satode.pl.base.DAOBase;
 
@@ -48,6 +49,23 @@ public class NecesidadesDAO extends DAOBase {
 		ArrayList<Necesidad> res= new ArrayList<Necesidad>(list);
 		
 		return res;
+	}
+
+	public GestionNecesidad buscarGestionNecesidadPorNecesidad(Long idNecesidad) {
+		if(idNecesidad!=null){
+			return (GestionNecesidad)sess().createQuery("from GestionNecesidad where( necesidad.id="+idNecesidad+" ) ").uniqueResult();
+		}else{
+			return null;
+		}
+	}
+
+	public void nuevoGestionNecesidad(GestionNecesidad necesidad) {
+		Long id=(Long)sess().save(necesidad);
+		necesidad.setId(id);
+	}
+
+	public void modificarGestionNecesidad(GestionNecesidad necesidad) {
+		sess().update(necesidad);
 	}
 
 }

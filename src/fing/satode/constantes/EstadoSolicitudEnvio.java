@@ -9,6 +9,7 @@ public class EstadoSolicitudEnvio implements Serializable, IsSerializable{
 
 	private static final long serialVersionUID = 1L;
 
+	public final static int CREADA=0;
 	public final static int NUEVA=1;
 	public final static int ENVIADA=2;
 	public final static int RECIBIDA_OK=3;

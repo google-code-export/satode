@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import fing.satode.data.SolicitudEnvioSuministroDTO;
 import fing.satode.data.SolicitudSuministroDTO;
 
 @Entity
@@ -28,6 +29,14 @@ public class SolicitudEnvioSuministro {
 	}
 	
 	
+	public SolicitudEnvioSuministro(SolicitudEnvioSuministroDTO dto) {
+		// TODO Auto-generated constructor stub
+		id= dto.getId();
+		cantidad=dto.getCantidad();
+		tipoSuministro= new TipoSuministro(dto.getTipoSuministro());
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -52,7 +61,15 @@ public class SolicitudEnvioSuministro {
 	public void setTipoSuministro(TipoSuministro tipoSuministro) {
 		this.tipoSuministro = tipoSuministro;
 	}
+
 	
+	public SolicitudEnvioSuministroDTO getDTO(){
+		SolicitudEnvioSuministroDTO dto=new SolicitudEnvioSuministroDTO();
+		dto.setId(id);
+		dto.setCantidad(cantidad);
+		dto.setTipoSuministro(tipoSuministro.getDTO());
+		return dto;
+	}
 
 	
 	

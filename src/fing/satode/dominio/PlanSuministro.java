@@ -1,6 +1,7 @@
 package fing.satode.dominio;
 
-import java.util.Collection;
+
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import fing.satode.data.PlanSuministroDTO;
+import fing.satode.data.SolicitudEnvioDTO;
 
 @Entity
 @Table(name="palessuministros")
@@ -27,6 +31,18 @@ public class PlanSuministro {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="plansuministro_id")
 	private Set<SolicitudEnvio> solicitudesEnvios;
+
+	public PlanSuministro(){}
+	
+	public PlanSuministro(PlanSuministroDTO dto) {
+		// TODO Auto-generated constructor stub
+		id=dto.getId();
+		solicitudsuministro= new SolicitudSuministro(dto.getSolicitudsuministro());
+		solicitudesEnvios= new HashSet<SolicitudEnvio>();
+		for(SolicitudEnvioDTO edto:dto.getSolicitudesEnvios()){
+			solicitudesEnvios.add(new SolicitudEnvio(edto));
+		}
+	}
 
 	public Long getId() {
 		return id;
@@ -50,6 +66,11 @@ public class PlanSuministro {
 
 	public void setSolicitudesEnvios(Set<SolicitudEnvio> solicitudesEnvios) {
 		this.solicitudesEnvios = solicitudesEnvios;
+	}
+
+	public PlanSuministroDTO getDTO() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
