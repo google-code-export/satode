@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
+import fing.satode.data.GestionNecesidadDTO;
 import fing.satode.data.NecesidadDTO;
+import fing.satode.dominio.GestionNecesidad;
 import fing.satode.dominio.Necesidad;
 import fing.satode.pl.necesidades.NecesidadesDAO;
 
@@ -49,6 +51,27 @@ public class NecesidadService extends ServiceBase {
 			listaDTOS.add(d.getDTO());
 		}
 		return listaDTOS;
+	}
+
+	public GestionNecesidadDTO buscarGestionNecesidadPorNecesidad(Long idNecesidad) {
+		// TODO Auto-generated method stub
+		GestionNecesidad gesnec= NecesidadesDAO.getInstance().buscarGestionNecesidadPorNecesidad(idNecesidad);
+		if(gesnec!=null){
+			return gesnec.getDTO();
+		}else{
+			return null;
+		}
+	}
+
+	public void nuevoGestionNecesidad(GestionNecesidadDTO dto) {
+		GestionNecesidad necesidad= new GestionNecesidad(dto);
+		NecesidadesDAO.getInstance().nuevoGestionNecesidad(necesidad);
+		dto.setId(necesidad.getId());
+	}
+	
+	public void modificarGestionNecesidad(GestionNecesidadDTO dto) {
+		GestionNecesidad necesidad= new GestionNecesidad(dto);
+		NecesidadesDAO.getInstance().modificarGestionNecesidad(necesidad);
 	}
 
 }

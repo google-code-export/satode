@@ -3,9 +3,13 @@ package fing.satode.ui.necesidades.client;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+
+import org.mortbay.jetty.servlet.HashSessionIdManager;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.LinkElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -17,6 +21,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -26,11 +31,16 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import fing.satode.constantes.EstadoNecesidad;
+import fing.satode.constantes.EstadoSolicitudEnvio;
 import fing.satode.constantes.ItemConstante;
 import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.GestionNecesidadDTO;
 import fing.satode.data.NecesidadDTO;
+import fing.satode.data.PlanSuministroDTO;
 import fing.satode.data.PuntoReferenciaDTO;
+import fing.satode.data.SolicitudEnvioDTO;
+import fing.satode.data.SolicitudEnvioSuministroDTO;
 import fing.satode.data.SolicitudSuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.data.UsuarioDTO;
@@ -236,7 +246,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 				gridPrincipal.setWidget(0, 4, new Label("Descripcion"));
 				gridPrincipal.setWidget(0, 5, new Label("Estado"));
 				gridPrincipal.setWidget(0, 6, new Label("Usuario"));
-				gridPrincipal.setWidget(0, 7, ver);
+				gridPrincipal.setWidget(0, 7, new Label("Procesar"));
 				gridPrincipal.setWidget(0, 8, modificarLabel);
 		
 				
@@ -255,12 +265,15 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 					
 					final Long id= s.getId();
 					
-					final Image verI= new Image("/images/LOCATE.bmp");
-						verI.addClickHandler(new ClickHandler() {
+					
+					final Hyperlink  procesar= new Hyperlink();
+					procesar.setText("Procesar");
+					
+					procesar.addClickHandler(new ClickHandler() {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							FormDialogBox dialog= new FormDialogBox(id, "ver");
+							FormDialogBox dialog= new FormDialogBox(id, "procesar");
 							dialog.show();
 						}
 					});
@@ -276,7 +289,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 					});
 					
 					
-					gridPrincipal.setWidget(row, 7, verI);
+					gridPrincipal.setWidget(row, 7, procesar);
 					if(s.getEstado()==EstadoNecesidad.EN_PROCESO){
 						gridPrincipal.setWidget(row, 8, modificarI);
 					}
@@ -287,10 +300,8 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
-				
 			}
 		});
 	}
@@ -314,6 +325,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 	   
 	    final Button cancelar= new Button("Cancelar");
 		final Button aceptar= new Button("Aceptar");
+		private GestionNecesidadDTO dto;
 		
 		public FormDialogBox(Long idNecesidad,String accion){
 			a=accion;
@@ -331,7 +343,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 		    datePicker.setValue(new Date(), true);
 	    	
 	    	if(a=="modificar") label.setText("Modificar Gestion Necesidad");
-			if(a=="eliminar") label.setText("Eliminar Gestion Necesidad");
+			if(a=="procesar") label.setText("Procesar Necesidad");
 			if(a=="nuevo") label.setText("Nuevo Gestion Necesidad");
 			if(a=="ver") label.setText("Ver Gestion Necesidad");
 			
@@ -406,74 +418,168 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			
 		    gridFormulario.setWidget(5, 0, panelSuministros);
 		    
+		    INecesidadAsync serverNecesidad=GWT.create(INecesidad.class);
 		    
-			for(SolicitudSuministroDTO s: necesidadDTO.getSolicitudesSuministros()){
-				suministros= new Grid(2, 2);
-				suministros.setBorderWidth(1);
-				suministros.setWidget(0, 0, new Label("Tipo Suministro"));
-			    suministros.setWidget(0, 1, new Label("Cantidad"));
-			    suministros.setWidget(1, 0, new Label(s.getTipoSuministro().getNombre()));
-				suministros.setWidget(1, 1, new Label(String.valueOf(s.getCantidad())));
-				for(int i=0;i<2;i++){
-					suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
-				}
-				panelSuministros.add(suministros);
+		    serverNecesidad.buscarGestionNecesidadPorNecesidad(id, new AsyncCallback<GestionNecesidadDTO>() {
 				
-				
-				
-				if(stocks.containsKey(s.getTipoSuministro().getId())){
-					Grid depoCantidades= new Grid(stocks.get(s.getTipoSuministro().getId()).size()+1,3);
-					depoCantidades.setBorderWidth(1);
-					depoCantidades.setWidget(0, 0, new Label("Deposito"));
-					depoCantidades.setWidget(0, 1, new Label("Cantidad en Stock"));
-					depoCantidades.setWidget(0, 2, new Label("Cantidad a enviar"));
-					panelSuministros.add(depoCantidades);
-					
-					for(int i=0;i<3;i++){
-						depoCantidades.getCellFormatter().setStyleName(0,i, "tbl-cab");
+				@Override
+				public void onSuccess(GestionNecesidadDTO result) {
+					// TODO Auto-generated method stub
+					dto=result;
+					boolean yaExiste=true;
+					if(dto==null){
+						yaExiste=false;
+						dto=new GestionNecesidadDTO();
+						dto.setNecesidad(necesidadDTO);
+						dto.setUsuario(usuarioGlobal);
+						INecesidadAsync serverNecesidad=GWT.create(INecesidad.class);
+						
+						serverNecesidad.nuevoGestionNecesidad(dto, new AsyncCallback<Void>() {
+							
+							@Override
+							public void onSuccess(Void result) {}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								caught.printStackTrace();
+								Window.alert("ERROR AJAX");
+							}
+						});
 					}
-					int row=1;
-					for(CuentaCorrienteSuministroDTO cuenta:stocks.get(s.getTipoSuministro().getId())){
-						depoCantidades.setWidget(row, 0, new Label(cuenta.getDeposito().getId().toString()+"-"+cuenta.getDeposito().getCiudad().getNombre()+"-"+cuenta.getDeposito().getDireccion()));
-						depoCantidades.setWidget(row, 1, new Label(String.valueOf(cuenta.getCantidad())));
-						TextBox cantidad = new TextBox();
-						cantidad.setText("0.0");
-						cantidad.addKeyboardListener(new KeyNumeric());
-						DepositoCantidad depoCan=new DepositoCantidad();
-						depoCan.setDeposito(cuenta.getDeposito());
-						depoCan.setCantidad(cantidad);
-						if(!cantidades.containsKey(s.getId())){
-							cantidades.put(s.getTipoSuministro().getId(),new ArrayList<DepositoCantidad>());
+					
+					for(SolicitudSuministroDTO s: necesidadDTO.getSolicitudesSuministros()){
+						suministros= new Grid(2, 2);
+						suministros.setBorderWidth(1);
+						suministros.setWidget(0, 0, new Label("Tipo Suministro"));
+					    suministros.setWidget(0, 1, new Label("Cantidad"));
+					    suministros.setWidget(1, 0, new Label(s.getTipoSuministro().getNombre()));
+						suministros.setWidget(1, 1, new Label(String.valueOf(s.getCantidad())));
+						for(int i=0;i<2;i++){
+							suministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
 						}
-						ArrayList<DepositoCantidad> listaDepoCan= cantidades.get(s.getTipoSuministro().getId());
-						listaDepoCan.add(depoCan);
-						depoCantidades.setWidget(row, 2, cantidad);
-						row++;
+						panelSuministros.add(suministros);
+						
+						
+						PlanSuministroDTO planSum=null;
+						for(PlanSuministroDTO pdto:dto.getPlanesSuministros()){
+							if(pdto.getSolicitudsuministro().getTipoSuministro().getId().equals(s.getTipoSuministro().getId())){
+								planSum=pdto;
+								break;
+							}
+						}
+						
+						if(stocks.containsKey(s.getTipoSuministro().getId())){
+							Grid depoCantidades= new Grid(stocks.get(s.getTipoSuministro().getId()).size()+1,3);
+							depoCantidades.setBorderWidth(1);
+							depoCantidades.setWidget(0, 0, new Label("Deposito"));
+							depoCantidades.setWidget(0, 1, new Label("Cantidad en Stock"));
+							depoCantidades.setWidget(0, 2, new Label("Cantidad a enviar"));
+							panelSuministros.add(depoCantidades);
+							
+							for(int i=0;i<3;i++){
+								depoCantidades.getCellFormatter().setStyleName(0,i, "tbl-cab");
+							}
+							int row=1;
+							for(CuentaCorrienteSuministroDTO cuenta:stocks.get(s.getTipoSuministro().getId())){
+								depoCantidades.setWidget(row, 0, new Label(cuenta.getDeposito().getId().toString()+"-"+cuenta.getDeposito().getCiudad().getNombre()+"-"+cuenta.getDeposito().getDireccion()));
+								depoCantidades.setWidget(row, 1, new Label(String.valueOf(cuenta.getCantidad())));
+								TextBox cantidad = new TextBox();
+								cantidad.setText("0");
+								cantidad.addKeyboardListener(new KeyNumeric());
+								DepositoCantidad depoCan=new DepositoCantidad();
+								depoCan.setDeposito(cuenta.getDeposito());
+								depoCan.setCantidad(cantidad);
+								if(!cantidades.containsKey(s.getId())){
+									cantidades.put(s.getTipoSuministro().getId(),new ArrayList<DepositoCantidad>());
+								}
+								ArrayList<DepositoCantidad> listaDepoCan= cantidades.get(s.getTipoSuministro().getId());
+								listaDepoCan.add(depoCan);
+								depoCantidades.setWidget(row, 2, cantidad);
+								row++;
+								if(planSum!=null){
+									for(SolicitudEnvioDTO sdto: planSum.getSolicitudesEnvios()){
+										if(sdto.getDeposito().getId().equals(cuenta.getDeposito().getId())){
+											for(SolicitudEnvioSuministroDTO sesdto:sdto.getSolicitudesEnvioSuministros()){
+												if(sesdto.getTipoSuministro().getId().equals(s.getTipoSuministro().getId())){
+													cantidad.setText(String.valueOf(sesdto.getCantidad()));
+												}
+											}
+										}
+									}
+								}
+							}
+						}else{
+							if(planSum==null){
+								Grid depoCantidades= new Grid(2,3);
+								depoCantidades.setBorderWidth(1);
+								depoCantidades.setWidget(0, 0, new Label("Deposito"));
+								depoCantidades.setWidget(0, 1, new Label("Cantidad en Stock"));
+								depoCantidades.setWidget(0, 2, new Label("Cantidad a enviar"));
+								panelSuministros.add(depoCantidades);
+								
+								for(int i=0;i<3;i++){
+									depoCantidades.getCellFormatter().setStyleName(0,i, "tbl-cab");
+								}
+				
+								depoCantidades.setWidget(1, 0, new Label("SIN STOCK"));
+								depoCantidades.setWidget(1, 1, new Label("SIN STOCK"));
+								depoCantidades.setWidget(1, 2, new Label("SIN STOCK"));
+							}else{
+								
+								Grid depoCantidades= new Grid(stocks.get(s.getTipoSuministro().getId()).size()+1,3);
+								depoCantidades.setBorderWidth(1);
+								depoCantidades.setWidget(0, 0, new Label("Deposito"));
+								depoCantidades.setWidget(0, 1, new Label("Cantidad en Stock"));
+								depoCantidades.setWidget(0, 2, new Label("Cantidad a enviar"));
+								panelSuministros.add(depoCantidades);
+								
+								for(int i=0;i<3;i++){
+									depoCantidades.getCellFormatter().setStyleName(0,i, "tbl-cab");
+								}
+								int row=1;
+								for(SolicitudEnvioDTO solenv:planSum.getSolicitudesEnvios() ){
+									for(SolicitudEnvioSuministroDTO solenvsum:solenv.getSolicitudesEnvioSuministros()){
+										if(solenvsum.getTipoSuministro().getId().equals(s.getTipoSuministro().getId()))
+										{
+											depoCantidades.setWidget(row, 0, new Label(solenv.getDeposito().getId().toString()+"-"+solenv.getDeposito().getCiudad().getNombre()+"-"+solenv.getDeposito().getDireccion()));
+											depoCantidades.setWidget(row, 1, new Label(String.valueOf(solenvsum.getCantidad())));
+											TextBox cantidad = new TextBox();
+											cantidad.setText(String.valueOf(solenvsum.getCantidad()));
+											cantidad.addKeyboardListener(new KeyNumeric());
+											DepositoCantidad depoCan=new DepositoCantidad();
+											depoCan.setDeposito(solenv.getDeposito());
+											depoCan.setCantidad(cantidad);
+											if(!cantidades.containsKey(s.getId())){
+												cantidades.put(s.getTipoSuministro().getId(),new ArrayList<DepositoCantidad>());
+											}
+											ArrayList<DepositoCantidad> listaDepoCan= cantidades.get(s.getTipoSuministro().getId());
+											listaDepoCan.add(depoCan);
+											depoCantidades.setWidget(row, 2, cantidad);
+											row++;
+											
+										}
+									}
+								}
+							}
+						}
 					}
-				}else{
-					Grid depoCantidades= new Grid(2,3);
-					depoCantidades.setBorderWidth(1);
-					depoCantidades.setWidget(0, 0, new Label("Deposito"));
-					depoCantidades.setWidget(0, 1, new Label("Cantidad en Stock"));
-					depoCantidades.setWidget(0, 2, new Label("Cantidad a enviar"));
-					panelSuministros.add(depoCantidades);
-					
-					for(int i=0;i<3;i++){
-						depoCantidades.getCellFormatter().setStyleName(0,i, "tbl-cab");
-					}
-	
-					depoCantidades.setWidget(1, 0, new Label("SIN STOCK"));
-					depoCantidades.setWidget(1, 1, new Label("SIN STOCK"));
-					depoCantidades.setWidget(1, 2, new Label("SIN STOCK"));
 				}
-			}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					caught.printStackTrace();
+					Window.alert("ERROR AJAX");
+				}
+			});
+		    
+			
 	    	
 	    	descripcion.setEnabled(false);
 	    	fecha.setEnabled(false);
 	    	desastres.setEnabled(false);
 	    	nuevoB.setEnabled(false);
 	    	puntoEntrega.setEnabled(false);
-	    	aceptar.setEnabled(false);
 	    	recursosLocales.setEnabled(false);
 	    	datePicker.setVisible(false);
 			  
@@ -506,68 +612,23 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 		}
 
 		protected void procesar() {
-			NecesidadDTO dto=validar();
+			GestionNecesidadDTO dto=validar();
 			
 			if(dto!=null){
-				for(SolicitudSuministroDTO s: dto.getSolicitudesSuministros()){
-					if(s.getId()>=baseNumerador){
-						s.setId(null);
-					}
-					if(!dto.isRecursosLocales()){
-						s.setCosto(0);
-					}
-				}
-				dto.setId(id);
-				dto.setUsuarioCreador(usuarioGlobal);
 				
-				if(a=="modificar"){
+				dto.setId(id);
+				dto.setUsuario(usuarioGlobal);
+				
+				if(a=="procesar"){
 					
 					INecesidadAsync servidorNecesidad=GWT.create(INecesidad.class);
 					
-					servidorNecesidad.modificarNecesidad(dto,new AsyncCallback<Void>() {
-						
-						@Override
-						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});
-				}else if(a== "nuevo"){
-					INecesidadAsync servidorNecesidad=GWT.create(INecesidad.class);
-					
-					servidorNecesidad.nuevoNecesidad(dto, new AsyncCallback<Void>() {
+					servidorNecesidad.modificarGestionNecesidad(dto, new AsyncCallback<Void>() {
 						
 						@Override
 						public void onSuccess(Void result) {
 							// TODO Auto-generated method stub
-							cargarLista();
-							hide();
-						}
-						
-						@Override
-						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
-							caught.printStackTrace();
-							Window.alert("ERROR AJAX");
-						}
-					});
-					
-				}else if(a=="eliminar"){
-					INecesidadAsync servidorNecesidad=GWT.create(INecesidad.class);
-					
-					servidorNecesidad.eliminarNecesidad(dto, new AsyncCallback<Void>() {
-						
-						@Override
-						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
-							cargarLista();
-							hide();
+							
 						}
 						
 						@Override
@@ -581,38 +642,42 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			}
 		}
 		
-		private NecesidadDTO validar(){
-			NecesidadDTO dto= necesidadDTO;
-			
-			if(descripcion.getText().trim().length()== 0){
-				Window.alert("Indique Descripcion");
-				return null;
-			}
-			
-			if(desastres.getSelectedIndex()<1){
-				Window.alert("Indique Desastre");
-				return null;
-			}
-			
-			if(puntoEntrega.getSelectedIndex()<1){
-				Window.alert("Indique Punto Entrega");
-				return null;
-			}
-			
-			dto.setFecha(datePicker.getValue());
-			dto.setDescripcion(descripcion.getText());
-			dto.setRecursosLocales(recursosLocales.getSelectedIndex()==1);
-			
-			for(DesastreDTO d: desastreGlobal){
-				if( d.getId().equals( Long.valueOf(desastres.getValue(desastres.getSelectedIndex()) ))){
-					dto.setDesastre(d);
+		private GestionNecesidadDTO validar(){
+			dto.setPlanesSuministros(new HashSet<PlanSuministroDTO>());	
+			for(Long idTipoSuministo :cantidades.keySet()){
+				ArrayList<DepositoCantidad> depoCanList= cantidades.get(idTipoSuministo);
+				TipoSuministroDTO tipoSuministro=null;
+				for(TipoSuministroDTO t:tipoSuministrosGlobal){
+					if(idTipoSuministo.equals(t.getId())){
+						tipoSuministro=t;
+						break;
+					}
+					
 				}
-			}
-			
-			for(PuntoReferenciaDTO d: puntosReferenciaGlobal){
-				if( d.getId().equals( Long.valueOf(puntoEntrega.getValue(puntoEntrega.getSelectedIndex()) ))){
-					dto.setPuntoEntrega(d);
+				PlanSuministroDTO plan= new PlanSuministroDTO();
+				for(SolicitudSuministroDTO soldto:necesidadDTO.getSolicitudesSuministros()){
+					if(soldto.getTipoSuministro().getId().equals(idTipoSuministo)){
+						plan.setSolicitudsuministro(soldto);
+						break;
+					}
 				}
+				HashSet<SolicitudEnvioDTO> solicitudesEnvios=new HashSet<SolicitudEnvioDTO>();
+				for(DepositoCantidad depoCan:depoCanList){
+					if(Integer.valueOf(depoCan.getCantidad().getText())>0){
+						SolicitudEnvioDTO solenv= new SolicitudEnvioDTO();
+						solenv.setDeposito(depoCan.getDeposito());
+						solenv.setEstado(EstadoSolicitudEnvio.CREADA);
+						solenv.setFecha(new Date());
+						solenv.setPuntoEntrega(necesidadDTO.getPuntoEntrega());
+						solenv.setSolicitudesEnvioSuministros(new HashSet<SolicitudEnvioSuministroDTO>());
+						SolicitudEnvioSuministroDTO solensum=new SolicitudEnvioSuministroDTO();
+						solensum.setCantidad(Integer.valueOf(depoCan.getCantidad().getText()));
+						solensum.setTipoSuministro(tipoSuministro);
+						solenv.getSolicitudesEnvioSuministros().add(solensum);
+						solicitudesEnvios.add(solenv);
+					}
+				}
+				
 			}
 			
 			return dto;
