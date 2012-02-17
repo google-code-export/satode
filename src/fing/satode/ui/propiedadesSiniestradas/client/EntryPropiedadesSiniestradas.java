@@ -169,7 +169,9 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		private String a;
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
-		final VerticalPanel vertical= new VerticalPanel();
+		final VerticalPanel vertical1= new VerticalPanel();
+		final VerticalPanel vertical2= new VerticalPanel();
+		final VerticalPanel vertical3= new VerticalPanel();
 		final Label label = new Label();
 		final Grid gridIzqParcelas= new Grid(6,2);
 		final Grid gridIzqDatosViv= new Grid(23,2);
@@ -242,11 +244,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		final TextBox cantFamilias= new TextBox();
 		final TextBox cantHabitaciones= new TextBox();
 		final TextBox cantHabDormitorio= new TextBox();
-		final TextBox obsBcantHabTrabajoasura= new TextBox();
 		final ListBox actividadLaboralEnViv = new ListBox();
-		
-
-		
+		final TextBox cantHabTrabajo= new TextBox();
 		
 		//Inundacion
 		final ListBox inundadaAnteriormente = new ListBox();
@@ -291,6 +290,58 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			gridIzqParcelas.setWidget(5, 1, otrosUsos);
 			gridIzqParcelas.setBorderWidth(1);
 			
+			
+			gridIzqDatosViv.setWidget(0, 0, new Label(" Indique si esta vivienda está…"));
+			gridIzqDatosViv.setWidget(1, 0, new Label("¿Cuál es el material predominante en las paredes?"));
+			gridIzqDatosViv.setWidget(2, 0, new Label("Observaciones material de las paredes"));
+			gridIzqDatosViv.setWidget(3, 0, new Label("Las paredes de esta vivienda, se encuentran..."));
+			gridIzqDatosViv.setWidget(4, 0, new Label("¿Cuál es el material predominante en el techo?"));
+			gridIzqDatosViv.setWidget(5, 0, new Label("Observaciones material en el techo"));
+			gridIzqDatosViv.setWidget(6, 0, new Label("¿Cuál es el material predominante en los pisos?"));
+			gridIzqDatosViv.setWidget(7, 0, new Label("Observaciones material en los pisos"));
+			gridIzqDatosViv.setWidget(8, 0, new Label("Estado de terminación de la vivienda"));
+			gridIzqDatosViv.setWidget(9, 0, new Label("Categoría de la vivienda"));
+			gridIzqDatosViv.setWidget(10, 0, new Label("¿De donde proviene el agua que utilizan para beber y cocinar? "));
+			gridIzqDatosViv.setWidget(11, 0, new Label("Observaciones procedencia de agua"));
+			gridIzqDatosViv.setWidget(12, 0, new Label("¿Cómo llega el agua a la vivienda?"));
+			gridIzqDatosViv.setWidget(13, 0, new Label("Qué tipo de energía tiene su vivienda?"));
+			gridIzqDatosViv.setWidget(14, 0, new Label("¿Cómo se realiza la evacuación del servicio sanitario?"));
+			gridIzqDatosViv.setWidget(15, 0, new Label("Observaciones evacuación del servicio sanitario"));
+			gridIzqDatosViv.setWidget(16, 0, new Label("¿Dónde tira la basura?"));
+			gridIzqDatosViv.setWidget(17, 0, new Label("Observaciones de tirar la basura"));
+			gridIzqDatosViv.setWidget(18, 0, new Label("¿Esta vivienda tiene servicio higiénico?"));
+			gridIzqDatosViv.setWidget(19, 0, new Label("Respecto a la vivienda donde vive  usted,  es… "));
+			gridIzqDatosViv.setWidget(20, 0, new Label("Independientemente de  la situación respecto a ésta vivienda, ud es propietario de:"));
+			gridIzqDatosViv.setWidget(21, 0, new Label("Estado de conservación de la vivienda"));
+			gridIzqDatosViv.setWidget(22, 0, new Label("Si le ofrecieran una casa igual a esta, ubicada en un barrio mejor que no se inunde... "));
+			
+						
+			gridIzqDatosViv.setWidget(0, 1, ocupacion);
+			gridIzqDatosViv.setWidget(1, 1, materialParedes);
+			gridIzqDatosViv.setWidget(2, 1, obsMaterialParedes);
+			gridIzqDatosViv.setWidget(3, 1, estadoPared);
+			gridIzqDatosViv.setWidget(4, 1, materialTecho);
+			gridIzqDatosViv.setWidget(5, 1, obsMaterialTecho);
+			gridIzqDatosViv.setWidget(6, 1, materialPiso);
+			gridIzqDatosViv.setWidget(7, 1, obsMaterialPiso);
+			gridIzqDatosViv.setWidget(8, 1, estadoTerminacion);
+			gridIzqDatosViv.setWidget(9, 1, categoriaVivienda);
+			gridIzqDatosViv.setWidget(10, 1, procedenciaAguaConsumo);
+			gridIzqDatosViv.setWidget(11, 1, obsProcedenciaAgua);
+			gridIzqDatosViv.setWidget(12, 1, procedenciaAguaVivienda);
+			gridIzqDatosViv.setWidget(13, 1, energia);
+			gridIzqDatosViv.setWidget(14, 1, sanitario);
+			gridIzqDatosViv.setWidget(15, 1, obsSanitaria);
+			gridIzqDatosViv.setWidget(16, 1, basura);
+			gridIzqDatosViv.setWidget(17, 1, obsBasura);
+			gridIzqDatosViv.setWidget(18, 1, banios);
+			gridIzqDatosViv.setWidget(19, 1, tenenciaVivienda);
+			gridIzqDatosViv.setWidget(20, 1, propietarioOtras);
+			gridIzqDatosViv.setWidget(21, 1, conservacionVivienda);
+			gridIzqDatosViv.setWidget(22, 1, mudarse);
+			gridIzqDatosViv.setBorderWidth(1);
+			
+			
 			gridDerProblViv.setWidget(0, 0, new Label("Humedades en techos"));
 			gridDerProblViv.setWidget(1, 0, new Label("Goteras en el techo"));
 			gridDerProblViv.setWidget(2, 0, new Label("Puertas y ventanas en mal estado"));
@@ -320,62 +371,50 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			gridDerProblViv.setWidget(12, 1, pozoNegroMalEstado);
 			gridDerProblViv.setBorderWidth(1);
 			
-			
-	    }//ESte cierre no va, es solo para que compile.	
-			
-			
-		/*	
-			
-			
-			
-			
-			
-			
 			gridDerInund.setWidget(0, 0, new Label("¿Se ha inundado esta vivienda anteriormente?"));
 			gridDerInund.setWidget(1, 0, new Label("¿En que años?"));
 			gridDerInund.setWidget(2, 0, new Label("¿Hace cuántos años viven ustedes en esta vivienda?"));
 			gridDerInund.setWidget(3, 0, new Label("Usted ha considerado la posibilidad de irse de este barrio porque se inunda?"));
 			gridDerInund.setWidget(4, 0, new Label("En caso de Negativo, ¿Por qué no?"));
 			gridDerInund.setWidget(5, 0, new Label("¿Ingresó en esta oportunidad el agua en el interior de su vivienda?"));
-			gridDerInund.setWidget(5, 0, new Label("Especificar altura alcanzada (nivel de piso terminado de la vivienda)"));
-			gridDerInund.setWidget(6, 0, new Label("Observaciones ingreso de agua en Vivienda"));
-			
-			
-			gridDerInund.setWidget(7, 0, new Label("¿Cuántos días estuvo fuera de su hogar?"));
-			gridDerInund.setWidget(9, 0, new Label("¿Abandonaron su vivienda durante la inundación?));
-			gridDerInund.setWidget(10, 0, new Label("Manchas, hongos en paredes o techos"));
-			gridDerInund.setWidget(11, 0, new Label("Descalce de cimientos"));
-			gridDerInund.setWidget(12, 0, new Label("Pozo negro en mal estado"));
-			
-			
-			
+			gridDerInund.setWidget(6, 0, new Label("Especificar altura alcanzada (nivel de piso terminado de la vivienda)"));
+			gridDerInund.setWidget(7, 0, new Label("Observaciones ingreso de agua en Vivienda"));
+			gridDerInund.setWidget(8, 0, new Label("¿Abandonaron su vivienda durante la inundación?"));
+			gridDerInund.setWidget(9, 0, new Label("¿Dónde estaban alojados durante la evacuación?"));
+			gridDerInund.setWidget(10, 0, new Label("Observaciones alojamineto durante la evacuación"));
+			gridDerInund.setWidget(11, 0, new Label("¿Cuántos días estuvo fuera de su hogar?"));
+			gridDerInund.setWidget(12, 0, new Label("¿Usted cree que este es"));
 			
 			gridDerInund.setWidget(0, 1, inundadaAnteriormente);
 			gridDerInund.setWidget(1, 1, anios);
 			gridDerInund.setWidget(2, 1, antiguedadEnCasa);
 			gridDerInund.setWidget(3, 1, irsePorInundacion);
 			gridDerInund.setWidget(4, 1, observacionesNoIrse);
-			gridDerInund.setWidget(12, 1, aguaEnVivienda);
-			gridDerInund.setWidget(8, 1, alturaAgua);
-			gridDerInund.setWidget(9, 1, obsAguaVivienda);
-			
-			gridDerInund.setWidget(10, 1, abandonoViviendaPorInund);
-			gridDerInund.setWidget(5, 1, alojamientoInundacion);
-			gridDerInund.setWidget(6, 1, obsAlojamientoEnInundacion);
-			gridDerInund.setWidget(7, 1, cntDiasFuera);
-			
-			
-			
-			
-			
-			
-			gridDerInund.setWidget(11, 1, persepcionVivienda);
-			
+			gridDerInund.setWidget(5, 1, aguaEnVivienda);
+			gridDerInund.setWidget(6, 1, alturaAgua);
+			gridDerInund.setWidget(7, 1, obsAguaVivienda);
+			gridDerInund.setWidget(8, 1, abandonoViviendaPorInund);
+			gridDerInund.setWidget(9, 1, alojamientoInundacion);
+			gridDerInund.setWidget(10, 1, obsAlojamientoEnInundacion);
+			gridDerInund.setWidget(11, 1, cntDiasFuera);
+			gridDerInund.setWidget(12, 1, persepcionVivienda);
 			gridDerInund.setBorderWidth(1);
 			
+			gridDerHacin.setWidget(0, 0, new Label("¿Cuántas familias comparten esta vivienda?"));
+			gridDerHacin.setWidget(1, 0, new Label("¿Cuántas habitaciones tiene esta vivienda sin considerar baño y cocina?"));
+			gridDerHacin.setWidget(2, 0, new Label("¿Cuántas habitaciones usa para dormir?"));
+			gridDerHacin.setWidget(3, 0, new Label("¿En estas vivienda se realiza alguna actividad que le reporta ingresos a las personas que viven aquí?"));
+			gridDerHacin.setWidget(4, 0, new Label("¿Cuántas habitaciones se usan para trabajar?"));
 			
-	    	
-	        departamentos.addItem("Seleccionar","0");
+			gridDerHacin.setWidget(0, 1, cantFamilias);
+			gridDerHacin.setWidget(1, 1, cantHabitaciones);
+			gridDerHacin.setWidget(2, 1, cantHabDormitorio);
+			gridDerHacin.setWidget(3, 1, actividadLaboralEnViv);
+			gridDerHacin.setWidget(4, 1, cantHabTrabajo);
+			gridDerHacin.setBorderWidth(1);
+			
+			
+			departamentos.addItem("Seleccionar","0");
 		    for(DepartamentoDTO d:departamentosGlobal){
 		    	departamentos.addItem(d.getNombre(), d.getId().toString());
 		    }
@@ -383,7 +422,6 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				
 				@Override
 				public void onChange(ChangeEvent event) {
-					// TODO Auto-generated method stub
 					ciudades.clear();
 					Long id=Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex()));
 					for(DepartamentoDTO dto:departamentosGlobal){
@@ -397,20 +435,133 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				}
 			});
 		    
-		    area2.addKeyboardListener(new KeyNumeric());
-		    area3.addKeyboardListener(new KeyNumeric());
-		    
+		    cantFamilias.addKeyboardListener(new KeyNumeric());
+		    cantHabitaciones.addKeyboardListener(new KeyNumeric());
+		    cantHabDormitorio.addKeyboardListener(new KeyNumeric());
+		    cantHabTrabajo.addKeyboardListener(new KeyNumeric());
+		    antiguedadEnCasa.addKeyboardListener(new KeyNumeric());
+		    cntDiasFuera.addKeyboardListener(new KeyNumeric());
+		 
+		    /*  
 		    if (a == "modificar" || a == "eliminar" ){
 		    	
-		    	DepositoDTO depositoDTO= null;
-	    		for(DepositoDTO d:depositoGlobal){
-	    			if(d.getId().equals(id)){
-	    				depositoDTO=d;
+		    	ParcelaDTO parcelaDTO= null;
+	    		for(ParcelaDTO p:parcelaGlobal){
+	    			if(p.getId().equals(id)){
+	    				parcelaDTO=p;
 	    			}
 	    		}
 	    		
 		    	
-		    	direccion.setText(depositoDTO.getDireccion());
+	    		direccion.setText(parcelaDTO.getDireccion());
+	    		telefono.setText(parcelaDTO.getTelefono());
+	    		vivienda.addItem("SI", "SI");
+	    		vivienda.addItem("NO", "NO");
+	    		vivienda.setSelectedIndex(parcelaDTO.getTipoParcela().isVivienda()?0:1);   
+	    		otrosUsos.setText(parcelaDTO.getTipoParcela().getOtrosUsos());
+	    		
+	    		int row=0;
+	    		DepartamentoDTO dtoDepto=null;
+			    for(DepartamentoDTO d:departamentosGlobal){
+			    	row++;
+				    if(d.getId().equals(parcelaDTO.getDepartamento().getId())){
+			    		departamentos.setSelectedIndex(row);
+			    		dtoDepto=d;
+			    	}
+			    }
+			    
+			    row=0;
+			    ciudades.clear();
+				ciudades.addItem("Seleccionar","0");
+				for(CiudadDTO c:dtoDepto.getCiudades()){
+					row++;
+					ciudades.addItem(c.getNombre(),c.getId().toString());
+					if(c.getId().equals(parcelaDTO.getCiudad().getId())){
+						ciudades.setSelectedIndex(row);
+					}
+				}
+	    		
+	    		
+	    			
+	    			//UnidadesParcelas
+	    			final TextBox descripcion=new TextBox();
+	    			final TextBox nivelAgua=new TextBox();
+	    			final TextBox metros2afectados=new TextBox();
+	    			final ListBox nivelPiso=new ListBox();
+	    			;
+	    			
+	    			//Datos Vivienda
+	    			final TextBox obsMaterialTecho=new TextBox();
+	    			final TextBox obsMaterialPiso=new TextBox();
+	    			final TextBox obsProcedenciaAgua= new TextBox();
+	    			final TextBox obsMaterialParedes= new TextBox();
+	    			final TextBox obsSanitaria= new TextBox();
+	    			final TextBox obsBasura= new TextBox();
+	    		
+	    			
+	    			//Referencias a constantes
+	    			final ListBox ocupacion = new ListBox();
+	    			final ListBox estadoPared = new ListBox();
+	    			final ListBox materialTecho = new ListBox();
+	    			final ListBox materialParedes = new ListBox();
+	    			final ListBox materialPiso = new ListBox();
+	    			final ListBox banios = new ListBox();
+	    			final ListBox propietarioOtras = new ListBox();
+	    			final ListBox tenenciaVivienda = new ListBox();
+	    			final ListBox mudarse = new ListBox();
+	    			final ListBox procedenciaAguaConsumo = new ListBox();
+	    			final ListBox procedenciaAguaVivienda = new ListBox();
+	    			final ListBox basura = new ListBox();
+	    			final ListBox categoriaVivienda = new ListBox();
+	    			final ListBox sanitario = new ListBox();
+	    			final ListBox estadoTerminacion = new ListBox();
+	    			final ListBox energia = new ListBox();
+	    			final ListBox conservacionVivienda = new ListBox();
+	    			
+	    			
+	    		
+	    			//ProblemasVivienda (Atributos Boolean)
+	    			final ListBox humedadesTecho = new ListBox();
+	    			final ListBox goterasTecho = new ListBox();
+	    			final ListBox puertasVentanasMalEstado = new ListBox();
+	    			final ListBox grietasPiso = new ListBox();
+	    			final ListBox caidaRevoques = new ListBox();
+	    			final ListBox cielorasoDesprendido = new ListBox();
+	    			final ListBox pocaLuzSolar = new ListBox();
+	    			final ListBox escazaVentilacion = new ListBox();
+	    			final ListBox peligroDerrumbe = new ListBox();
+	    			final ListBox instalacionesMalas = new ListBox();
+	    			final ListBox manchasParedesTechos = new ListBox();
+	    			final ListBox descalceDeCimientos = new ListBox();
+	    			final ListBox pozoNegroMalEstado = new ListBox();
+	    			
+	    			//Hacinamiento
+	    			final TextBox cantFamilias= new TextBox();
+	    			final TextBox cantHabitaciones= new TextBox();
+	    			final TextBox cantHabDormitorio= new TextBox();
+	    			final ListBox actividadLaboralEnViv = new ListBox();
+	    			final TextBox cantHabTrabajo= new TextBox();
+	    			
+	    			//Inundacion
+	    			final ListBox inundadaAnteriormente = new ListBox();
+	    			final TextBox anios= new TextBox();
+	    			final TextBox antiguedadEnCasa= new TextBox();
+	    			final ListBox irsePorInundacion = new ListBox();
+	    			final TextBox observacionesNoIrse= new TextBox();
+	    			final TextBox obsAlojamientoEnInundacion= new TextBox();
+	    			final TextBox cntDiasFuera= new TextBox();
+	    			final TextBox alturaAgua= new TextBox();
+	    			final TextBox obsAguaVivienda= new TextBox();
+	    			final ListBox abandonoViviendaPorInund = new ListBox();
+	    			
+	    			
+	    			final ListBox alojamientoInundacion = new ListBox();
+	    			final ListBox persepcionVivienda = new ListBox();
+	    			final ListBox aguaEnVivienda = new ListBox();
+	    		
+	    		
+	    		
+		    	
 			    telefono.setText(depositoDTO.getTelefono());
 			    mail.setText(depositoDTO.getMail());
 			    area2.setText(String.valueOf(depositoDTO.getArea2()));
@@ -473,10 +624,10 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				
 			setAnimationEnabled(true);
 			add(vertical);
-			center();
+			center();*/
 		}
 	    
-	    */
+	
 
 		protected void procesar() {
 			// TODO Auto-generated method stub
