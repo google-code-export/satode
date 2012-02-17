@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
+import fing.satode.data.SolicitudEnvioDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 
@@ -52,6 +53,18 @@ public interface IDepositoAsync {
 	void buscarCuentaCorrienteSuministro(Long idDeposito,
 			Long idTipoSuministro,
 			AsyncCallback<ArrayList<CuentaCorrienteSuministroDTO>> callback);
+
+	void modificarCuentaCorrienteSuministro(CuentaCorrienteSuministroDTO dto,
+			AsyncCallback<Void> callback);
+
+	void buscarSolicitudesEnvio(Long idPuntoEntrega, Long idDeposito,
+			int estado, AsyncCallback<ArrayList<SolicitudEnvioDTO>> callback);
+
+	void enviarSolicitudEnvio(SolicitudEnvioDTO dto,
+			AsyncCallback<Void> callback);
+
+	void recibirSolicitudEnvio(SolicitudEnvioDTO dto,
+			AsyncCallback<Void> callback);
 
 	
 

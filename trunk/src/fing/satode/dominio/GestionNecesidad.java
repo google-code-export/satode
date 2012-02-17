@@ -32,6 +32,9 @@ public class GestionNecesidad {
 	private Usuario usuario;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@org.hibernate.annotations.Cascade(
+			value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+			)
 	@JoinColumn(name="gestionnecesidad_id")
 	private Set<PlanSuministro> planesSuministros;
 

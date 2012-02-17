@@ -1,24 +1,27 @@
 package fing.satode.bl.deposito;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
+import fing.satode.constantes.EstadoSolicitudEnvio;
 import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
+import fing.satode.data.SolicitudEnvioDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.dominio.CuentaCorrienteSuministro;
 import fing.satode.dominio.Deposito;
 import fing.satode.dominio.Donacion;
+import fing.satode.dominio.SolicitudEnvio;
 import fing.satode.dominio.Suministro;
 import fing.satode.dominio.TipoSuministro;
 import fing.satode.pl.deposito.CuentaCorrienteSuministroDAO;
 import fing.satode.pl.deposito.DepositoDAO;
 import fing.satode.pl.deposito.DonacionDAO;
+import fing.satode.pl.deposito.SolicitudEnvioDAO;
 import fing.satode.pl.deposito.SuministroDAO;
 import fing.satode.pl.deposito.TipoSuministroDAO;
 
@@ -150,6 +153,35 @@ public class DepositoService extends ServiceBase {
 			listaDTOS.add(d.getDTO());
 		}
 		return listaDTOS;
+	}
+
+	public void modificarCuentaCorrienteSuministro(CuentaCorrienteSuministroDTO dto) {
+		CuentaCorrienteSuministroDAO.getInstance().modificarCuentaCorriente(new CuentaCorrienteSuministro(dto));
+		
+	}
+
+	public ArrayList<SolicitudEnvioDTO> buscarSolicitudesEnvio(	Long idPuntoEntrega, Long idDeposito, int estado) {
+		ArrayList<SolicitudEnvioDTO> listaDTOS= new ArrayList<SolicitudEnvioDTO>();
+		ArrayList<SolicitudEnvio> lista= SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(idPuntoEntrega, idDeposito,  estado);
+		for(SolicitudEnvio d: lista){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
+
+	public void enviarSolicitudEnvio(SolicitudEnvioDTO dto) {
+		// TODO Auto-generated method stub
+		dto.setEstado(EstadoSolicitudEnvio.ENVIADA);
+		SolicitudEnvioDAO.getInstance().modificarSolicitudEnvio(new SolicitudEnvio(dto));
+	}
+
+	public void recibirSolicitudEnvio(SolicitudEnvioDTO dto) {
+		dto.setEstado(EstadoSolicitudEnvio.RECIBIDA_OK);
+		if(dto.getObservacionesEntrega()!=null && dto.getObservacionesEntrega().trim().length()!=0){
+			dto.setEstado(EstadoSolicitudEnvio.RECIBIDA_OBS);
+		}
+		SolicitudEnvioDAO.getInstance().modificarSolicitudEnvio(new SolicitudEnvio(dto));
+		
 	}
 	
 }

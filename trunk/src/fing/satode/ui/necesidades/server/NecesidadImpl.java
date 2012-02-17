@@ -56,4 +56,11 @@ public class NecesidadImpl extends ServerImpl implements INecesidad {
 		ServiceFactory.getInstance().getNecesidadService().modificarGestionNecesidad(dto);
 	}
 
+	@Override
+	public ArrayList<NecesidadDTO> buscarNecesidades(Long idDesastre,
+			Long idEstado, boolean recursosLocales) {
+		// TODO Auto-generated method stub
+		return ServiceFactory.getInstance().getNecesidadService().buscarNecesidades(idDesastre,idEstado, recursosLocales);
+	}
+
 }

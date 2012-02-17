@@ -60,7 +60,6 @@ import fing.satode.ui.usuarios.client.IUsuarioAsync;
 public class EntryPointGestionNecesidad implements EntryPoint {
 
 
-	final Button nuevoB = new Button("Nuevo");
 	final Button buscarB = new Button("Buscar");
 	final VerticalPanel vertical = new VerticalPanel();
 	private ArrayList<NecesidadDTO> necesidadesGlobal;
@@ -90,7 +89,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 		botonera.add(desastreGrid);
 		botonera.add(estadoGrid);
 		botonera.add(buscarB);
-		botonera.add(nuevoB);
+		
 		RootPanel.get("botones").add(botonera);
 		RootPanel.get("necesidades").add(vertical);
 		
@@ -192,15 +191,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 					
 		});
 		
-		nuevoB.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				FormDialogBox dialog= new FormDialogBox(0L, "nuevo");
-				dialog.show();
-			}
-		});
-		
 		IUsuarioAsync servidorUsuario= GWT.create(IUsuario.class);
 		
 		servidorUsuario.getUsuarioLogin(new AsyncCallback<UsuarioDTO>() {
@@ -226,16 +216,16 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 		Long idDesastre=Long.valueOf(desastres.getValue(desastres.getSelectedIndex()));
 		Long idEstado=Long.valueOf(estados.getValue(estados.getSelectedIndex()));
 		
-		INecesidadAsync serverNecesidad=GWT.create(INecesidad.class);
+		final INecesidadAsync serverNecesidad=GWT.create(INecesidad.class);
 		
-		serverNecesidad.buscarNecesidades(idDesastre, idEstado, new AsyncCallback<ArrayList<NecesidadDTO>>() {
+		serverNecesidad.buscarNecesidades(idDesastre, idEstado, false, new AsyncCallback<ArrayList<NecesidadDTO>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<NecesidadDTO> result) {
 				necesidadesGlobal=result;
 				
-				Grid gridPrincipal= new Grid(result.size()+1,9);
-				for(int i=0;i<9;i++){
+				Grid gridPrincipal= new Grid(result.size()+1,10);
+				for(int i=0;i<10;i++){
 					gridPrincipal.getCellFormatter().setStyleName(0,i, "tbl-cab");
 				}
 				gridPrincipal.setBorderWidth(1);
@@ -247,7 +237,8 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 				gridPrincipal.setWidget(0, 5, new Label("Estado"));
 				gridPrincipal.setWidget(0, 6, new Label("Usuario"));
 				gridPrincipal.setWidget(0, 7, new Label("Procesar"));
-				gridPrincipal.setWidget(0, 8, modificarLabel);
+				gridPrincipal.setWidget(0, 8, new Label("Confirmar"));
+				gridPrincipal.setWidget(0, 9, new Label("Rechazar"));
 		
 				
 				vertical.add(gridPrincipal);
@@ -266,7 +257,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 					final Long id= s.getId();
 					
 					
-					final Hyperlink  procesar= new Hyperlink();
+					final Button  procesar= new Button();
 					procesar.setText("Procesar");
 					
 					procesar.addClickHandler(new ClickHandler() {
@@ -278,18 +269,93 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 						}
 					});
 					
-					final Image modificarI= new Image("/images/modificar.png");
+					final Button  modificarI= new Button();
+					modificarI.setText("Confirmar");
+					final NecesidadDTO ns=s;
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							FormDialogBox dialog= new FormDialogBox(id, "modificar");
-							dialog.show();
+							ns.setEstado(EstadoNecesidad.ACEPTADA);
+							serverNecesidad.modificarNecesidad(ns, new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									
+									serverNecesidad.buscarGestionNecesidadPorNecesidad(ns.getId(), new AsyncCallback<GestionNecesidadDTO>() {
+										
+										@Override
+										public void onSuccess(GestionNecesidadDTO result) {
+											// TODO Auto-generated method stub
+											for(PlanSuministroDTO ps:result.getPlanesSuministros()){
+												for(SolicitudEnvioDTO se:ps.getSolicitudesEnvios()){
+													se.setEstado(EstadoSolicitudEnvio.NUEVA);
+												}
+											}
+											
+											serverNecesidad.modificarGestionNecesidad(result, new AsyncCallback<Void>() {
+												
+												@Override
+												public void onSuccess(Void result) {
+													// TODO Auto-generated method stub
+													cargarLista();
+												}
+												
+												@Override
+												public void onFailure(Throwable caught) {
+													// TODO Auto-generated method stub
+													
+												}
+											});
+										}
+										
+										@Override
+										public void onFailure(Throwable caught) {
+											caught.printStackTrace();
+											Window.alert("ERROR AJAX");
+											
+										}
+									});
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
 						}
 					});
 					
+					final Button  rechazarI= new Button();
+					rechazarI.setText("Rechazar");
+					rechazarI.addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							ns.setEstado(EstadoNecesidad.RECHAZADA);
+							serverNecesidad.modificarNecesidad(ns, new AsyncCallback<Void>() {
+								
+								@Override
+								public void onSuccess(Void result) {
+									// TODO Auto-generated method stub
+									cargarLista();
+								}
+								
+								@Override
+								public void onFailure(Throwable caught) {
+									caught.printStackTrace();
+									Window.alert("ERROR AJAX");
+								}
+							});
+						}
+					});
 					
-					gridPrincipal.setWidget(row, 7, procesar);
+					if(s.getEstado()==EstadoNecesidad.EN_PROCESO || s.getEstado()==EstadoNecesidad.INGRESADA){
+						gridPrincipal.setWidget(row, 7, procesar);
+						gridPrincipal.setWidget(row, 9, rechazarI);
+					}
+					
 					if(s.getEstado()==EstadoNecesidad.EN_PROCESO){
 						gridPrincipal.setWidget(row, 8, modificarI);
 					}
@@ -578,7 +644,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 	    	descripcion.setEnabled(false);
 	    	fecha.setEnabled(false);
 	    	desastres.setEnabled(false);
-	    	nuevoB.setEnabled(false);
 	    	puntoEntrega.setEnabled(false);
 	    	recursosLocales.setEnabled(false);
 	    	datePicker.setVisible(false);
@@ -616,19 +681,33 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			
 			if(dto!=null){
 				
-				dto.setId(id);
 				dto.setUsuario(usuarioGlobal);
 				
 				if(a=="procesar"){
 					
 					INecesidadAsync servidorNecesidad=GWT.create(INecesidad.class);
 					
+					necesidadDTO.setEstado(EstadoNecesidad.EN_PROCESO);
+					servidorNecesidad.modificarNecesidad(necesidadDTO, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+					
 					servidorNecesidad.modificarGestionNecesidad(dto, new AsyncCallback<Void>() {
 						
 						@Override
 						public void onSuccess(Void result) {
 							// TODO Auto-generated method stub
-							
+							hide();
+							cargarLista();
 						}
 						
 						@Override
@@ -638,12 +717,13 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 							Window.alert("ERROR AJAX");
 						}
 					});
+				
 				}
 			}
 		}
 		
 		private GestionNecesidadDTO validar(){
-			dto.setPlanesSuministros(new HashSet<PlanSuministroDTO>());	
+			dto.getPlanesSuministros().clear();
 			for(Long idTipoSuministo :cantidades.keySet()){
 				ArrayList<DepositoCantidad> depoCanList= cantidades.get(idTipoSuministo);
 				TipoSuministroDTO tipoSuministro=null;
@@ -655,6 +735,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 					
 				}
 				PlanSuministroDTO plan= new PlanSuministroDTO();
+				dto.getPlanesSuministros().add(plan);				
 				for(SolicitudSuministroDTO soldto:necesidadDTO.getSolicitudesSuministros()){
 					if(soldto.getTipoSuministro().getId().equals(idTipoSuministo)){
 						plan.setSolicitudsuministro(soldto);
@@ -662,6 +743,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 					}
 				}
 				HashSet<SolicitudEnvioDTO> solicitudesEnvios=new HashSet<SolicitudEnvioDTO>();
+				plan.setSolicitudesEnvios(solicitudesEnvios);
 				for(DepositoCantidad depoCan:depoCanList){
 					if(Integer.valueOf(depoCan.getCantidad().getText())>0){
 						SolicitudEnvioDTO solenv= new SolicitudEnvioDTO();

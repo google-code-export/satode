@@ -5,5 +5,5 @@
 	<inherits name="fing.satode.ui.general.Inicial" />
 	<source path="client" />
 	<entry-point
-		class="fing.satode.ui.propiedadesSiniestradas.client.EntryPropiedadesSiniestradas" />
+		class="fing.satode.ui.deposito.client.EntryPointSolicitudEnvioList" />
 </module>
