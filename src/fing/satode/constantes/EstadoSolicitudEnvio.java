@@ -13,7 +13,7 @@ public class EstadoSolicitudEnvio implements Serializable, IsSerializable{
 	public final static int NUEVA=1;
 	public final static int ENVIADA=2;
 	public final static int RECIBIDA_OK=3;
-	public final static int RECIBIDA_OBS=3;
+	public final static int RECIBIDA_OBS=4;
 	
 	public static String NUEVA_TXT="NUEVA";
 	public static String ENVIADA_TXT="ENVIADA";
@@ -27,7 +27,7 @@ public class EstadoSolicitudEnvio implements Serializable, IsSerializable{
 		case 3: return RECIBIDA_OK_TXT;
 		case 4: return RECIBIDA_OBS_TXT;
 		default:
-			return "";
+			return "CREADA";
 		}
 	}
 	

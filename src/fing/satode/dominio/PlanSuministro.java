@@ -10,26 +10,40 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import fing.satode.data.PlanSuministroDTO;
 import fing.satode.data.SolicitudEnvioDTO;
 
 @Entity
-@Table(name="palessuministros")
+@Table(name="planessuministros")
 public class PlanSuministro {
 
 	@Id @GeneratedValue
 	private Long id;
 	
-	@ManyToOne
+	@OneToOne(cascade= CascadeType.MERGE)
     @JoinColumn(name="solicitudsuministro_id")
 	private SolicitudSuministro solicitudsuministro;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@JoinColumn(name="plansuministro_id")
+	  @ManyToMany(
+			  targetEntity=fing.satode.dominio.SolicitudEnvio.class,
+		        cascade={CascadeType.PERSIST, CascadeType.ALL}
+	    )
+	  
+	    @JoinTable(
+	        name="PlanSuministro_SolicitudEnvio",
+	        joinColumns=@JoinColumn(name="planSuministro_Id"),
+	        inverseJoinColumns=@JoinColumn(name="solicitudEnvio_Id")
+	    )
+	  @org.hibernate.annotations.Cascade(
+				value = org.hibernate.annotations.CascadeType.DELETE_ORPHAN
+				)
 	private Set<SolicitudEnvio> solicitudesEnvios;
 
 	public PlanSuministro(){}
@@ -69,8 +83,18 @@ public class PlanSuministro {
 	}
 
 	public PlanSuministroDTO getDTO() {
-		// TODO Auto-generated method stub
-		return null;
+		PlanSuministroDTO dto= new PlanSuministroDTO();
+		dto.setId(id);
+		dto.setSolicitudsuministro(solicitudsuministro.getDTO());
+		
+		
+		HashSet<SolicitudEnvioDTO> solicitudesEnviosDTO= new HashSet<SolicitudEnvioDTO>();
+		for(SolicitudEnvio s:solicitudesEnvios){
+			solicitudesEnviosDTO.add(s.getDTO());
+		}
+		dto.setSolicitudesEnvios(solicitudesEnviosDTO);
+		
+		return dto;
 	}
 	
 	

@@ -74,4 +74,14 @@ public class NecesidadService extends ServiceBase {
 		NecesidadesDAO.getInstance().modificarGestionNecesidad(necesidad);
 	}
 
+	public ArrayList<NecesidadDTO> buscarNecesidades(Long idDesastre,
+			Long idEstado, boolean recursosLocales) {
+		ArrayList<NecesidadDTO> listaDTOS= new ArrayList<NecesidadDTO>();
+		ArrayList<Necesidad> listaDes= NecesidadesDAO.getInstance().buscarNecesidades(idDesastre,idEstado,recursosLocales);
+		for(Necesidad d: listaDes){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
+
 }

@@ -6,6 +6,7 @@ import fing.satode.bl.base.ServiceFactory;
 import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
+import fing.satode.data.SolicitudEnvioDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.ui.base.ServerImpl;
@@ -113,6 +114,30 @@ public class DepositoImpl extends ServerImpl implements IDeposito {
 			Long idDeposito, Long idTipoSuministro) {
 		// TODO Auto-generated method stub
 		return ServiceFactory.getInstance().getDepositoService().buscarCuentaCorrienteSuministro(idDeposito,idTipoSuministro);
+	}
+
+	@Override
+	public void modificarCuentaCorrienteSuministro(CuentaCorrienteSuministroDTO dto) {
+			ServiceFactory.getInstance().getDepositoService().modificarCuentaCorrienteSuministro(dto);
+	}
+
+	@Override
+	public ArrayList<SolicitudEnvioDTO> buscarSolicitudesEnvio(
+			Long idPuntoEntrega, Long idDeposito, int estado) {
+		// TODO Auto-generated method stub
+		return 	ServiceFactory.getInstance().getDepositoService().buscarSolicitudesEnvio(idPuntoEntrega,idDeposito,estado);
+	}
+
+	@Override
+	public void enviarSolicitudEnvio(SolicitudEnvioDTO dto) {
+		// TODO Auto-generated method stub
+		ServiceFactory.getInstance().getDepositoService().enviarSolicitudEnvio( dto);
+	}
+
+	@Override
+	public void recibirSolicitudEnvio(SolicitudEnvioDTO dto) {
+		// TODO Auto-generated method stub
+		ServiceFactory.getInstance().getDepositoService().recibirSolicitudEnvio(dto);
 	}
 
 }

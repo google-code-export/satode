@@ -27,4 +27,8 @@ public interface INecesidadAsync {
 	void modificarGestionNecesidad(GestionNecesidadDTO dto,
 			AsyncCallback<Void> callback);
 
+	void buscarNecesidades(Long idDesastre, Long idEstado,
+			boolean recursosLocales,
+			AsyncCallback<ArrayList<NecesidadDTO>> callback);
+
 }

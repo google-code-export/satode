@@ -19,6 +19,7 @@ public interface INecesidad extends RemoteService {
 	public void modificarNecesidad(NecesidadDTO dto);
 	public void eliminarNecesidad(NecesidadDTO dto);
 	public ArrayList<NecesidadDTO> buscarNecesidades(Long idDesastre,Long idEstado);
+	public ArrayList<NecesidadDTO> buscarNecesidades(Long idDesastre,Long idEstado,boolean recursosLocales);
 	
 	public GestionNecesidadDTO buscarGestionNecesidadPorNecesidad(Long idNecesidad);
 	public void nuevoGestionNecesidad(GestionNecesidadDTO dto);

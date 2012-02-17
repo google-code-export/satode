@@ -68,4 +68,12 @@ public class NecesidadesDAO extends DAOBase {
 		sess().update(necesidad);
 	}
 
+	public ArrayList<Necesidad> buscarNecesidades(Long idDesastre,
+			Long idEstado, boolean recursosLocales) {
+		List list=sess().createQuery("from Necesidad where( (estado="+idEstado+" or "+idEstado+"=0) and (desastre.id="+idDesastre+" or "+idDesastre+"=0) and recursosLocales="+recursosLocales+") order by fecha desc").list();
+		ArrayList<Necesidad> res= new ArrayList<Necesidad>(list);
+		
+		return res;
+	}
+
 }

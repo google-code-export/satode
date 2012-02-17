@@ -1,6 +1,5 @@
 package fing.satode.dominio;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -59,6 +58,7 @@ public class SolicitudEnvio {
 		for(SolicitudEnvioSuministroDTO sedto:dto.getSolicitudesEnvioSuministros()){
 			solicitudesEnvioSuministros.add(new SolicitudEnvioSuministro(sedto));
 		}
+		fecha=dto.getFecha();
 	}
 
 	public Long getId() {
@@ -126,5 +126,24 @@ public class SolicitudEnvio {
 		this.solicitudesEnvioSuministros = solicitudesSuministros;
 	}
 	
+	public SolicitudEnvioDTO getDTO(){
+		SolicitudEnvioDTO dto= new SolicitudEnvioDTO();
+		
+		dto.setId(id);
+		dto.setEstado(estado);
+		dto.setObservacionesEntrega(observacionesEntrega);
+		dto.setObservacionesEnvio(observacionesEnvio);
+		dto.setDeposito(deposito.getDTO());
+		dto.setPuntoEntrega(puntoEntrega.getDTO());
+		
+		HashSet<SolicitudEnvioSuministroDTO> solicitudesEnvioSuministrosDTO=new HashSet<SolicitudEnvioSuministroDTO>();
+		for(SolicitudEnvioSuministro s:solicitudesEnvioSuministros){
+			solicitudesEnvioSuministrosDTO.add(s.getDTO());
+		}
+		dto.setSolicitudesEnvioSuministros(solicitudesEnvioSuministrosDTO);
+		dto.setFecha(fecha);
+		
+		return dto;
+	}
 	
 }
