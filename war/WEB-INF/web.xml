@@ -28,6 +28,12 @@
     <servlet-class>fing.satode.ui.puntoReferencias.server.PuntoReferenciaImpl</servlet-class>
   </servlet>
   
+  <servlet-mapping>
+    <servlet-name>puntoReferencia</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.SolicitudEnvioList/puntoReferencia</url-pattern>
+  </servlet-mapping>
+  
+  
    <servlet-mapping>
     <servlet-name>puntoReferencia</servlet-name>
     <url-pattern>/fing.satode.ui.necesidades.NecesidadList/puntoReferencia</url-pattern>
@@ -55,6 +61,11 @@
     <servlet-name>deposito</servlet-name>
     <servlet-class>fing.satode.ui.deposito.server.DepositoImpl</servlet-class>
   </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>deposito</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.SolicitudEnvioList/deposito</url-pattern>
+  </servlet-mapping>
   
   
   <servlet-mapping>
