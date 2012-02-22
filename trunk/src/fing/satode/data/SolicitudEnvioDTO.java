@@ -96,6 +96,8 @@ public class SolicitudEnvioDTO implements Serializable, IsSerializable {
 			Set<SolicitudEnvioSuministroDTO> solicitudesEnvioSuministros) {
 		this.solicitudesEnvioSuministros = solicitudesEnvioSuministros;
 	}
+	
+	
 
 	
 	

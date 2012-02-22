@@ -18,13 +18,7 @@ public class EntryPointInicial implements EntryPoint  {
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
 
-		 // Create a command that will execute on menu item selection
-	    Command menuCommand = new Command() {
-	      
-	      public void execute() {
-	        Window.alert("COMMAND");
-	      }
-	    };
+		
 
 	    Command menuCommandSalir = new Command() {
 	    	 public void execute() {
@@ -74,6 +68,10 @@ public class EntryPointInicial implements EntryPoint  {
 	    	 public void execute() {
 	 	        setWindowHref("/GestionNecesidad.html");}};// Create a menu bar	 
 
+	 	Command menuCommandSolicitudEnvio = new Command() {
+	    	 public void execute() {
+	 	        setWindowHref("/SolicitudEnvioList.html");}};// Create a menu bar	 
+
 	 	MenuBar menu = new MenuBar();
 	    menu.setAutoOpen(true);
 	    menu.setWidth("100%");
@@ -93,9 +91,9 @@ public class EntryPointInicial implements EntryPoint  {
 	    MenuBar depositoMenu = new MenuBar(true);
 	    depositoMenu.setAnimationEnabled(true);
 	    menu.addItem(new MenuItem("Deposito", depositoMenu));
-	    depositoMenu.addItem("Tipo Suministro Mantenimiento", menuCommandTipoSuministro);
 	    depositoMenu.addItem("Donaciones", menuCommandDoaciones);
 	    depositoMenu.addItem("Stock Suministros", menuCommandStockSuministros);
+	    depositoMenu.addItem("Solicitudes de envio", menuCommandSolicitudEnvio);
 	    
 	    MenuBar desastresMenu = new MenuBar(true);
 	    desastresMenu.setAnimationEnabled(true);
@@ -117,6 +115,7 @@ public class EntryPointInicial implements EntryPoint  {
 	    menu.addItem(new MenuItem("Basicos", basicosMenu));
 	    basicosMenu.addItem("Punto Referencia Mantenimiento", menuCommandPuntoReferencia);
 	    basicosMenu.addItem("Deposito Mantenimiento", menuCommandDeposito);
+	    basicosMenu.addItem("Tipo Suministro Mantenimiento", menuCommandTipoSuministro);
 	    
 	    // Return the menu
 	    menu.ensureDebugId("cwMenuBar");
