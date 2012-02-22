@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.TipoCostoDTO;
 
 public interface IDesastreAsync {
 
@@ -15,5 +16,13 @@ public interface IDesastreAsync {
 	void eliminarDesastre(DesastreDTO dto, AsyncCallback<Void> callback);
 
 	void modificarDesastre(DesastreDTO dto, AsyncCallback<Void> callback);
+
+	void listaTipoCosto(AsyncCallback<ArrayList<TipoCostoDTO>> callback);
+
+	void nuevoTipoCosto(TipoCostoDTO dto, AsyncCallback<Void> callback);
+
+	void modificarTipoCosto(TipoCostoDTO dto, AsyncCallback<Void> callback);
+
+	void eliminarTipoCosto(TipoCostoDTO dto, AsyncCallback<Void> callback);
 
 }

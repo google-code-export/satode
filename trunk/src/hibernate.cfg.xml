@@ -66,5 +66,6 @@
 		<mapping class="fing.satode.dominio.ProblemasVivienda"  />
 		<mapping class="fing.satode.dominio.Hacinamiento"  />
 		<mapping class="fing.satode.dominio.Inundacion"  />
+		<mapping class="fing.satode.dominio.TipoCosto"  />
 		</session-factory>
 </hibernate-configuration>
