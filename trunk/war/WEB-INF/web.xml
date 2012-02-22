@@ -109,6 +109,12 @@
     <servlet-name>desastres</servlet-name>
     <url-pattern>/fing.satode.ui.desastres.DesastreList/desastres</url-pattern>
   </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>desastres</servlet-name>
+    <url-pattern>/fing.satode.ui.desastres.TipoCostoList/desastres</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>desastres</servlet-name>
     <url-pattern>/fing.satode.ui.necesidades.NecesidadList/desastres</url-pattern>
