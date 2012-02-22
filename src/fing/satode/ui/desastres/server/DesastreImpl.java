@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fing.satode.bl.base.ServiceFactory;
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.TipoCostoDTO;
 import fing.satode.ui.base.ServerImpl;
 import fing.satode.ui.desastres.client.IDesastre;
 
@@ -33,6 +34,22 @@ public class DesastreImpl extends ServerImpl implements IDesastre {
 	public void eliminarDesastre(DesastreDTO dto) {
 		// TODO Auto-generated method stub
 		ServiceFactory.getInstance().getDesastresService().eliminarDesastre(dto);
+	}
+
+	public ArrayList<TipoCostoDTO> listaTipoCosto() {
+		return ServiceFactory.getInstance().getDesastresService().listaTipoCosto();
+	}
+
+	public void nuevoTipoCosto(TipoCostoDTO dto) {
+		ServiceFactory.getInstance().getDesastresService().nuevoTipoCosto(dto);
+	}
+
+	public void modificarTipoCosto(TipoCostoDTO dto) {
+		ServiceFactory.getInstance().getDesastresService().modificarTipoCosto(dto);
+	}
+
+	public void eliminarTipoCosto(TipoCostoDTO dto) {
+		ServiceFactory.getInstance().getDesastresService().eliminarTipoCosto(dto);
 	}
 
 }
