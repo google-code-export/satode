@@ -96,5 +96,8 @@ public class DepositoDTO implements Serializable, IsSerializable {
 			this.departamento = departamento;
 		}
 		
+		public String toString(){
+			return id+"-"+departamento.getNombre()+"-"+ciudad.getNombre()+"-"+direccion;
+		}
 
 }

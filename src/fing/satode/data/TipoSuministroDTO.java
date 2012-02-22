@@ -45,5 +45,7 @@ public class TipoSuministroDTO implements Serializable, IsSerializable {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 	
-	
+	public String toString(){
+		return id+"-"+nombre+"-"+descripcion;
+	}
 }

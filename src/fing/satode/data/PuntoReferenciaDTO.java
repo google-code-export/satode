@@ -89,6 +89,8 @@ public class PuntoReferenciaDTO implements Serializable, IsSerializable {
 			this.tipo = tipo;
 		}
 
-		
+		public String toString(){
+			return id+"-"+departamento.getNombre()+"-"+ciudad.getNombre()+"-"+direccion;
+		}
 
 }

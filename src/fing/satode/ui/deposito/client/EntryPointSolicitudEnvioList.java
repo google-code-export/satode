@@ -20,6 +20,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
@@ -32,6 +33,7 @@ import fing.satode.data.DesastreDTO;
 import fing.satode.data.NecesidadDTO;
 import fing.satode.data.PuntoReferenciaDTO;
 import fing.satode.data.SolicitudEnvioDTO;
+import fing.satode.data.SolicitudEnvioSuministroDTO;
 import fing.satode.data.SolicitudSuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.ui.necesidades.client.INecesidad;
@@ -46,8 +48,8 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 	final Button buscarB = new Button("Buscar");
 	final VerticalPanel vertical = new VerticalPanel();
 	private ArrayList<DepositoDTO> depositoGlobal;
-	private ArrayList<TipoSuministroDTO> tipoSuministrosGlobal;
 	private ArrayList<PuntoReferenciaDTO> puntosEntregaGlobal;
+	private ArrayList<SolicitudEnvioDTO> solicitudesEnvio;
 	private Grid gridStock;
 	final Label modificarLabel= new Label("Modificar");
 	final Label eliminarLabel= new Label("Eliminar");
@@ -117,22 +119,7 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			}
 		});
 		
-		servidorDepositos.listaTipoSuministros(new AsyncCallback<ArrayList<TipoSuministroDTO>>() {
-			
-			@Override
-			public void onSuccess(ArrayList<TipoSuministroDTO> result) {
-				// TODO Auto-generated method stub
-			
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				caught.printStackTrace();
-				Window.alert("ERROR AJAX");
-				
-			}
-		});
+		
 		
 		estados=new ListBox();
 		estados.addItem("Todos","0");
@@ -166,7 +153,8 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			@Override
 			public void onSuccess(ArrayList<SolicitudEnvioDTO> result) {
 				// TODO Auto-generated method stub
-				Grid principal= new Grid(result.size()+1,6);
+				solicitudesEnvio=result;
+				Grid principal= new Grid(result.size()+1,7);
 				
 				principal.setWidget(0, 0, new Label("Deposito"));
 				principal.setWidget(0, 1, new Label("Fecha"));
@@ -174,8 +162,9 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 				principal.setWidget(0, 3, new Label("Punto Entrega"));
 				principal.setWidget(0, 4, new Label("Ver"));
 				principal.setWidget(0, 5, new Label("Enviar"));
+				principal.setWidget(0, 6, new Label("Recibir"));
 				
-				for(int i=0;i<6;i++){
+				for(int i=0;i<7;i++){
 					principal.getCellFormatter().setStyleName(0,i, "tbl-cab");
 				}
 				
@@ -212,9 +201,23 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 						
 					});
 					
+					final Button recibirB= new Button("Recibir");
+					
+					recibirB.addClickHandler(new ClickHandler() {
+						@Override
+						public void onClick(ClickEvent event) {
+							FormDialogBox dialog= new FormDialogBox(id, "recibir");
+							dialog.show();
+						}
+						
+					});
+					
 					principal.setWidget(row, 4, verI);
 					if(c.getEstado()==EstadoSolicitudEnvio.NUEVA){
 						principal.setWidget(row, 5, enviarB);	
+					}
+					if(c.getEstado()==EstadoSolicitudEnvio.ENVIADA){
+						principal.setWidget(row, 6, recibirB);	
 					}
 					
 					row++;
@@ -241,40 +244,103 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 		final VerticalPanel vertical= new VerticalPanel();
 		final Label label = new Label();
 	  
-	    final Grid gridFecha= new Grid(1,2);
+	    final Grid gridForm= new Grid(6,2);
+	    private Grid gridSuministros;
 	    
-	    final DatePicker datePicker = new DatePicker();
 	    final TextBox fecha= new TextBox();
-	
-   
+	    final TextBox deposito = new TextBox();
+	    final TextBox puntoEntrega=new TextBox();
+	    final TextArea observacionesEnvio=new TextArea();
+	    final TextArea observacionesRecibir = new TextArea();
+	    
 	    final Button cancelar= new Button("Cancelar");
 		final Button aceptar= new Button("Aceptar");
 		final Button nuevoB = new Button("Nuevo");
 		
-		public FormDialogBox(Long idNecesidad,String accion){
+		public FormDialogBox(Long idSolicitudEnvio,String accion){
 			a=accion;
-			id=idNecesidad;
+			id=idSolicitudEnvio;
 			
-			
-			datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
-		      public void onValueChange(ValueChangeEvent<Date> event) {
-		        Date date = (Date)event.getValue();
-		        DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
-		        String dateString = format.format(date);
-		        fecha.setText(dateString);
-		      }
-		    });
-		    datePicker.setValue(new Date(), true);
-	    	
-	    	if(a=="enviar") label.setText("Enviar Solicitud");
+			if(a=="enviar") label.setText("Enviar Solicitud");
 			if(a=="ver") label.setText("Ver Solicitud");
+			if(a=="recibir") label.setText("Recibir Solicitud de Envio");
 			
-			if ( a == "enviar" || a=="ver"){
+			if (  a == "recibir" || a == "enviar" || a=="ver"){
+				SolicitudEnvioDTO dto=null;
+				for(SolicitudEnvioDTO sol:solicitudesEnvio){
+					if(sol.getId().equals(id)){
+						dto=sol;
+					}
+				}
+				
+				DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+				fecha.setText(format.format(dto.getFecha()));
+				deposito.setText(dto.getDeposito().toString());
+				puntoEntrega.setText(dto.getPuntoEntrega().toString());
+				observacionesEnvio.setText(dto.getObservacionesEnvio());
+				observacionesRecibir.setText(dto.getObservacionesEntrega());
+				
+				gridSuministros= new Grid(dto.getSolicitudesEnvioSuministros().size()+1,2);
+				
+				gridSuministros.setWidget(0, 0, new Label("Tipo Suministro"));
+				gridSuministros.setWidget(0, 1, new Label("Cantidad"));
+				
+				for(int i=0;i<2;i++){
+					gridSuministros.getCellFormatter().setStyleName(0,i, "tbl-cab");
+				}
+				
+				int row=1;
+				for(SolicitudEnvioSuministroDTO solsum :dto.getSolicitudesEnvioSuministros()){
+					gridSuministros.setWidget(row, 0, new Label(solsum.getTipoSuministro().toString()));
+					gridSuministros.setWidget(row, 1, new Label(String.valueOf(solsum.getCantidad())));
+					row++;
+				}
+				
+				fecha.setEnabled(false);
+				deposito.setEnabled(false);
+				puntoEntrega.setEnabled(false);
+				
+				if(a!="recibir"){
+					observacionesRecibir.setEnabled(false);
+				}else{
+					observacionesEnvio.setEnabled(false);
+				}
 			 }
+			
+			if(a=="ver"){
+				observacionesEnvio.setEnabled(false);
+				aceptar.setEnabled(false);
+			}
+			observacionesRecibir.setVisibleLines(10);
+			observacionesRecibir.setWidth("250px");
+			observacionesEnvio.setVisibleLines(10);
+			observacionesEnvio.setWidth("250px");
+			deposito.setWidth("250px");
+			puntoEntrega.setWidth("250px");
+			
+			gridForm.setBorderWidth(1);
+			gridSuministros.setBorderWidth(1);
+			
+			gridForm.setWidget(0,0, new Label("Fecha"));
+			gridForm.setWidget(0,1, fecha);
+			
+			gridForm.setWidget(1,0, new Label("Deposito"));
+			gridForm.setWidget(1,1, deposito);
+			
+			gridForm.setWidget(2,0, new Label("Punto Entrega"));
+			gridForm.setWidget(2,1, puntoEntrega);
+			
+			gridForm.setWidget(3,0, new Label("Observaciones Envio"));
+			gridForm.setWidget(3,1, observacionesEnvio);
+			
+			gridForm.setWidget(4,0, new Label("Observaciones Entrega"));
+			gridForm.setWidget(4,1, observacionesRecibir);
+			
+			gridForm.setWidget(5,0, gridSuministros);
 			
 			
 			vertical.add(label);
-
+			vertical.add(gridForm);	
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
 			vertical.add(horizontal);
@@ -301,20 +367,65 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 		}
 
 		protected void procesar() {
-			SolicitudEnvioDTO dto=validar();
+			SolicitudEnvioDTO dto=null;
+			for(SolicitudEnvioDTO sol:solicitudesEnvio){
+				if(sol.getId().equals(id)){
+					dto=sol;
+				}
+			}
 			
 			if(dto!=null){
 				dto.setId(id);
 				
+				IDepositoAsync serverDeposito=GWT.create(IDeposito.class);
+				
 				if(a=="enviar"){
+					
+					dto.setObservacionesEnvio(observacionesEnvio.getText());
+					
+					serverDeposito.enviarSolicitudEnvio(dto,new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+							cargarLista();
+							hide();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+					
+				}
+				if(a=="recibir"){
+					
+					dto.setObservacionesEntrega(observacionesRecibir.getText());
+					
+					serverDeposito.recibirSolicitudEnvio(dto,new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+							// TODO Auto-generated method stub
+							cargarLista();
+							hide();
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
 					
 				}
 			}
 		}
 		
-		private SolicitudEnvioDTO validar(){
-			
-			return null;
-		}
+		
 	}
 }
