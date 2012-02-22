@@ -6,8 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.TipoCostoDTO;
 import fing.satode.dominio.Desastre;
+import fing.satode.dominio.TipoCosto;
 import fing.satode.pl.desastres.DesastreDAO;
+import fing.satode.pl.desastres.TipoCostoDAO;
 
 @Transactional
 public class DesastresService extends ServiceBase {
@@ -38,6 +41,34 @@ public class DesastresService extends ServiceBase {
 		// TODO Auto-generated method stub
 		Desastre desastre= new Desastre(dto);
 		DesastreDAO.getInstance().eliminarDesastre(desastre);
+	}
+	
+	public ArrayList<TipoCostoDTO> listaTipoCosto() {
+		// TODO Auto-generated method stub
+		ArrayList<TipoCostoDTO> listaDTOS= new ArrayList<TipoCostoDTO>();
+		ArrayList<TipoCosto> listaDes= TipoCostoDAO.getInstance().listaTipoCosto();
+		for(TipoCosto d: listaDes){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
+
+	public void nuevoTipoCosto(TipoCostoDTO dto) {
+		// TODO Auto-generated method stub
+		TipoCosto tipoCosto= new TipoCosto(dto);
+		TipoCostoDAO.getInstance().nuevoTipoCosto(tipoCosto);
+	}
+
+	public void modificarTipoCosto(TipoCostoDTO dto) {
+		// TODO Auto-generated method stub
+		TipoCosto tipoCosto= new TipoCosto(dto);
+		TipoCostoDAO.getInstance().modificarTipoCosto(tipoCosto);
+	}
+
+	public void eliminarTipoCosto(TipoCostoDTO dto) {
+		// TODO Auto-generated method stub
+		TipoCosto tipoCosto= new TipoCosto(dto);
+		TipoCostoDAO.getInstance().eliminarTipoCosto(tipoCosto);
 	}
 
 }
