@@ -106,7 +106,7 @@ public class EntryPointInicial implements EntryPoint  {
 	    MenuBar desastresMenu = new MenuBar(true);
 	    desastresMenu.setAnimationEnabled(true);
 	    menu.addItem(new MenuItem("Desastres", desastresMenu));
-	    desastresMenu.addItem("Declaracion", menuCommandDesastre);
+	    desastresMenu.addItem("Declaracion Desastres", menuCommandDesastre);
 	    desastresMenu.addItem("Ingreso Necesidades", menuCommandNecesidades);
 	    desastresMenu.addItem("Gestion Necesidades", menuCommandGestionNecesidad);
 	    desastresMenu.addItem("Gestion Costos", menuCommandCosto);
