@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
+import fing.satode.data.CostoDTO;
 import fing.satode.data.DesastreDTO;
 import fing.satode.data.TipoCostoDTO;
+import fing.satode.dominio.Costo;
 import fing.satode.dominio.Desastre;
 import fing.satode.dominio.TipoCosto;
+import fing.satode.pl.desastres.CostoDAO;
 import fing.satode.pl.desastres.DesastreDAO;
 import fing.satode.pl.desastres.TipoCostoDAO;
 
@@ -71,4 +74,37 @@ public class DesastresService extends ServiceBase {
 		TipoCostoDAO.getInstance().eliminarTipoCosto(tipoCosto);
 	}
 
+	public ArrayList<CostoDTO> listaCosto() {
+		// TODO Auto-generated method stub
+		ArrayList<CostoDTO> listaDTOS= new ArrayList<CostoDTO>();
+		ArrayList<Costo> listaDes= CostoDAO.getInstance().listaoCosto();
+		for(Costo d: listaDes){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
+
+	public void nuevoCosto(CostoDTO dto) {
+		Costo costo= new Costo(dto);
+		CostoDAO.getInstance().nuevoCosto(costo);
+	}
+
+	public void modificarCosto(CostoDTO dto) {
+		Costo costo= new Costo(dto);
+		CostoDAO.getInstance().modificarCosto(costo);
+	}
+
+	public void eliminarCosto(CostoDTO dto) {
+		Costo costo= new Costo(dto);
+		CostoDAO.getInstance().eliminarCosto(costo);
+	}
+
+	public ArrayList<CostoDTO> listaCosto(Long idDesastre) {
+		ArrayList<CostoDTO> listaDTOS= new ArrayList<CostoDTO>();
+		ArrayList<Costo> listaDes= CostoDAO.getInstance().listaoCosto(idDesastre);
+		for(Costo d: listaDes){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
 }

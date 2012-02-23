@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+import fing.satode.data.CostoDTO;
 import fing.satode.data.DesastreDTO;
 import fing.satode.data.TipoCostoDTO;
 
@@ -24,4 +25,10 @@ public interface IDesastre extends RemoteService {
 	public void nuevoTipoCosto(TipoCostoDTO dto);
 	public void modificarTipoCosto(TipoCostoDTO dto);
 	public void eliminarTipoCosto(TipoCostoDTO dto);
+
+	public ArrayList<CostoDTO> listaCosto();
+	public ArrayList<CostoDTO> listaCosto(Long idDesastre);
+	public void nuevoCosto(CostoDTO dto);
+	public void modificarCosto(CostoDTO dto);
+	public void eliminarCosto(CostoDTO dto);
 }

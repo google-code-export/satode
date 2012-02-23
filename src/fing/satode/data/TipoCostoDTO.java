@@ -38,5 +38,9 @@ public class TipoCostoDTO implements Serializable , IsSerializable{
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
+	public String toString(){
+		return id+"-"+nombre;
+	}
 
 }
