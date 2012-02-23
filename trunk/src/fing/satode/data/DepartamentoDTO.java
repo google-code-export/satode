@@ -32,5 +32,8 @@ public class DepartamentoDTO implements Serializable, IsSerializable{
 		this.nombre = nombre;
 	}
 	
+	public String toString(){
+		return nombre;
+	}
 
 }

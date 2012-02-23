@@ -3,6 +3,7 @@ package fing.satode.ui.desastres.server;
 import java.util.ArrayList;
 
 import fing.satode.bl.base.ServiceFactory;
+import fing.satode.data.CostoDTO;
 import fing.satode.data.DesastreDTO;
 import fing.satode.data.TipoCostoDTO;
 import fing.satode.ui.base.ServerImpl;
@@ -50,6 +51,32 @@ public class DesastreImpl extends ServerImpl implements IDesastre {
 
 	public void eliminarTipoCosto(TipoCostoDTO dto) {
 		ServiceFactory.getInstance().getDesastresService().eliminarTipoCosto(dto);
+	}
+
+	@Override
+	public ArrayList<CostoDTO> listaCosto() {
+		// TODO Auto-generated method stub
+		return ServiceFactory.getInstance().getDesastresService().listaCosto();
+	}
+
+	@Override
+	public void nuevoCosto(CostoDTO dto) {
+		ServiceFactory.getInstance().getDesastresService().nuevoCosto(dto);
+	}
+
+	@Override
+	public void modificarCosto(CostoDTO dto) {
+		ServiceFactory.getInstance().getDesastresService().modificarCosto(dto);
+	}
+
+	@Override
+	public void eliminarCosto(CostoDTO dto) {
+		ServiceFactory.getInstance().getDesastresService().eliminarCosto(dto);
+	}
+
+	@Override
+	public ArrayList<CostoDTO> listaCosto(Long idDesastre) {
+		return ServiceFactory.getInstance().getDesastresService().listaCosto(idDesastre);
 	}
 
 }

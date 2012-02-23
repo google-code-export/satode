@@ -1,8 +1,10 @@
 package fing.satode.data;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 
@@ -48,6 +50,11 @@ public class DesastreDTO implements Serializable,IsSerializable {
 
 	public void setEvento(EventoDTO evento) {
 		this.evento = evento;
+	}
+	
+	public String toString(){
+		DateTimeFormat format =  DateTimeFormat.getFormat("dd/MM/yyyy");
+		return id+"-"+format.format(fechaDeclaracion)+"-"+evento.getDepartamento();
 	}
 	
 	
