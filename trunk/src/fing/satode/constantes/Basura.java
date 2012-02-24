@@ -15,7 +15,7 @@ public class Basura implements Serializable, IsSerializable{
 	public final static int OTROS=4;
 	
 	
-	public static String SERVICIOMUNICIPAL_TXT= "Servicio de recolección municipal";
+	public static String SERVICIOMUNICIPAL_TXT= "Servicio de recolecci\u00F3n municipal";
 	public static String CONTENEDORES_TXT= "Contenedores";
 	public static String SERVICIOVECINOS_TXT= "Servicio organizado por los vecinos";
 	public static String OTROS_TXT= "Otro";

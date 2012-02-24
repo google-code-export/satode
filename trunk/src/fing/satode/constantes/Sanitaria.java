@@ -16,7 +16,7 @@ public class Sanitaria implements Serializable, IsSerializable{
 	
 	
 	public static String REDGENERAL_TXT= "Red General";
-	public static String FOSASEPTICA_TXT= "Fosa séptica- Pozo negro ";
+	public static String FOSASEPTICA_TXT= "Fosa s\u00E9ptica- Pozo negro ";
 	public static String ENSUPERFICIE_TXT= "En superficie";
 	public static String OTROS_TXT= "Otro";
 	

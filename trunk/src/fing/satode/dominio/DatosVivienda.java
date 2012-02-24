@@ -61,6 +61,7 @@ public class DatosVivienda implements Serializable{
 	
 	//Atributos
 	private String obsMaterialParedes;
+	private String obsMaterialPiso;
 	private String obsProcedenciaAgua;
 	private String obsSanitaria;
 	private String obsBasura;
@@ -99,6 +100,7 @@ public class DatosVivienda implements Serializable{
 		obsSanitaria= dto.getObsSanitaria();
 		obsBasura= dto.getObsBasura();
 		obsMaterialTecho= dto.getObsMaterialTecho();
+		obsMaterialPiso= dto.getObsMaterialPiso();
 		
 	}
 
@@ -132,6 +134,7 @@ public class DatosVivienda implements Serializable{
 		dto.setObsSanitaria(obsSanitaria );
 		dto.setObsBasura( obsBasura);
 		dto.setObsMaterialTecho(obsMaterialTecho);
+		dto.setObsMaterialPiso(obsMaterialPiso);
 		return dto;
 	}
 
@@ -165,6 +168,16 @@ public class DatosVivienda implements Serializable{
 
 	public void setHacinamiento(Hacinamiento hacinamiento) {
 		this.hacinamiento = hacinamiento;
+	}
+	
+	
+
+	public String getObsMaterialPiso() {
+		return obsMaterialPiso;
+	}
+
+	public void setObsMaterialPiso(String obsMaterialPiso) {
+		this.obsMaterialPiso = obsMaterialPiso;
 	}
 
 	public Inundacion getInundacion() {

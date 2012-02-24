@@ -18,8 +18,8 @@ public class MaterialTecho implements Serializable, IsSerializable{
 	public final static int OTROS=7;
 	
 	
-	public static String LOSAHORMIGONCONPROTECCION_TXT= "Losa de hormigón con protección";
-	public static String LOSAHORMIGONSINPROTECCION_TXT= "Losa de hormigón sin protección";
+	public static String LOSAHORMIGONCONPROTECCION_TXT= "Losa de hormig\u00F3n con protecci\u00F3n";
+	public static String LOSAHORMIGONSINPROTECCION_TXT= "Losa de hormig\u00F3n sin protecci\u00F3n";
 	public static String CHAPACONCIELORRASO_TXT= "Chapas de zinc con cielorraso";
 	public static String CHAPASINCIELORRASO_TXT= "Chapas de zinc con cielorraso";
 	public static String PAJA_TXT= "Paja";

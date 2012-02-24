@@ -20,8 +20,8 @@ public class MaterialPiso implements Serializable, IsSerializable{
 	
 	public static String MADERA_TXT= "Madera";
 	public static String BALDOSA_TXT= "Baldosa";
-	public static String MONOLITICO_TXT= "Monolítico";
-	public static String HORMIGON_TXT= "Hormigón";
+	public static String MONOLITICO_TXT= "Monol\u00EDtico";
+	public static String HORMIGON_TXT= "Hormig\u00F3n";
 	public static String LADRILLO_TXT= "Ladrillo";
 	public static String TIERRAOCASCOTEO_TXT= "Tierra o cascote";
 	public static String OTROS_TXT= "Otro";

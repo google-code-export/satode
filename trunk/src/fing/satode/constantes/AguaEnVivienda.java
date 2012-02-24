@@ -15,7 +15,7 @@ public class AguaEnVivienda implements Serializable, IsSerializable{
 	
 		
 	public static String SI_TXT= "Si";
-	public static String SOLOTERRENO_TXT= "Solo se inundó el terreno";
+	public static String SOLOTERRENO_TXT= "Solo se inund\u00F3 el terreno";
 	public static String OTRO_TXT= "Otro";
 		
 	public static String getTXT(int constante){
