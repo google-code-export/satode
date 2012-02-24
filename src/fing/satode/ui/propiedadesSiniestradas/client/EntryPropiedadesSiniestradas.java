@@ -1519,7 +1519,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 
 		private ParcelaDTO validar() {
 			
-			ParcelaDTO dto = new ParcelaDTO();
+			ParcelaDTO dto = parcelaDTO;
 
 			
 			 if(direccion.getText().trim().length()==0){
