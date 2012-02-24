@@ -68,5 +68,6 @@
 		<mapping class="fing.satode.dominio.Inundacion"  />
 		<mapping class="fing.satode.dominio.TipoCosto"  />
 		<mapping class="fing.satode.dominio.Costo"  />
+		<mapping class="fing.satode.dominio.CalculoIndice"  />
 		</session-factory>
 </hibernate-configuration>
