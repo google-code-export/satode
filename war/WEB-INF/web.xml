@@ -187,7 +187,8 @@
   
    <servlet-mapping>
     <servlet-name>propiedadesSiniestradas</servlet-name>
-    <url-pattern>/fing.satode.ui.propiedadesSiniestradas.PropiedadesSiniestradasList/propiedadesSiniestradas</url-pattern>
+    <url-pattern>/fing.satode.ui.propiedadesSiniestradas.PropiedeadesSiniestradasList/propiedadesSiniestradas</url-pattern>
+    			 
   </servlet-mapping>
  
  
@@ -197,6 +198,10 @@
   </servlet>
   
   
+  <servlet-mapping>
+    <servlet-name>basicos</servlet-name>
+    <url-pattern>/fing.satode.ui.propiedadesSiniestradas.PropiedeadesSiniestradasList/basicos</url-pattern>
+  </servlet-mapping>
   
   
   <servlet-mapping>
