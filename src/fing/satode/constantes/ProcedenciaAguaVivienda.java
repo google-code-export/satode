@@ -16,11 +16,11 @@ public class ProcedenciaAguaVivienda implements Serializable, IsSerializable{
 	public final static int NOACCESOMAS100M=5;
 	
 	
-	public static String CANIERIADENTROVIVIENDA_TXT= "Cañería dentro de la vivienda ";
-	public static String CANIERIAFUERAVIVIENDA_TXT= "Cañería fuera de la vivienda...";
+	public static String CANIERIADENTROVIVIENDA_TXT= "Ca\u00F1er\u00EDa dentro de la vivienda ";
+	public static String CANIERIAFUERAVIVIENDA_TXT= "Ca\u00F1er\u00EDa fuera de la vivienda...";
 	public static String OTROSMEDIOS_TXT= "Otros medios";
 	public static String NOACCESO100M_TXT= "Acceso fuera de la vivienda a menos de 100m";
-	public static String NOACCESOMAS100M_TXT= "Acceso fuera de la vivienda a más de 100m";
+	public static String NOACCESOMAS100M_TXT= "Acceso fuera de la vivienda a m\u00E1s de 100m";
 	
 	public static String getTXT(int constante){
 		switch (constante) {

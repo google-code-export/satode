@@ -48,6 +48,7 @@ private Long id;
 	private String obsSanitaria;
 	private String obsBasura;
 	private String obsMaterialTecho;
+	private String obsMaterialPiso;
 	
 	public Long getId() {
 		return id;
@@ -87,6 +88,15 @@ private Long id;
 	}
 	public int getPropietarioOtras() {
 		return propietarioOtras;
+	}
+	
+	
+	
+	public String getObsMaterialPiso() {
+		return obsMaterialPiso;
+	}
+	public void setObsMaterialPiso(String obsMaterialPiso) {
+		this.obsMaterialPiso = obsMaterialPiso;
 	}
 	public void setPropietarioOtras(int propietarioOtras) {
 		this.propietarioOtras = propietarioOtras;

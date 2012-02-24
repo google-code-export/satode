@@ -23,14 +23,14 @@ public class TenenciaVivienda implements Serializable, IsSerializable{
 	
 		
 	public static String PROPIETARIOSEHIZOLAVIV_TXT= "Propietario  se hizo la vivienda";
-	public static String PROPIETARIOPAGANDO_TXT= "Propietario la está pagando";
-	public static String PROPIETARIOPAGO_TXT= "Propietario ya la pagó";
-	public static String PROPIETARIOHERENCIA_TXT= "Propietario le donaron o heredó la vivienda";
+	public static String PROPIETARIOPAGANDO_TXT= "Propietario la est\u00E1 pagando";
+	public static String PROPIETARIOPAGO_TXT= "Propietario ya la pag\u00F3";
+	public static String PROPIETARIOHERENCIA_TXT= "Propietario le donaron o hered\u00F3 la vivienda";
 	public static String INQUILINO_TXT= "Inquilino";
-	public static String OCUPANTERELACIONDEPENDENCIA_TXT= "Ocupante con relación de dependencia.";
-	public static String OCUPANTEPRESTAMO_TXT= "Ocupante préstamo, permiso, cesión";
+	public static String OCUPANTERELACIONDEPENDENCIA_TXT= "Ocupante con relaci\u00F3n de dependencia.";
+	public static String OCUPANTEPRESTAMO_TXT= "Ocupante pr\u00E9stamo, permiso, cesi\u00F3n";
 	public static String OCUPANTESINPERMISO_TXT= "Ocupante de hecho (sin permiso del propietario)";
-	public static String OTRASITUACION_TXT= "Otra situación";
+	public static String OTRASITUACION_TXT= "Otra situaci\u00F3n";
 	public static String NOSABENOCONTESTA_TXT= "ns/nc";
 		
 	public static String getTXT(int constante){

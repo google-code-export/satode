@@ -16,7 +16,7 @@ public class ConservacionVivienda implements Serializable, IsSerializable{
 	
 	
 	public static String BUENA_TXT= "Buena";
-	public static String NECESITAREPARACIONESPEQ_TXT= "Necesita reparaciones pequeñas";
+	public static String NECESITAREPARACIONESPEQ_TXT= "Necesita reparaciones peque\u00F1as";
 	public static String NECESITAREPARACIONESMAYORES_TXT= "Necesita reparaciones importantes";
 	public static String VIVIENDARUINOSA_TXT= "Vivienda ruinosa";
 	

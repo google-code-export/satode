@@ -14,7 +14,7 @@ public class Mudarse implements Serializable, IsSerializable{
 	public final static int DEPENDE=3;
 	
 		
-	public static String MEQUEDO_TXT= "Me quedo aquí";
+	public static String MEQUEDO_TXT= "Me quedo aqu\u00ED";
 	public static String MEMUDO_TXT= "Me mudo";
 	public static String DEPENDE_TXT= "Depende";
 		

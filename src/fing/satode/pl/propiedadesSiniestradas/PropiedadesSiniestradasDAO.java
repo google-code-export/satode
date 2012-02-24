@@ -31,7 +31,7 @@ public class PropiedadesSiniestradasDAO extends DAOBase {
 	}
 	
 		public ArrayList<Parcela> listaParcelas() {
-		List list=sess().createQuery("from Parcelas order by id").list();
+		List list=sess().createQuery("from Parcela order by departamento.nombre").list();
 		ArrayList<Parcela> res= new ArrayList<Parcela>(list);
 		
 		return res;

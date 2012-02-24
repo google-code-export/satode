@@ -28,7 +28,7 @@ public class PropietarioOtras implements Serializable, IsSerializable{
 	public static String OTRAVIVIENDAMISMOBARRIO_TXT= "Otra vivienda en esta localidad (mismo barrio)";
 	public static String OTRAVIVIENDAOTROBARRIO_TXT= "Otra vivienda en esta localidad (otro barrio)";
 	public static String OTRAVIVIENDAOTRALOCALIDAD_TXT= "Otra vivienda en otra localidad";
-	public static String OTRASITUACION_TXT= "Otra situación";
+	public static String OTRASITUACION_TXT= "Otra situaci\u00F3n";
 	public static String NOSABENOCONTESTA_TXT= "ns/nc";
 		
 	public static String getTXT(int constante){

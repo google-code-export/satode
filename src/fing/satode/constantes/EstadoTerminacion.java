@@ -16,8 +16,8 @@ public class EstadoTerminacion implements Serializable, IsSerializable{
 	
 	
 	public static String TERMINADA_TXT= "Terminada";
-	public static String FALTADETALLES_TXT= "Faltan detalles de terminación";
-	public static String CONCARENCIAS_TXT= "con carencias de terminación";
+	public static String FALTADETALLES_TXT= "Faltan detalles de terminaci\u00F3n";
+	public static String CONCARENCIAS_TXT= "con carencias de terminaci\u00F3n";
 	public static String VIVIENDAENOBRA_TXT= "vivienda en obra";
 	
 	public static String getTXT(int constante){

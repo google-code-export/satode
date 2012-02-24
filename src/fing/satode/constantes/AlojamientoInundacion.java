@@ -14,7 +14,7 @@ public class AlojamientoInundacion implements Serializable, IsSerializable{
 	public final static int OTRO=3;
 	
 		
-	public static String INSTITUCION_TXT= "Institución";
+	public static String INSTITUCION_TXT= "Instituci\u00F3n";
 	public static String FAMILIAR_TXT= "Casa de un familiar.";
 	public static String OTRO_TXT= "Otro";
 		

@@ -18,7 +18,7 @@ public class CategoriaVivienda implements Serializable, IsSerializable{
 	public static String SUNTUARIA_TXT= "Suntuaria";
 	public static String CONFORTABLE_TXT= "Confortable";
 	public static String BUENA_TXT= "Buena";
-	public static String ECONOMICA_TXT= "Económica";
+	public static String ECONOMICA_TXT= "Econ\u00F3mica";
 	public static String PRECARIA_TXT= "Precaria";
 	
 	public static String getTXT(int constante){
