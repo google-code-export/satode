@@ -36,5 +36,6 @@
 	<bean id="depositoService" class="fing.satode.bl.deposito.DepositoService" scope="singleton">	</bean>
 	<bean id="necesidadService" class="fing.satode.bl.necesidades.NecesidadService" scope="singleton">	</bean>
 	<bean id="propiedadesSiniestradasService" class="fing.satode.bl.propiedadesSiniestradas.PropiedadesSinietradasService" scope="singleton">	</bean>
+	<bean id="indicesService" class="fing.satode.bl.indices.IndicesService" scope="singleton">	</bean>
 		      
 </beans>
