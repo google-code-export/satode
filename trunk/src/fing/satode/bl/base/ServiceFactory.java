@@ -61,7 +61,7 @@ public class ServiceFactory {
 	}
 	
 	public PropiedadesSinietradasService getPropiedadesSiniestradasService() {
-		return   (PropiedadesSinietradasService) beanFactory.getBean("propiedadesSinietradasService");
+		return   (PropiedadesSinietradasService) beanFactory.getBean("propiedadesSiniestradasService");
 	}
 	
 	public IndicesService getIndicesService() {
