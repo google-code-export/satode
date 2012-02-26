@@ -61,6 +61,7 @@ import fing.satode.data.UnidadParcelaDTO;
 import fing.satode.dominio.TipoParcela;
 import fing.satode.ui.deposito.client.IDeposito;
 import fing.satode.ui.deposito.client.IDepositoAsync;
+import fing.satode.ui.deposito.client.EntryPointSuministro.FormDialogSuministroBox;
 import fing.satode.ui.general.client.IBasicos;
 import fing.satode.ui.general.client.IBasicosAsync;
 import fing.satode.ui.general.data.KeyNumeric;
@@ -74,6 +75,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 	private Grid parcelas;
 	public static ParcelaDTO parcelaDTO;
 	public static Grid unidadesParcelas;
+	public static Grid gridUnidadesParcelas= new Grid(1,2);
 	private static Long numerador = 10000000000L;
 	private static Long baseNumerador = 10000000000L;
 	final Label modificarLabel = new Label("Modificar");
@@ -206,12 +208,13 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		private String a;
 		private Long id;
 		final HorizontalPanel horizontal1 = new HorizontalPanel();
-		final HorizontalPanel horizontal2 = new HorizontalPanel();
+		final HorizontalPanel horizontal3 = new HorizontalPanel();
 		final CaptionPanel panelParcelas = new CaptionPanel("Datos de identificaci\u00F3n");
 		final CaptionPanel panelDatosVivienda = new CaptionPanel("Datos de la vivienda");
 		final CaptionPanel panelProblemasVivienda = new CaptionPanel("Problemas en la vivienda");
 		final CaptionPanel panelInundacion = new CaptionPanel("Inundacion");
 		final CaptionPanel panelHacinamineto = new CaptionPanel("Hacinamineto");
+		final CaptionPanel panelUnidadesParcela = new CaptionPanel("Unidades de la parcela");
 		final VerticalPanel vertical1 = new VerticalPanel();
 		final VerticalPanel vertical2 = new VerticalPanel();
 		final VerticalPanel vertical3 = new VerticalPanel();
@@ -231,6 +234,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		final ListBox ciudades = new ListBox();
 		final Button cancelar = new Button("Cancelar");
 		final Button aceptar = new Button("Aceptar");
+		final Button nuevoB = new Button("Nuevo");
+		
 
 		// UnidadesParcelas
 		final TextBox descripcion = new TextBox();
@@ -320,7 +325,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				panelTitulo.setTitle("Nueva Parcela");
 				panelTitulo.setCaptionText("Nueva Parcela");
 			}
-
+			
+			
 			gridIzqParcelas.setWidget(0, 0, new Label("Direccion"));
 			gridIzqParcelas.setWidget(1, 0, new Label("Telefono"));
 			gridIzqParcelas.setWidget(2, 0, new Label("Departamento"));
@@ -577,7 +583,17 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			}
 
 			unidadesParcelas.setBorderWidth(1);
-
+			
+			nuevoB.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					FormDialogBoxUnidadParcela dialog= new FormDialogBoxUnidadParcela(null, "nuevo");
+					dialog.show();
+				}
+			});
+			
+			
 			ocupacion.addItem("Seleccionar", "0");
 			for (ItemConstante i : Ocupacion.getItems()) {
 				ocupacion.addItem(i.getTexto(), String.valueOf(i.getCodigo()));
@@ -772,10 +788,11 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			cntDiasFuera.addKeyboardListener(new KeyNumeric());
 			anios.addKeyboardListener(new KeyNumeric());
 			alturaAgua.addKeyboardListener(new KeyNumeric());
+			
+			parcelaDTO = new ParcelaDTO();
 
 			if (a == "modificar" || a == "eliminar") {
 
-				parcelaDTO = null;
 				for (ParcelaDTO p : parcelaGlobal) {
 					if (p.getId().equals(id)) {
 						parcelaDTO = p;
@@ -822,7 +839,6 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						"Nivel de Piso Terminado"));
 				unidadesParcelas.setWidget(0, 4, new Label("Modificar"));
 				unidadesParcelas.setWidget(0, 5, new Label("Eliminar"));
-				//vertical.add(unidadesParcelas);
 				for (int i = 0; i < 6; i++) {
 					unidadesParcelas.getCellFormatter().setStyleName(0, i,
 							"tbl-cab");
@@ -869,6 +885,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 					}
 					row++;
 				}
+				gridUnidadesParcelas.setWidget(0, 0, unidadesParcelas);
+				
 
 				obsMaterialTecho.setText(parcelaDTO.getTipoParcela()
 						.getDatosVivienda().getObsMaterialTecho());
@@ -1399,8 +1417,11 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				persepcionVivienda.setEnabled(false);
 				aguaEnVivienda.setEnabled(false);
 
-			}
-			;
+			};
+			
+			
+			
+			
 			vertical1.add(panelDatosVivienda);
 			panelParcelas.add(gridIzqParcelas);
 			panelDatosVivienda.add(gridIzqDatosViv);
@@ -1416,14 +1437,17 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			horizontal1.add(vertical2);
 			panelTitulo.add(vertical);
 			vertical.add(horizontal1);
-			vertical.add(unidadesParcelas);
-
+			vertical.add(panelUnidadesParcela);
+			panelUnidadesParcela.add(gridUnidadesParcelas);
+			gridUnidadesParcelas.setWidget(0, 0, unidadesParcelas);
+			gridUnidadesParcelas.setWidget(0, 1, nuevoB);
+			
 			
 			// Agregar Grilal Fotos
 
-			horizontal2.add(aceptar);
-			horizontal2.add(cancelar);
-			vertical.add(horizontal2);
+			horizontal3.add(aceptar);
+			horizontal3.add(cancelar);
+			vertical.add(horizontal3);
 
 			cancelar.addClickHandler(new ClickHandler() {
 
@@ -1437,7 +1461,6 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 
 				@Override
 				public void onClick(ClickEvent event) {
-					// TODO Auto-generated method stub
 					FormDialogBox.this.procesar();
 				}
 			});
@@ -1841,28 +1864,13 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 		}
 
 		private Boolean getBoolean(String text) {
-			// TODO Auto-generated method stub
 			if(text==null || text.trim().length()==0 || text.equals("NO")){
 				return false;
 			}
 			return true;
 		}
 
-		private int getInt(String text) {
-			// TODO Auto-generated method stub
-			if(text==null || text.trim().length()==0){
-				return 0;
-			}
-			return Integer.valueOf(text);
-		}
-
-		private Float getFloat(String text) {
-			// TODO Auto-generated method stub
-			if(text==null || text.trim().length()==0){
-				return 0F;
-			}
-			return Float.valueOf(text);
-		}
+	
 	}
 
 	public class FormDialogBoxUnidadParcela extends DialogBox {
@@ -2024,7 +2032,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 					unidadesParcelas.setWidget(row, 2,
 							new Label(String.valueOf(u.getMetros2afectados())));
 					unidadesParcelas.setWidget(row, 3,
-							new Label(String.valueOf(u.getNivelPiso())));
+							new Label(NivelPiso.getTXT(u.getNivelPiso())));
 					final UnidadParcelaDTO uni = u;
 					final Image modificarI = new Image("/images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
@@ -2052,6 +2060,9 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 					unidadesParcelas.setWidget(row, 5, eliminarI);
 					row++;
 				}
+				gridUnidadesParcelas.setWidget(0, 0, unidadesParcelas);
+				
+			
 				hide();
 			}
 		}

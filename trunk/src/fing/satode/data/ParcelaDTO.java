@@ -1,6 +1,7 @@
 package fing.satode.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -18,6 +19,12 @@ public class ParcelaDTO implements Serializable, IsSerializable {
 	private UsuarioDTO usuario;
 	private String  direccion;
 	private String telefono;
+	
+	
+	public ParcelaDTO(){
+		unidadesParcelas= new ArrayList<UnidadParcelaDTO>();
+		fotos= new ArrayList<FotoDTO>();
+	}
 	
 	public Long getId() {
 		return id;
