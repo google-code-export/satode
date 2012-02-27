@@ -3,6 +3,7 @@ package fing.satode.dominio;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,15 +29,15 @@ public class DatosVivienda implements Serializable{
 	
 	private int conservacionVivienda;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="problemasvivienda_id")
 	private ProblemasVivienda problemasVivienda;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="hacinamiento_id")
 	private Hacinamiento hacinamiento;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="inundacion_id")
 	private Inundacion inundacion;
 	

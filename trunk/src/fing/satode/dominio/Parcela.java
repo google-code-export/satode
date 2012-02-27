@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -35,29 +38,13 @@ public class Parcela implements Serializable{
 	@Id @GeneratedValue
 	private Long id;
 	
-	@OneToMany(
-	        targetEntity=fing.satode.dominio.Foto.class,
-	        cascade={CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinTable(
-        name="fotos",
-        joinColumns=@JoinColumn(name="id"),
-        inverseJoinColumns=@JoinColumn(name="parcela_id")
-    )
-	private Collection<Foto> fotos;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+   private Set<Foto> fotos;
 	
-	@OneToMany(
-	        targetEntity=fing.satode.dominio.Foto.class,
-	        cascade={CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinTable(
-        name="unidadesparcela",
-        joinColumns=@JoinColumn(name="id"),
-        inverseJoinColumns=@JoinColumn(name="parcela_id")
-    )
-	private Collection<UnidadParcela> unidadesParcelas;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private Set<UnidadParcela> unidadesParcelas;
 	
-	@ManyToOne
+	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="tipoparcela_id")
 	private TipoParcela tipoParcela;
 	
@@ -82,13 +69,104 @@ public class Parcela implements Serializable{
 	
 	public Parcela(){}
 	
+	
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public Set<Foto> getFotos() {
+		return fotos;
+	}
+
+
+	public void setFotos(Set<Foto> fotos) {
+		this.fotos = fotos;
+	}
+
+
+	public Set<UnidadParcela> getUnidadesParcelas() {
+		return unidadesParcelas;
+	}
+
+
+	public void setUnidadesParcelas(Set<UnidadParcela> unidadesParcelas) {
+		this.unidadesParcelas = unidadesParcelas;
+	}
+
+
+	public TipoParcela getTipoParcela() {
+		return tipoParcela;
+	}
+
+
+	public void setTipoParcela(TipoParcela tipoParcela) {
+		this.tipoParcela = tipoParcela;
+	}
+
+
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
+
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+
 	public Parcela(ParcelaDTO dto){
 		id=dto.getId();
-		fotos= new ArrayList<Foto>();
+		fotos= new HashSet<Foto>();
 		for (FotoDTO fotoDto : dto.getFotos()) {
 			fotos.add(new Foto(fotoDto));
 		}
-		unidadesParcelas = new ArrayList<UnidadParcela>();
+		unidadesParcelas = new HashSet<UnidadParcela>();
 		for( UnidadParcelaDTO parcelaDto: dto.getUnidadesParcelas()){
 			unidadesParcelas.add(new UnidadParcela(parcelaDto));
 		}
