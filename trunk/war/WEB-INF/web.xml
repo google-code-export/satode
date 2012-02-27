@@ -144,6 +144,11 @@
     <url-pattern>/fing.satode.ui.desastres.DesastreList/usuario</url-pattern>
   </servlet-mapping>
   
+   <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.propiedadesSiniestradas.PropiedeadesSiniestradasList/usuario</url-pattern>
+  </servlet-mapping>
+  
   <servlet-mapping>
     <servlet-name>usuarios</servlet-name>
     <url-pattern>/fing.satode.ui.necesidades.NecesidadList/usuario</url-pattern>
