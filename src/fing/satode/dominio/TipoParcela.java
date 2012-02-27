@@ -2,6 +2,7 @@ package fing.satode.dominio;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,12 +27,44 @@ public class TipoParcela implements Serializable{
 	
 	private String otrosUsos;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="datosvivienda_id")
 	private DatosVivienda datosVivienda;
 	
 	public TipoParcela(){}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public boolean isVivienda() {
+		return vivienda;
+	}
+
+	public void setVivienda(boolean vivienda) {
+		this.vivienda = vivienda;
+	}
+
+	public String getOtrosUsos() {
+		return otrosUsos;
+	}
+
+	public void setOtrosUsos(String otrosUsos) {
+		this.otrosUsos = otrosUsos;
+	}
+
+	public DatosVivienda getDatosVivienda() {
+		return datosVivienda;
+	}
+
+	public void setDatosVivienda(DatosVivienda datosVivienda) {
+		this.datosVivienda = datosVivienda;
+	}
+
 	public TipoParcela(TipoParcelaDTO dto){
 		id = dto.getId();
 		vivienda = dto.isVivienda();

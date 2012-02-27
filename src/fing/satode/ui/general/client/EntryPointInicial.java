@@ -79,6 +79,10 @@ public class EntryPointInicial implements EntryPoint  {
 	 	Command menuCommandCosto = new Command() {
 	    	 public void execute() {
 	 	        setWindowHref("/CostoList.html");}};// Create a menu bar	 
+	 	Command  menuCommandPropiedadesSinistradas = new Command() {
+	 		    	 public void execute() {
+	 		 	        setWindowHref("/PropiedadesSiniestradasList.html");}};// Create a menu bar	         
+	 	        
 
 	 	MenuBar menu = new MenuBar();
 	    menu.setAutoOpen(true);
@@ -95,6 +99,7 @@ public class EntryPointInicial implements EntryPoint  {
         eventosMenu.setAnimationEnabled(true);
 	    menu.addItem(new MenuItem("Registros", eventosMenu));
 	    eventosMenu.addItem("Eventos", menuCommandEvento);
+	    eventosMenu.addItem("Propiedades Siniestradas", menuCommandPropiedadesSinistradas);
 	    
 	    MenuBar depositoMenu = new MenuBar(true);
 	    depositoMenu.setAnimationEnabled(true);

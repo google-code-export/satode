@@ -34,8 +34,8 @@ public class Departamento implements Serializable{
 	    )
 	    @JoinTable(
 	        name="ciudades",
-	        joinColumns=@JoinColumn(name="id"),
-	        inverseJoinColumns=@JoinColumn(name="departamento_id")
+	        joinColumns=@JoinColumn(name="departamento_id"),
+	        inverseJoinColumns=@JoinColumn(name="id")
 	    )
 	private Collection<Ciudad> ciudades;
 	 

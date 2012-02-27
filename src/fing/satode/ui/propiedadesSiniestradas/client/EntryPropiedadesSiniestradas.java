@@ -58,6 +58,7 @@ import fing.satode.data.ProblemasViviendaDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoParcelaDTO;
 import fing.satode.data.UnidadParcelaDTO;
+import fing.satode.data.UsuarioDTO;
 import fing.satode.dominio.TipoParcela;
 import fing.satode.ui.deposito.client.IDeposito;
 import fing.satode.ui.deposito.client.IDepositoAsync;
@@ -65,11 +66,14 @@ import fing.satode.ui.deposito.client.EntryPointSuministro.FormDialogSuministroB
 import fing.satode.ui.general.client.IBasicos;
 import fing.satode.ui.general.client.IBasicosAsync;
 import fing.satode.ui.general.data.KeyNumeric;
+import fing.satode.ui.usuarios.client.IUsuario;
+import fing.satode.ui.usuarios.client.IUsuarioAsync;
 
 public class EntryPropiedadesSiniestradas implements EntryPoint {
 
 	final Button nuevoB = new Button("Nuevo");
 	final VerticalPanel vertical = new VerticalPanel();
+	private UsuarioDTO usuarioGlobal;
 	private ArrayList<ParcelaDTO> parcelaGlobal;
 	private ArrayList<DepartamentoDTO> departamentosGlobal;
 	private Grid parcelas;
@@ -101,6 +105,24 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		RootPanel.get("parcelas").clear();
 		vertical.clear();
 		RootPanel.get("parcelas").add(vertical);
+		
+		IUsuarioAsync servidorUsuario= GWT.create(IUsuario.class);
+		
+		servidorUsuario.getUsuarioLogin(new AsyncCallback<UsuarioDTO>() {
+			
+			@Override
+			public void onSuccess(UsuarioDTO result) {
+				// TODO Auto-generated method stub
+				usuarioGlobal=result;
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				caught.printStackTrace();
+				Window.alert("ERROR AJAX");
+			}
+		});
 
 		IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas = GWT
 				.create(IPropiedadesSiniestradas.class);
@@ -1416,6 +1438,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				alojamientoInundacion.setEnabled(false);
 				persepcionVivienda.setEnabled(false);
 				aguaEnVivienda.setEnabled(false);
+				nuevoB.setEnabled(false);
 
 			};
 			
@@ -1483,7 +1506,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				}
 				dto.setId(id);
 				if(a=="modificar"){
-					
+					dto.setUsuario(usuarioGlobal);
 					IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropiedadesSiniestradas.class);
 					
 					servidorPropiedadesSiniestradas.modificarParcela(dto,new AsyncCallback<Void>() {
@@ -1501,6 +1524,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						}
 					});
 				}else if(a== "nuevo"){
+					dto.setUsuario(usuarioGlobal);
 					IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropiedadesSiniestradas.class);
 					
 					servidorPropiedadesSiniestradas.nuevaParcela(dto, new AsyncCallback<Void>() {
@@ -1857,6 +1881,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 			datosViviendaDTO.setProblemasVivienda(problemasViviendaDTO);
 			tipoParcelaDTO.setDatosVivienda(datosViviendaDTO);	 
 			dto.setTipoParcela(tipoParcelaDTO);
+		
 			  
 
 			return dto;

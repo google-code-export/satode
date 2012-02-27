@@ -48,6 +48,7 @@ public class PropiedadesSiniestradasDAO extends DAOBase {
 	}
 
 	public void eliminarParcela(Parcela parcela) {
+		parcela= (Parcela)sess().get(Parcela.class,parcela.getId());
 		sess().delete(parcela);
 	}
 
