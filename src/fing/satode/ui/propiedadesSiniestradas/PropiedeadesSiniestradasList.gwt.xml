@@ -3,6 +3,9 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="fing.satode.ui.general.Inicial" />
+	<inherits name="gwtupload.GWTUpload"/>
+  	<!-- Load dinamically predefined styles in the library when the application starts -->
+  	<stylesheet src="Upload.css"/>
 	<source path="client" />
 	<entry-point
 		class="fing.satode.ui.propiedadesSiniestradas.client.EntryPropiedadesSiniestradas" />

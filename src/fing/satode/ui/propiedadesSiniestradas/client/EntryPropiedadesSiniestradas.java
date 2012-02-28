@@ -1,6 +1,14 @@
 package fing.satode.ui.propiedadesSiniestradas.client;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
+
+import org.apache.struts2.util.TabbedPane;
 
 import sun.security.action.GetLongAction;
 
@@ -14,13 +22,17 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TabBar;
+import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -51,6 +63,7 @@ import fing.satode.data.CiudadDTO;
 import fing.satode.data.DatosViviendaDTO;
 import fing.satode.data.DepartamentoDTO;
 import fing.satode.data.DepositoDTO;
+import fing.satode.data.FotoDTO;
 import fing.satode.data.HacinamientoDTO;
 import fing.satode.data.InundacionDTO;
 import fing.satode.data.ParcelaDTO;
@@ -68,6 +81,12 @@ import fing.satode.ui.general.client.IBasicosAsync;
 import fing.satode.ui.general.data.KeyNumeric;
 import fing.satode.ui.usuarios.client.IUsuario;
 import fing.satode.ui.usuarios.client.IUsuarioAsync;
+import gwtupload.client.IUploadStatus.Status;
+import gwtupload.client.IUploader;
+import gwtupload.client.IUploader.UploadedInfo;
+import gwtupload.client.MultiUploader;
+import gwtupload.client.PreloadedImage;
+import gwtupload.client.PreloadedImage.OnLoadPreloadedImageHandler;
 
 public class EntryPropiedadesSiniestradas implements EntryPoint {
 
@@ -84,6 +103,11 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 	private static Long baseNumerador = 10000000000L;
 	final Label modificarLabel = new Label("Modificar");
 	final Label eliminarLabel = new Label("Eliminar");
+	
+	public static native void setWindowHref(String url)/*-{
+	$wnd.location.href = url;
+}-*/; 
+
 
 	@Override
 	public void onModuleLoad() {
@@ -231,17 +255,19 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal1 = new HorizontalPanel();
 		final HorizontalPanel horizontal3 = new HorizontalPanel();
+		final HorizontalPanel horizFotos = new HorizontalPanel();
 		final CaptionPanel panelParcelas = new CaptionPanel("Datos de identificaci\u00F3n");
 		final CaptionPanel panelDatosVivienda = new CaptionPanel("Datos de la vivienda");
 		final CaptionPanel panelProblemasVivienda = new CaptionPanel("Problemas en la vivienda");
 		final CaptionPanel panelInundacion = new CaptionPanel("Inundacion");
 		final CaptionPanel panelHacinamineto = new CaptionPanel("Hacinamineto");
 		final CaptionPanel panelUnidadesParcela = new CaptionPanel("Unidades de la parcela");
+		final CaptionPanel panelFotos = new CaptionPanel("Fotos");
 		final VerticalPanel vertical1 = new VerticalPanel();
 		final VerticalPanel vertical2 = new VerticalPanel();
 		final VerticalPanel vertical3 = new VerticalPanel();
 		final VerticalPanel vertical = new VerticalPanel();
-		//final Label label = new Label();
+		final VerticalPanel verticalFoto = new VerticalPanel();
 		final CaptionPanel panelTitulo = new CaptionPanel();
 		final Grid gridIzqParcelas = new Grid(6, 2);
 		final Grid gridIzqDatosViv = new Grid(23, 2);
@@ -257,6 +283,9 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		final Button cancelar = new Button("Cancelar");
 		final Button aceptar = new Button("Aceptar");
 		final Button nuevoB = new Button("Nuevo");
+		
+		
+	
 		
 
 		// UnidadesParcelas
@@ -329,6 +358,18 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		final ListBox alojamientoInundacion = new ListBox();
 		final ListBox persepcionVivienda = new ListBox();
 		final ListBox aguaEnVivienda = new ListBox();
+		
+		// A panel where the thumbnails of uploaded images will be shown
+		final FlowPanel panelImages = new FlowPanel();
+		final FlowPanel panelImagesAntes = new FlowPanel();
+		final FlowPanel panelImagesDespues = new FlowPanel();
+		
+		
+		final CheckBox fotoAntesDespues = new CheckBox();
+		final Label labelFoto = new Label();
+		final TabBar tabBarFotos = new TabBar();
+		
+		 
 
 		@SuppressWarnings("deprecation")
 		public FormDialogBox(Long idParcela, String accion) {
@@ -347,6 +388,45 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				panelTitulo.setTitle("Nueva Parcela");
 				panelTitulo.setCaptionText("Nueva Parcela");
 			}
+			
+			
+			IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas = GWT
+					.create(IPropiedadesSiniestradas.class);
+
+			servidorPropiedadesSiniestradas.setFoto(true, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+			
+			fotoAntesDespues.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+				       boolean checked = ((CheckBox) event.getSource()).isChecked();
+				       IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas = GWT
+								.create(IPropiedadesSiniestradas.class);
+				       servidorPropiedadesSiniestradas.setFoto(!checked, new AsyncCallback<Void>() {
+							
+							@Override
+							public void onSuccess(Void result) {
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								caught.printStackTrace();
+								Window.alert("ERROR AJAX");
+							}
+						});
+				     }
+			});
 			
 			
 			gridIzqParcelas.setWidget(0, 0, new Label("Direccion"));
@@ -811,6 +891,17 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			anios.addKeyboardListener(new KeyNumeric());
 			alturaAgua.addKeyboardListener(new KeyNumeric());
 			
+			
+			// Attach the image viewer to the document
+		    // Create a new uploader panel and attach it to the document
+		    MultiUploader defaultUploader = new MultiUploader();
+		 
+		    // Add a finish handler which will load the image once the upload finishes
+		    defaultUploader.addOnFinishUploadHandler(onFinishUploaderHandler);
+		    
+		    labelFoto.setText("Despues de los arreglos");
+		    
+			
 			parcelaDTO = new ParcelaDTO();
 
 			if (a == "modificar" || a == "eliminar") {
@@ -821,6 +912,25 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 					}
 				}
 
+				for(FotoDTO foto:parcelaDTO.getFotos()){
+					Image image=new Image("/ImageServer.image?id="+foto.getId());
+					final Long id=foto.getId();
+					image.addClickHandler(new ClickHandler() {
+						
+						@Override
+						public void onClick(ClickEvent event) {
+							// TODO Auto-generated method stub
+							setWindowHref("/ImageServer.image?id="+id);
+						}
+					});
+					
+					if(foto.isAntes()){
+						panelImagesAntes.add(image);
+					}else{
+						panelImagesDespues.add(image);
+					}
+				}
+				
 				direccion.setText(parcelaDTO.getDireccion());
 				telefono.setText(parcelaDTO.getTelefono());
 				vivienda.addItem("SI", "SI");
@@ -1444,6 +1554,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			
 			
 			
+			//tabBarFotos.addTab(panelImagesAntes);
+			//tabBarFotos.addTab(panelImagesDespues);
 			
 			vertical1.add(panelDatosVivienda);
 			panelParcelas.add(gridIzqParcelas);
@@ -1461,6 +1573,18 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			panelTitulo.add(vertical);
 			vertical.add(horizontal1);
 			vertical.add(panelUnidadesParcela);
+			vertical.add(panelFotos);
+			panelFotos.add(verticalFoto);
+			verticalFoto.add(new Label("Antes de los arreglos"));
+			verticalFoto.add(panelImagesAntes);
+			verticalFoto.add(new Label("Despues de los arreglos"));
+			verticalFoto.add(panelImagesDespues);
+			verticalFoto.add(horizFotos);
+			verticalFoto.add(panelImages);
+			
+			horizFotos.add(defaultUploader);
+			horizFotos.add(fotoAntesDespues);
+			horizFotos.add(labelFoto);
 			panelUnidadesParcela.add(gridUnidadesParcelas);
 			gridUnidadesParcelas.setWidget(0, 0, unidadesParcelas);
 			gridUnidadesParcelas.setWidget(0, 1, nuevoB);
@@ -1873,7 +1997,14 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 			
 			hacinamientoDTO.setCantHabTrabajo(Integer.valueOf((cantHabTrabajo.getText())));
 			
-			
+			ArrayList<FotoDTO> imag=new ArrayList<FotoDTO>();
+			for(String i: imagenes){
+				FotoDTO f= new FotoDTO();
+				f.setAntes(true);
+				f.setUrl(i);
+				imag.add(f);
+			}
+			parcelaDTO.setFotos(imag);
 			
 			
 			datosViviendaDTO.setHacinamiento(hacinamientoDTO);
@@ -1894,6 +2025,38 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 			}
 			return true;
 		}
+
+		  // Attach an image to the pictures viewer
+		  private OnLoadPreloadedImageHandler showImage = new OnLoadPreloadedImageHandler() {
+		    public void onLoad(PreloadedImage image) {
+		      image.setWidth("250px");
+		      panelImages.add(image);
+		    }
+		  };
+
+		  private ArrayList<String> imagenes=new ArrayList<String>();
+		  // Load the image in the document and in the case of success attach it to the viewer
+		  private IUploader.OnFinishUploaderHandler onFinishUploaderHandler = new IUploader.OnFinishUploaderHandler() {
+		    public void onFinish(IUploader uploader) {
+		      if (uploader.getStatus() == Status.SUCCESS) {
+
+		        new PreloadedImage(uploader.fileUrl(), showImage);
+		        
+		       imagenes.add(uploader.fileUrl()) ;		        
+		        
+		        // The server sends useful information to the client by default
+		        UploadedInfo info = uploader.getServerInfo();
+		        
+		        System.out.println("File name " + info.name);
+		        System.out.println("File content-type " + info.ctype);
+		        System.out.println("File size " + info.size);
+
+		        // You can send any customized message and parse it 
+		        System.out.println("Server message " + info.message);
+		      }
+		    }
+		  };
+
 
 	
 	}

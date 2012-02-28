@@ -22,6 +22,8 @@ public interface IPropiedadesSiniestradasAsync {
 
 	void eliminarParcela(ParcelaDTO dto, AsyncCallback<Void> callback);
 
+	void setFoto(Boolean antes, AsyncCallback<Void> callback);
+
 	
 
 }

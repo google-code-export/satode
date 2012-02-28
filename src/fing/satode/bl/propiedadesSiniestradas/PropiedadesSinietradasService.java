@@ -1,5 +1,13 @@
 package fing.satode.bl.propiedadesSiniestradas;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +16,7 @@ import fing.satode.bl.base.ServiceBase;
 import fing.satode.data.BomberosDTO;
 import fing.satode.data.CamineraDTO;
 import fing.satode.data.CuartelDTO;
+import fing.satode.data.FotoDTO;
 import fing.satode.data.HospitalDTO;
 import fing.satode.data.PROtrosDTO;
 import fing.satode.data.ParcelaDTO;
@@ -46,15 +55,27 @@ public class PropiedadesSinietradasService extends ServiceBase {
 	
 
 	public void nuevaParcela(ParcelaDTO dto) {
+		
+        
+		
 		PropiedadesSiniestradasDAO.getInstance().nuevaParcela(new Parcela(dto));
 	}
 	
 	
 	public void modificarParcela(ParcelaDTO dto) {
-		PropiedadesSiniestradasDAO.getInstance().modificarParcela(new Parcela(dto));
+		
+		Parcela p=new Parcela(dto);
+		Parcela pOrigen=PropiedadesSiniestradasDAO.getInstance().getParcela(dto.getId());
+		p.getFotos().addAll(pOrigen.getFotos());
+		
+		PropiedadesSiniestradasDAO.getInstance().modificarParcela(p);
 	}
 
 	public void eliminarParcela(ParcelaDTO dto) {
 		PropiedadesSiniestradasDAO.getInstance().eliminarParcela(new Parcela(dto));
+	}
+	
+	public FotoDTO getFoto(Long id) {
+		return PropiedadesSiniestradasDAO.getInstance().getFoto(id).getDTO();
 	}
 }

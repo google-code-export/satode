@@ -24,6 +24,8 @@ public interface IPropiedadesSiniestradas extends RemoteService {
 	public void  nuevaParcela(ParcelaDTO dto);
 	public void modificarParcela(ParcelaDTO dto);
 	public void eliminarParcela(ParcelaDTO dto);
+	public void setFoto(Boolean antes);
+		
 	
 	
 	
