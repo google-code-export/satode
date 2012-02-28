@@ -3,10 +3,13 @@ package fing.satode.dominio;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
 
 import fing.satode.data.CiudadDTO;
 import fing.satode.data.FotoDTO;
@@ -19,10 +22,12 @@ public class Foto implements Serializable{
 		@Id @GeneratedValue
 		private Long id;
 		
-		private ArrayList<Byte> datos;
+		@Column(length=5200000)
+		private byte[] datos;
 		
 		private boolean antes;
 		
+		private String nombre;
 		
 		 
 		public Foto(){}
@@ -31,9 +36,18 @@ public class Foto implements Serializable{
 			setId(dto.getId());
 			setDatos(dto.getDatos());
 			setAntes(dto.isAntes());
-			
+			setNombre(dto.getNombre());
 		}
-		 
+
+		public String getNombre() {
+			return nombre;
+		}
+
+		public void setNombre(String nombre) {
+			this.nombre = nombre;
+		}
+
+
 		public Long getId() {
 			return id;
 		}
@@ -44,11 +58,11 @@ public class Foto implements Serializable{
 
 		
 			 
-		public ArrayList<Byte> getDatos() {
+		public  byte[]  getDatos() {
 			return datos;
 		}
 
-		public void setDatos(ArrayList<Byte> datos) {
+		public void setDatos( byte[]  datos) {
 			this.datos = datos;
 		}
 
@@ -65,6 +79,7 @@ public class Foto implements Serializable{
 			dto.setId(id);
 			dto.setDatos(datos);
 			dto.setAntes(antes);
+			dto.setNombre(nombre);
 			return dto;
 		}
 }

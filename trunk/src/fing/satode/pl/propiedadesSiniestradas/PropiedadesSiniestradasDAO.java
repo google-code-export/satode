@@ -5,9 +5,11 @@ import java.util.List;
 
 
 import fing.satode.constantes.TipoPuntoReferencia;
+import fing.satode.data.ParcelaDTO;
 import fing.satode.dominio.Bomberos;
 import fing.satode.dominio.Caminera;
 import fing.satode.dominio.Cuartel;
+import fing.satode.dominio.Foto;
 import fing.satode.dominio.Hospital;
 import fing.satode.dominio.PROtros;
 import fing.satode.dominio.Parcela;
@@ -44,6 +46,7 @@ public class PropiedadesSiniestradasDAO extends DAOBase {
 	
 	
 	public void modificarParcela(Parcela parcela) {
+		parcela=(Parcela)sess().merge(parcela);
 		sess().update(parcela);
 	}
 
@@ -52,5 +55,13 @@ public class PropiedadesSiniestradasDAO extends DAOBase {
 		sess().delete(parcela);
 	}
 
-	
+	public Parcela getParcela(Long id) {
+		return (Parcela)sess().get(Parcela.class,id);
+	}
+
+	public Foto getFoto(Long id) {
+		return (Foto)sess().get(Foto.class,id);
+		
+	}
+
 }

@@ -11,21 +11,29 @@ public class FotoDTO implements Serializable, IsSerializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<Byte> datos;
+	private byte[] datos;
 	private boolean antes;
 	private Long id;
-	
+	private String url;
+	private String nombre;
 		
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public ArrayList<Byte> getDatos() {
+	public byte[] getDatos() {
 		return datos;
 	}
-	public void setDatos(ArrayList<Byte> datos) {
+	public void setDatos(byte[] datos) {
 		this.datos = datos;
 	}
 	public boolean isAntes() {
@@ -33,6 +41,12 @@ public class FotoDTO implements Serializable, IsSerializable {
 	}
 	public void setAntes(boolean antes) {
 		this.antes = antes;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 
