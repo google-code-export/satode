@@ -64,4 +64,21 @@ public class PropiedadesSiniestradasDAO extends DAOBase {
 		
 	}
 
+	public void borrarFotos(Long idParcela, ArrayList<Foto> fotosAEliminar) {
+		Parcela parcela= (Parcela)sess().get(Parcela.class,idParcela);
+		for(Foto f : fotosAEliminar){
+			Foto fs=null;
+			for(Foto fi:parcela.getFotos()){
+				if(fi.getId().equals(f.getId())){
+					fs=fi;
+					break;
+				}
+			}
+			parcela.getFotos().remove(fs);
+		}
+		sess().update(parcela);
+	}
+		
+	
+
 }

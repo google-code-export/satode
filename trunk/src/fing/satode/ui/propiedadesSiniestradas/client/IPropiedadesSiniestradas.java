@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
+import fing.satode.data.FotoDTO;
 import fing.satode.data.ParcelaDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
@@ -25,6 +26,7 @@ public interface IPropiedadesSiniestradas extends RemoteService {
 	public void modificarParcela(ParcelaDTO dto);
 	public void eliminarParcela(ParcelaDTO dto);
 	public void setFoto(Boolean antes);
+	public void borrarFotos(Long idParcela, ArrayList<FotoDTO> fotosBorradas);
 		
 	
 	

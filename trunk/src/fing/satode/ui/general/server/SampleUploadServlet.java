@@ -3,6 +3,7 @@ package fing.satode.ui.general.server;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 
+import fing.satode.data.FotoDTO;
 import fing.satode.data.UsuarioDTO;
 import gwtupload.server.UploadAction;
 import gwtupload.server.exceptions.UploadActionException;
@@ -38,48 +40,36 @@ public class SampleUploadServlet extends UploadAction {
 	      if (false == item.isFormField()) {
 	        cont ++;
 	        try {
-	          boolean antes =	(Boolean) request.getSession().getAttribute("foto.tipo");	
-	          /// Create a new file based on the remote file name in the client
-	          // String saveName = item.getName().replaceAll("[\\\\/><\\|\\s\"'{}()\\[\\]]+", "_");
-	          // File file =new File("/tmp/" + saveName);
-	          
-	          /// Create a temporary file placed in /tmp (only works in unix)
-	          // File file = File.createTempFile("upload-", ".bin", new File("/tmp"));
-	          
-	          /// Create a temporary file placed in the default system temp folder
-	          //File file = File.createTempFile("upload-", ".bin");
-	        	UsuarioDTO usuario = (UsuarioDTO)perThreadRequest.get().getSession().getAttribute("usuario");
-	        	File file = null;
-	        	if(antes)
-	        	{
-	        		new File("/tmp/"+ usuario.getUsuario()+"/antes/" ).mkdir();
-		        	file =new File("/tmp/"+ usuario.getUsuario()+"/antes/" + item.getName() );
-		        	String path = file.getAbsolutePath();
-		        	 
-	        		
+	        	boolean antes =	(Boolean) request.getSession().getAttribute("foto.tipo");	
+	        	ArrayList<FotoDTO> fotos= (ArrayList<FotoDTO>)request.getSession().getAttribute("foto.lista");	        	
+	        	if(fotos==null){
+	        		fotos=new ArrayList<FotoDTO>();
+	        		request.getSession().setAttribute("foto.lista", fotos);
 	        	}
-	        	else{
-	        		new File("/tmp/"+ usuario.getUsuario()+"/despues/" ).mkdir();
-		        	file =new File("/tmp/"+ usuario.getUsuario()+"/despues/" + item.getName() );	
-		        	String path = file.getAbsolutePath();
-		       	
-	        	}
-	        	item.write(file);
 	        	
-	          
-	          
-	          /// Save a list with the received files
-	          receivedFiles.put(item.getFieldName(), file);
-	          receivedContentTypes.put(item.getFieldName(), item.getContentType());
-	          
-	          /// Send a customized message to the client.
-	          response += "File saved as " + file.getAbsolutePath();
+	        	FotoDTO foto= new FotoDTO();
+	        	foto.setAntes(antes);
+	        	foto.setNombre(item.getName());
+	        	foto.setDatos(item.get());
+	        	
+	        	fotos.add(foto);
+	        	
+	        	 /// Create a temporary file placed in the default system temp folder
+	            File file = File.createTempFile("upload-", ".bin");
+	            item.write(file);
+	            
+	            /// Save a list with the received files
+	            receivedFiles.put(item.getFieldName(), file);
+	            receivedContentTypes.put(item.getFieldName(), item.getContentType());
 
+	            
+	         
 	        } catch (Exception e) {
 	          throw new UploadActionException(e);
 	        }
 	      }
 	    }
+	    
 	    
 	    /// Remove files from session because we have a copy of them
 	    removeSessionFileItems(request);

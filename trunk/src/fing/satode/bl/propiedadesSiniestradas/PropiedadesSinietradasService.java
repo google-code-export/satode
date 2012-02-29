@@ -27,6 +27,7 @@ import fing.satode.constantes.TipoPuntoReferencia;
 import fing.satode.dominio.Bomberos;
 import fing.satode.dominio.Caminera;
 import fing.satode.dominio.Cuartel;
+import fing.satode.dominio.Foto;
 import fing.satode.dominio.Hospital;
 import fing.satode.dominio.PROtros;
 import fing.satode.dominio.Parcela;
@@ -77,5 +78,16 @@ public class PropiedadesSinietradasService extends ServiceBase {
 	
 	public FotoDTO getFoto(Long id) {
 		return PropiedadesSiniestradasDAO.getInstance().getFoto(id).getDTO();
+	}
+
+
+	public void borrarFotos(Long idParcela, ArrayList<FotoDTO> fotosBorradas) {
+		ArrayList<Foto> fotosAEliminar = new ArrayList<Foto>();
+		for(FotoDTO dto : fotosBorradas){
+			Foto foto = new Foto(dto);
+			fotosAEliminar.add(foto);
+		}
+		PropiedadesSiniestradasDAO.getInstance().borrarFotos( idParcela, fotosAEliminar);
+		
 	}
 }
