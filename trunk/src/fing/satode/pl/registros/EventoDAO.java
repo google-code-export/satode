@@ -49,5 +49,20 @@ private static EventoDAO instance;
 		// TODO Auto-generated method stub
 		sess().delete(evento);
 	}
+
+	public ArrayList<Evento> listaEventosPorDepratamentoYTiposDeEvento(Long idDepartamento ,ArrayList<Long> tiposEventos) {
+		
+		String tiposEventosQuery="( ";
+		boolean entra=false;
+		for(Long id:tiposEventos){
+			if(entra)tiposEventosQuery+=" , ";
+			tiposEventosQuery+=id;
+			entra=true;
+		}
+		tiposEventosQuery+=" )";
+		List list=sess().createQuery("from Evento where ( departamento.id="+idDepartamento+" and tipoEvento.id in "+tiposEventosQuery+" )order by fechaInicio desc").list();
+		ArrayList<Evento> res= new ArrayList<Evento>(list);
+		return res;
+	}
 	
 }

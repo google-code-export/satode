@@ -29,6 +29,16 @@ public class EventoDTO implements Serializable, IsSerializable{
 	
 	private int muertos=0;
 	
+	private int afectados=0;
+	
+	public int getAfectados() {
+		return afectados;
+	}
+
+	public void setAfectados(int afectados) {
+		this.afectados = afectados;
+	}
+
 	private Float perdidasPesos=0F;
 	
 	private Float perdidasDolares=0F;
