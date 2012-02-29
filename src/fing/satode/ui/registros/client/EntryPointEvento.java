@@ -199,6 +199,7 @@ public class EntryPointEvento implements EntryPoint {
 	    final ListBox ciudades= new ListBox();
 	    final TextBox fuente= new TextBox();
 	    final TextBox muertos= new TextBox();
+	    final TextBox afectados= new TextBox();
 	    final TextBox perdidasPesos= new TextBox();
 	    final TextBox perdidasDolares= new TextBox();
 	    final TextBox viasAfectadas= new TextBox();
@@ -462,6 +463,7 @@ public class EntryPointEvento implements EntryPoint {
 		    gridDer.setWidget(13, 0, new Label("Duraci\u00F3n"));
 		    gridDer.setWidget(13, 1,duracion);
 		    gridDer.setWidget(13, 2,duracionMedida);
+		    
 		    duracion.addKeyboardListener(new KeyNumeric());
 		    duracionMedida.addItem(MedidaTiempo.getTXT(MedidaTiempo.SEGUNDOS),String.valueOf(MedidaTiempo.SEGUNDOS));	
 		    duracionMedida.addItem(MedidaTiempo.getTXT(MedidaTiempo.MINUTOS),String.valueOf(MedidaTiempo.MINUTOS));
@@ -473,6 +475,11 @@ public class EntryPointEvento implements EntryPoint {
 		    gridDer.setWidget(14, 1,observaciones);
 		    gridDer.setWidget(14, 2,new Label("Corresponde a cualquier observaci\u00F3n que se desea agregar, ya sea de las causas del evento, comentarios pertinentes, etc."));
 		
+		    gridDer.setWidget(15, 0, new Label("Afectados"));
+		    gridDer.setWidget(15, 1,afectados);
+		    gridDer.setWidget(15, 2,new Label("Numero de personas que sufren efectos indirectos o secundarios asociados a un evento. Corresponde al numero de personas; diferentes a damnificados, que sufren el impacto de los efectos secundarios de los desastre, por razones como deficiencias en la prestacion de servicios publicos, en el comercio, o en el trabajo, o por aislamiento."));
+		    afectados.addKeyboardListener(new KeyNumeric());
+		    
 		    if(a=="modificar" || a=="eliminar"){
 		    	
 	    		EventoDTO eventoDTO= null;
@@ -541,6 +548,7 @@ public class EntryPointEvento implements EntryPoint {
 			    duracion.setText(String.valueOf(eventoDTO.getDuracion()));
 			    duracionMedida.setSelectedIndex(eventoDTO.getDuracionMedida()-1);	
 			    observaciones.setText(eventoDTO.getObservaciones());
+			    afectados.setText(String.valueOf(eventoDTO.getAfectados()));
 		    }
 		    if(a=="eliminar"){
 		    	datePicker.setVisible(false);
@@ -578,6 +586,7 @@ public class EntryPointEvento implements EntryPoint {
 			    tipoEventos.setEnabled(false);
 			    ciudades.setEnabled(false);
 			    otrasPerdidas.setEnabled(false);
+			    afectados.setEnabled(false);
 		    }
 		    cancelar.addClickHandler(new ClickHandler() {
 				
@@ -744,7 +753,7 @@ public class EntryPointEvento implements EntryPoint {
 		    dto.setDuracion(getFloat(duracion.getText()));
 		    dto.setDuracionMedida(getInt(duracionMedida.getValue(duracionMedida.getSelectedIndex())));
 		    dto.setObservaciones(observaciones.getText());
-		    
+		    dto.setAfectados(getInt(afectados.getText()));
 		    return dto;
 		}
 

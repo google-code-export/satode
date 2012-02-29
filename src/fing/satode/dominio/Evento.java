@@ -46,6 +46,8 @@ public class Evento implements Serializable{
 	
 	private int muertos=0;
 	
+	private int afectados=0;
+	
 	private Float perdidasPesos=0F;
 	
 	private Float perdidasDolares=0F;
@@ -143,6 +145,15 @@ public class Evento implements Serializable{
 		duracion=dto.getDuracion();
 		duracionMedida=dto.getDuracionMedida();
 		observaciones=dto.getObservaciones();
+		afectados= dto.getAfectados();
+	}
+
+	public int getAfectados() {
+		return afectados;
+	}
+
+	public void setAfectados(int afectados) {
+		this.afectados = afectados;
 	}
 
 	public Long getId() {
@@ -481,6 +492,7 @@ public class Evento implements Serializable{
 		dto.setDuracion(duracion);
 		dto.setDuracionMedida(duracionMedida);
 		dto.setObservaciones(observaciones);
+		dto.setAfectados(afectados);
 		
 		return dto;
 	}

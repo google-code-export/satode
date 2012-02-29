@@ -16,13 +16,14 @@ import fing.satode.data.CalculoIndiceDTO;
 @Table(name="calculosdeindices")
 public class CalculoIndice implements Serializable{
 	
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
 	
 	@Id @GeneratedValue
 	private Long id;
 	private Date fecha;
 	private float valor;
 	private String observaciones;
+	private int tipo;
 	
 	@ManyToOne
 	@JoinColumn(name="usuario_id")
@@ -36,9 +37,18 @@ private static final long serialVersionUID = 1L;
 		valor=dto.getValor();
 		usuario=new Usuario(dto.getUsuario());
 		observaciones=dto.getObservaciones();
+		tipo=dto.getTipo();
 	}
 	
 	
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+
 	public String getObservaciones() {
 		return observaciones;
 	}
@@ -86,6 +96,7 @@ private static final long serialVersionUID = 1L;
 		dto.setObservaciones(observaciones);
 		dto.setUsuario(usuario.getDTO());
 		dto.setValor(valor);
+		dto.setTipo(tipo);
 		
 		return dto;
 	}
