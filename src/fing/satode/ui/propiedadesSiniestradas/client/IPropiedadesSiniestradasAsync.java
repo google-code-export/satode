@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
+import fing.satode.data.FotoDTO;
 import fing.satode.data.ParcelaDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
@@ -23,6 +24,8 @@ public interface IPropiedadesSiniestradasAsync {
 	void eliminarParcela(ParcelaDTO dto, AsyncCallback<Void> callback);
 
 	void setFoto(Boolean antes, AsyncCallback<Void> callback);
+
+	void borrarFotos(Long idParcela, ArrayList<FotoDTO> fotosBorradas, AsyncCallback<Void> asyncCallback);
 
 	
 

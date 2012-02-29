@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.struts2.util.TabbedPane;
 
@@ -35,6 +36,8 @@ import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import fing.satode.com.reveregroup.carousel.client.Carousel;
+import fing.satode.com.reveregroup.carousel.client.Photo;
 
 import fing.satode.constantes.AguaEnVivienda;
 import fing.satode.constantes.AlojamientoInundacion;
@@ -94,6 +97,9 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 	final VerticalPanel vertical = new VerticalPanel();
 	private UsuarioDTO usuarioGlobal;
 	private ArrayList<ParcelaDTO> parcelaGlobal;
+	private ArrayList<FotoDTO> fotosBorradas;
+	private ArrayList<Photo> photosAntes;
+	private ArrayList<Photo> photosDespues;
 	private ArrayList<DepartamentoDTO> departamentosGlobal;
 	private Grid parcelas;
 	public static ParcelaDTO parcelaDTO;
@@ -262,6 +268,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		final CaptionPanel panelInundacion = new CaptionPanel("Inundacion");
 		final CaptionPanel panelHacinamineto = new CaptionPanel("Hacinamineto");
 		final CaptionPanel panelUnidadesParcela = new CaptionPanel("Unidades de la parcela");
+		final CaptionPanel panelFotosAntes = new CaptionPanel("Fotos antes de los arreglos");
+		final CaptionPanel panelFotosDespues = new CaptionPanel("Fotos despues de los arreglos");
 		final CaptionPanel panelFotos = new CaptionPanel("Fotos");
 		final VerticalPanel vertical1 = new VerticalPanel();
 		final VerticalPanel vertical2 = new VerticalPanel();
@@ -283,6 +291,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		final Button cancelar = new Button("Cancelar");
 		final Button aceptar = new Button("Aceptar");
 		final Button nuevoB = new Button("Nuevo");
+		
+		
 		
 		
 	
@@ -367,7 +377,43 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		
 		final CheckBox fotoAntesDespues = new CheckBox();
 		final Label labelFoto = new Label();
-		final TabBar tabBarFotos = new TabBar();
+		
+		final Carousel carruselAntes=new Carousel();
+		final Carousel carruselDespues=new Carousel();
+		final Button sigCarruselAntes = new Button("Siguiente");
+		final Button antCarruselAntes = new Button("Anterior");
+		final Button sigCarruselDespues = new Button("Siguiente");
+		final Button antCarruselDespues = new Button("Anterior");
+		final Button elimFotoDespues = new Button("Eliminar");
+		final Button elimFotoAntes = new Button("Eliminar");
+		final VerticalPanel verticalFotosAntes = new VerticalPanel();
+		final VerticalPanel verticalFotosDespues = new VerticalPanel();
+		final HorizontalPanel horizFotosAntes = new HorizontalPanel();
+		final HorizontalPanel horizFotosDespues = new HorizontalPanel();
+				
+		
+		 
+		
+		
+		// Attach an image to the pictures viewer
+		private OnLoadPreloadedImageHandler showImageFotosAntes = new OnLoadPreloadedImageHandler() {
+		    public void onLoad(PreloadedImage image) {
+		      image.setWidth("250px");
+		      panelImagesAntes.add(image);
+		    }
+		  };
+		  
+		// Attach an image to the pictures viewer
+			private OnLoadPreloadedImageHandler showImageFotosDespues = new OnLoadPreloadedImageHandler() {
+			    public void onLoad(PreloadedImage image) {
+			      image.setWidth("250px");
+			      panelImagesDespues.add(image);
+			    }
+		 };
+
+		  
+
+		      
 		
 		 
 
@@ -388,6 +434,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				panelTitulo.setTitle("Nueva Parcela");
 				panelTitulo.setCaptionText("Nueva Parcela");
 			}
+			
+			fotosBorradas = new ArrayList<FotoDTO>();
 			
 			
 			IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas = GWT
@@ -695,6 +743,106 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				}
 			});
 			
+			sigCarruselAntes.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					carruselAntes.next();
+				}
+			});
+			
+			antCarruselAntes.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					carruselAntes.prev();
+				}
+			});
+			
+			sigCarruselDespues.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					carruselDespues.next();
+				}
+			});
+			
+			antCarruselDespues.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					carruselDespues.prev();
+				}
+			});
+			
+			elimFotoAntes.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					int indiceFotoActual = carruselAntes.getCurrentPhotoIndex();
+					int count = 0;
+					for(FotoDTO foto:parcelaDTO.getFotos()){
+						if(foto.isAntes()){
+							if(count == indiceFotoActual)
+							{
+								fotosBorradas.add(foto);
+								Photo f = null;
+								for(Photo photo : photosAntes){
+									if(photo.getCaption().equals(foto.getNombre())){
+										f= photo;
+										break;
+									}
+									
+								}
+								if(photosAntes.size()==1){
+									verticalFotosAntes.setVisible(false);
+								}else{
+									photosAntes.remove(f);
+									carruselAntes.setPhotos(photosAntes);
+								}
+								
+							}
+							count++;
+						}
+						
+					}
+				}
+			});
+			
+			elimFotoDespues.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					int indiceFotoActual = carruselDespues.getCurrentPhotoIndex();
+					int count = 0;
+					for(FotoDTO foto:parcelaDTO.getFotos()){
+						if(!foto.isAntes()){
+							if(count == indiceFotoActual)
+							{
+								fotosBorradas.add(foto);
+								Photo f = null;
+								for(Photo photo : photosDespues){
+									if(photo.getCaption().equals(foto.getNombre())){
+										f= photo;
+										break;
+									}
+									
+								}
+								if(photosDespues.size()==1){
+									verticalFotosDespues.setVisible(false);
+								}else{
+									photosDespues.remove(f);
+									carruselDespues.setPhotos(photosDespues);
+								}
+								
+							}
+							count++;
+						}
+						
+					}
+				}
+			});
+			
 			
 			ocupacion.addItem("Seleccionar", "0");
 			for (ItemConstante i : Ocupacion.getItems()) {
@@ -911,25 +1059,51 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						parcelaDTO = p;
 					}
 				}
-
+				
+				
+				photosAntes=new ArrayList<Photo>();
+				photosDespues=new ArrayList<Photo>();
+				 
 				for(FotoDTO foto:parcelaDTO.getFotos()){
-					Image image=new Image("/ImageServer.image?id="+foto.getId());
-					final Long id=foto.getId();
-					image.addClickHandler(new ClickHandler() {
-						
-						@Override
-						public void onClick(ClickEvent event) {
-							// TODO Auto-generated method stub
-							setWindowHref("/ImageServer.image?id="+id);
-						}
-					});
-					
 					if(foto.isAntes()){
-						panelImagesAntes.add(image);
+						new PreloadedImage("/ImageServer.image?id="+foto.getId(), showImageFotosAntes);
+						Photo photo = new Photo("/ImageServer.image?id="+foto.getId());
+						photo.setHeight(50);
+						photo.setWidth(50);
+						photo.setCaption(foto.getNombre());
+						photosAntes.add(photo);
 					}else{
-						panelImagesDespues.add(image);
+						new PreloadedImage("/ImageServer.image?id="+foto.getId(), showImageFotosDespues);
+						Photo photo = new Photo("/ImageServer.image?id="+foto.getId());
+						photo.setHeight(50);
+						photo.setWidth(50);
+						photo.setCaption(foto.getNombre());
+						photosDespues.add(photo);
 					}
 				}
+				if(photosAntes.size()>0){
+					carruselAntes.setPhotos(photosAntes);
+					carruselAntes.setVisible(true);
+					carruselAntes.setPixelSize(800,500);
+					//carruselAntes.setVelocity(10);
+					carruselAntes.setTitle("Imagenes Antes");
+				}else{
+					carruselAntes.setVisible(false);
+					verticalFotosAntes.setVisible(false);
+				}
+
+				if(photosDespues.size()>0){
+					carruselDespues.setPhotos(photosDespues);
+					carruselDespues.setVisible(true);
+					carruselDespues.setPixelSize(800,500);
+					//carruselDespues.setVelocity(10);
+					carruselDespues.setTitle("Imagenes Despues");
+				}else{
+					carruselDespues.setVisible(false);
+					verticalFotosDespues.setVisible(false);
+				}
+				
+				
 				
 				direccion.setText(parcelaDTO.getDireccion());
 				telefono.setText(parcelaDTO.getTelefono());
@@ -1554,8 +1728,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			
 			
 			
-			//tabBarFotos.addTab(panelImagesAntes);
-			//tabBarFotos.addTab(panelImagesDespues);
+			
 			
 			vertical1.add(panelDatosVivienda);
 			panelParcelas.add(gridIzqParcelas);
@@ -1575,12 +1748,26 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			vertical.add(panelUnidadesParcela);
 			vertical.add(panelFotos);
 			panelFotos.add(verticalFoto);
-			verticalFoto.add(new Label("Antes de los arreglos"));
-			verticalFoto.add(panelImagesAntes);
-			verticalFoto.add(new Label("Despues de los arreglos"));
-			verticalFoto.add(panelImagesDespues);
+			verticalFoto.add(panelFotosAntes);
+			verticalFoto.add(panelFotosDespues);
+			panelFotosAntes.add(verticalFotosAntes);
+			verticalFotosAntes.add(carruselAntes);
+			verticalFotosAntes.add(horizFotosAntes);
+			horizFotosAntes.add(antCarruselAntes);
+			horizFotosAntes.add(elimFotoAntes);
+			horizFotosAntes.add(sigCarruselAntes);
+
+			panelFotosDespues.add(verticalFotosDespues);
+			verticalFotosDespues.add(carruselDespues);
+			verticalFotosDespues.add(horizFotosDespues);
+			horizFotosDespues.add(antCarruselDespues);
+			horizFotosDespues.add(elimFotoDespues);
+			horizFotosDespues.add(sigCarruselDespues);
+			
+			
 			verticalFoto.add(horizFotos);
 			verticalFoto.add(panelImages);
+			
 			
 			horizFotos.add(defaultUploader);
 			horizFotos.add(fotoAntesDespues);
@@ -1631,7 +1818,22 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				dto.setId(id);
 				if(a=="modificar"){
 					dto.setUsuario(usuarioGlobal);
+					
 					IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropiedadesSiniestradas.class);
+					
+					servidorPropiedadesSiniestradas.borrarFotos(dto.getId(), fotosBorradas, new AsyncCallback<Void>() {
+						
+						@Override
+						public void onSuccess(Void result) {
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							caught.printStackTrace();
+							Window.alert("ERROR AJAX");
+						}
+					});
+					
 					
 					servidorPropiedadesSiniestradas.modificarParcela(dto,new AsyncCallback<Void>() {
 						
@@ -1647,6 +1849,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 							Window.alert("ERROR AJAX");
 						}
 					});
+					
+					
 				}else if(a== "nuevo"){
 					dto.setUsuario(usuarioGlobal);
 					IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropiedadesSiniestradas.class);
@@ -1684,6 +1888,9 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 						}
 					});
 				}
+				
+				
+				
 			}
 			 
 		}

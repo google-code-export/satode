@@ -3,7 +3,7 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
 	<source path="data"/>
-	<source path="dominio"/>
+
 	<source path="constantes"/>
 	<source path="ui/general/data"/>
 	<source path="ui/registros/client"/>
@@ -12,4 +12,7 @@
 	<source path="ui/general/client"/>
 	<source path="ui/deposito/client"/>
 	<source path="ui/puntoReferencias/client"/>
+	<source path="com/reveregroup/carousel/client"/>
+	<source path="com/reveregroup/carousel/client/events"/>
+	
 </module>

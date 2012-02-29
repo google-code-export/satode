@@ -38,103 +38,27 @@ public class PropiedadesSiniestradasImpl extends ServerImpl implements IPropieda
 	
 	@Override
 	public void nuevaParcela(ParcelaDTO dto) {
-		String[] archivos = new File("/tmp/"+ dto.getUsuario().getUsuario()+"/antes/" ).list();
-		ArrayList<FotoDTO> fotos=new ArrayList<FotoDTO>();
-		for(String imagenPath:archivos){
-			File file=new File("/tmp/"+ dto.getUsuario().getUsuario()+"/antes/"+imagenPath);
-			try {
-				FileInputStream stream=new FileInputStream(file);
-				int size=stream.available();
-				byte[] buff=new byte[size];
-				stream.read(buff, 0, size);
-				FotoDTO foto=new FotoDTO();
-				foto.setAntes(true);
-				foto.setDatos(buff);
-				fotos.add(foto);
-				file.delete();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		archivos = new File("/tmp/"+ dto.getUsuario().getUsuario()+"/despues/" ).list();
-		for(String imagenPath:archivos){
-			File file=new File("/tmp/"+ dto.getUsuario().getUsuario()+"/despues/"+imagenPath);
-			try {
-				FileInputStream stream=new FileInputStream(file);
-				int size=stream.available();
-				byte[] buff=new byte[size];
-				stream.read(buff, 0, size);
-				FotoDTO foto=new FotoDTO();
-				foto.setAntes(false);
-				foto.setDatos(buff);
-				fotos.add(foto);
-				file.delete();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
+		ArrayList<FotoDTO> fotos=(ArrayList<FotoDTO>)perThreadRequest.get().getSession().getAttribute("foto.lista");
+		if(fotos==null){
+			fotos=new ArrayList<FotoDTO>();
+		}else{
+			perThreadRequest.get().getSession().removeAttribute("foto.lista");
 		}
 		dto.setFotos(fotos);
-		
-		
 		ServiceFactory.getInstance().getPropiedadesSiniestradasService().nuevaParcela(dto);
 	}
 	
 	@Override
 	public void modificarParcela(ParcelaDTO dto) {
-		String[] archivos = new File("/tmp/"+ dto.getUsuario().getUsuario()+"/antes/" ).list();
-		ArrayList<FotoDTO> fotos=new ArrayList<FotoDTO>();
-		for(String imagenPath:archivos){
-			File file=new File("/tmp/"+ dto.getUsuario().getUsuario()+"/antes/"+imagenPath);
-			try {
-				FileInputStream stream=new FileInputStream(file);
-				int size=stream.available();
-				byte[] buff=new byte[size];
-				stream.read(buff, 0, size);
-				FotoDTO foto=new FotoDTO();
-				foto.setAntes(true);
-				foto.setDatos(buff);
-				foto.setNombre(file.getName());
-				fotos.add(foto);
-				file.delete();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		archivos = new File("/tmp/"+ dto.getUsuario().getUsuario()+"/despues/" ).list();
-		for(String imagenPath:archivos){
-			File file=new File("/tmp/"+ dto.getUsuario().getUsuario()+"/despues/"+imagenPath);
-			try {
-				FileInputStream stream=new FileInputStream(file);
-				int size=stream.available();
-				byte[] buff=new byte[size];
-				stream.read(buff, 0, size);
-				FotoDTO foto=new FotoDTO();
-				foto.setAntes(false);
-				foto.setNombre(file.getName());
-				foto.setDatos(buff);
-				fotos.add(foto);
-				file.delete();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
+		ArrayList<FotoDTO> fotos=(ArrayList<FotoDTO>)perThreadRequest.get().getSession().getAttribute("foto.lista");
+		if(fotos==null){
+			fotos=new ArrayList<FotoDTO>();
+		}else{
+			perThreadRequest.get().getSession().removeAttribute("foto.lista");
 		}
 		dto.setFotos(fotos);
-		
 		ServiceFactory.getInstance().getPropiedadesSiniestradasService().modificarParcela(dto);
+	
 	}
 	
 
@@ -145,6 +69,11 @@ public class PropiedadesSiniestradasImpl extends ServerImpl implements IPropieda
 	
 	public void setFoto(Boolean antes) {
 		perThreadRequest.get().getSession().setAttribute("foto.tipo", antes);
+	}
+
+	@Override
+	public void borrarFotos(Long idParcela, ArrayList<FotoDTO> fotosBorradas) {
+		ServiceFactory.getInstance().getPropiedadesSiniestradasService().borrarFotos( idParcela,  fotosBorradas);
 	}
 	
 	
