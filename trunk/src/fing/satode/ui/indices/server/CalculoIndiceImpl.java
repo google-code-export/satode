@@ -39,4 +39,10 @@ public class CalculoIndiceImpl extends ServerImpl implements IIndices {
 	public void exportarGraficosIDL() {
 		
 	}
+
+	@Override
+	public void calcularIGR(CalculoIndiceDTO dto) {
+		ServiceFactory.getInstance().getIndicesService().calcularIGR(dto);
+		
+	}
 }

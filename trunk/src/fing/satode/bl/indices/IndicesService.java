@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
+import fing.satode.bl.base.ServiceFactory;
 import fing.satode.data.CalculoIndiceDTO;
 import fing.satode.data.IDLX;
 import fing.satode.dominio.CalculoIndice;
@@ -406,6 +407,18 @@ public class IndicesService extends ServiceBase {
 		ArrayList<Long> ids=new ArrayList<Long>();
 		ids.add(26L);
 		return ids;
+	}
+
+	public void calcularIGR(CalculoIndiceDTO dto) {
+		Float valIr = Float.valueOf((dto.getIr1() + dto.getIr2() + dto.getIr3()+ dto.getIr4()+ dto.getIr5()+ dto.getIr6())/6);
+		Float valRr = Float.valueOf((dto.getRr1() + dto.getRr2() + dto.getRr3()+ dto.getRr4()+ dto.getRr5()+ dto.getRr6())/6);
+		Float valMd = Float.valueOf((dto.getMd1() + dto.getMd2() + dto.getMd3()+ dto.getMd4()+ dto.getMd5()+ dto.getMd6())/6);
+		Float valPf = Float.valueOf((dto.getPf1() + dto.getPf2() + dto.getPf3()+ dto.getPf4()+ dto.getPf5()+ dto.getPf6())/6);
+		Float val = Float.valueOf((valIr + valRr + valMd + valPf)/4);
+		val= val/5;
+		dto.setValor(val);
+		IndicesDAO.getInstance().nuevoCalculoIndice(new CalculoIndice(dto));
+		
 	}
 
 }
