@@ -20,6 +20,7 @@ insert into permisos(permiso) values('MNU_PUNTO_REFERENCIA');
 insert into permisos(permiso) values('MNU_MANTENIMIENTOS_DEPOSITOS');
 insert into permisos(permiso) values('MNU_TIPOS_SUMINISTROS');
 insert into permisos(permiso) values('MNU_TIPOS_COSTOS');
+insert into permisos(permiso) values('MNU_CALCULO_INDICES');
 
 
 
