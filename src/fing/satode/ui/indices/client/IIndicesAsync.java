@@ -13,5 +13,7 @@ public interface IIndicesAsync {
 
 	void calcularIDL(CalculoIndiceDTO dto, AsyncCallback<Void> callback);
 
+	void exportarGraficosIDL(AsyncCallback<Void> callback);
+
 
 }

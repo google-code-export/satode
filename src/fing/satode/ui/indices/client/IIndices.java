@@ -21,6 +21,6 @@ public interface IIndices extends RemoteService {
 
 	public ArrayList<CalculoIndiceDTO> buscarCalculoIndice(int tipo);
 	public void calcularIDL(CalculoIndiceDTO dto);
-	
+	public void exportarGraficosIDL();
 
 }

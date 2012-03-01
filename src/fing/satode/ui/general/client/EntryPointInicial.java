@@ -98,6 +98,9 @@ public class EntryPointInicial implements EntryPoint  {
 	 			 		    	 public void execute() {
 	 			 		 	        setWindowHref("/PropiedadesSiniestradasList.html");}};// Create a menu bar	         
 	 			 	        
+	 			 	Command  menuCommandIndices= new Command() {
+		 		    	 public void execute() {
+		 		 	        setWindowHref("/CalculoIndiceList.html");}};// Create a menu bar	         
 	 				
 	 				MenuBar menu = new MenuBar();
 	 			    menu.setAutoOpen(true);
@@ -160,8 +163,34 @@ public class EntryPointInicial implements EntryPoint  {
    	 			    	desastresMenu.addSeparator();
    	 			    	desastresMenu.addItem("Gestion Costos", menuCommandCosto);
    	 			    }
+	   	 			if(usuarioGlobal.getPerfil().tienePermiso("MNU_CALCULO_INDICES")){
+	 			    	desastresMenu.addSeparator();
+	 			    	desastresMenu.addItem("Calculo de indicadores", menuCommandIndices);
+	 			    }
    	 			   }
-	 			  
+	 			  if(usuarioGlobal.getPerfil().tienePermiso("MNU_MANTENIMISNTOS")){
+		 			    MenuBar basicosMenu = new MenuBar(true);
+		 			    basicosMenu.setAnimationEnabled(true);
+		 			    menu.addItem(new MenuItem("Mantenimientos", basicosMenu));
+		 			   if(usuarioGlobal.getPerfil().tienePermiso("MNU_PUNTO_REFERENCIA")){
+		 				   basicosMenu.addSeparator();
+		 				   basicosMenu.addItem("Punto Referencia ", menuCommandPuntoReferencia);
+		 			   }
+		 			   if(usuarioGlobal.getPerfil().tienePermiso("MNU_MANTENIMIENTOS_DEPOSITOS")){
+		 				   basicosMenu.addSeparator();
+		 				   basicosMenu.addItem("Deposito ", menuCommandDeposito);
+		 			   }
+		 			   if(usuarioGlobal.getPerfil().tienePermiso("MNU_TIPOS_SUMINISTROS")){
+		 				   basicosMenu.addSeparator();
+		 				   basicosMenu.addItem("Tipo Suministro ", menuCommandTipoSuministro);
+		 			   }
+		 			   if(usuarioGlobal.getPerfil().tienePermiso("MNU_TIPOS_COSTOS")){
+		 				   basicosMenu.addSeparator();
+		 				   basicosMenu.addItem("Tipo Costo ", menuCommandTipoCosto);
+		 			   }	
+		 				    
+		 		  }
+	 			 
 	 			  if(usuarioGlobal.getPerfil().tienePermiso("MNU_SEGURIDAD")){
 	 			    MenuBar seguridadMenu = new MenuBar(true);
 	 		        seguridadMenu.setAnimationEnabled(true);
@@ -175,28 +204,7 @@ public class EntryPointInicial implements EntryPoint  {
 	 				   seguridadMenu.addItem("Perfiles", menuCommandPerfil);
 	 			   }
 	 			  }
-	 			 if(usuarioGlobal.getPerfil().tienePermiso("MNU_MANTENIMISNTOS")){
-	 			    MenuBar basicosMenu = new MenuBar(true);
-	 			    basicosMenu.setAnimationEnabled(true);
-	 			    menu.addItem(new MenuItem("Mantenimientos", basicosMenu));
-	 			   if(usuarioGlobal.getPerfil().tienePermiso("MNU_PUNTO_REFERENCIA")){
-	 				   basicosMenu.addSeparator();
-	 				   basicosMenu.addItem("Punto Referencia ", menuCommandPuntoReferencia);
-	 			   }
-	 			   if(usuarioGlobal.getPerfil().tienePermiso("MNU_MANTENIMIENTOS_DEPOSITOS")){
-	 				   basicosMenu.addSeparator();
-	 				   basicosMenu.addItem("Deposito ", menuCommandDeposito);
-	 			   }
-	 			   if(usuarioGlobal.getPerfil().tienePermiso("MNU_TIPOS_SUMINISTROS")){
-	 				   basicosMenu.addSeparator();
-	 				   basicosMenu.addItem("Tipo Suministro ", menuCommandTipoSuministro);
-	 			   }
-	 			   if(usuarioGlobal.getPerfil().tienePermiso("MNU_TIPOS_COSTOS")){
-	 				   basicosMenu.addSeparator();
-	 				   basicosMenu.addItem("Tipo Costo ", menuCommandTipoCosto);
-	 			   }	
-	 				    
-	 			  }
+	 			 
 	 			    // Return the menu
 	 			    menu.ensureDebugId("cwMenuBar");
 	 			    

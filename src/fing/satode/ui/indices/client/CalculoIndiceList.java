@@ -2,9 +2,11 @@ package fing.satode.ui.indices.client;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -52,6 +54,7 @@ public class CalculoIndiceList implements EntryPoint {
 	final Label modificarLabel= new Label("Modificar");
 	final Label eliminarLabel= new Label("Eliminar");
 	final ListBox tipoFiltro= new ListBox();
+	final Button graficarIDL= new Button("Graficar IDL");
 	
 	@Override
 	public void onModuleLoad() {
@@ -60,10 +63,35 @@ public class CalculoIndiceList implements EntryPoint {
 		horizontalBotonera.add(new Label("Tipo"));
 		horizontalBotonera.add(tipoFiltro);
 		horizontalBotonera.add(buscarB);
+		horizontalBotonera.add(graficarIDL);
 		horizontalBotonera.add(nuevoIDL);
 		horizontalBotonera.add(nuevoIGR);
 		
 		RootPanel.get("botones").add(horizontalBotonera);
+		
+		graficarIDL.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				IIndicesAsync serverIndice=GWT.create(IIndices.class);
+				
+				serverIndice.exportarGraficosIDL(new AsyncCallback<Void>() {
+					
+					@Override
+					public void onSuccess(Void result) {
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						caught.printStackTrace();
+						Window.alert("ERROR AJAX");
+					}
+				});
+				
+			}
+		});
 		
 		nuevoIDL.addClickHandler(new ClickHandler() {
 			
@@ -176,6 +204,7 @@ public class CalculoIndiceList implements EntryPoint {
 	    final ListBox tipo=new ListBox();
 	    final Button cancelar= new Button("Cancelar");
 		final Button aceptar= new Button("Calcular");
+		
 	
 	    public FormDialogIDLBox(Long idDesastre, String accion) {
 			// TODO Auto-generated constructor stub
@@ -231,6 +260,8 @@ public class CalculoIndiceList implements EntryPoint {
 				}
 			});
 				
+			
+			
 			setAnimationEnabled(true);
 			add(captionPrincipal);
 			center();
