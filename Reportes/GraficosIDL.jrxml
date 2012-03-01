@@ -28,7 +28,7 @@ Where calculosdeindices.`tipo` =$P{tipo}]]>
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Valores del IDL"]]></seriesExpression>
+						<seriesExpression><![CDATA["Valores del indicador"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{calculosdeindices_fecha}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{calculosdeindices_valor}]]></valueExpression>
 					</categorySeries>
