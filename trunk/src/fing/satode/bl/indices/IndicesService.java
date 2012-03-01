@@ -150,12 +150,14 @@ public class IndicesService extends ServiceBase {
 		
 		//Esto es para que no de NaN en las siguientes cuentas
 		IPK=IPK!=0?IPK:1;
+		IPA=IPA!=0?IPA:1;
+		IPL=IPL!=0?IPL:1;
 		
 		float IDLK=(1-((IPKDyF/IPK)*(IPKDyF/IPK)+(IPKST/IPK)*(IPKST/IPK)+(IPKIyT/IPK)*(IPKIyT/IPK)+(IPKOtros/IPK)*(IPKOtros/IPK)));
-		float IDLA=(1-((IPADyF/IPK)*(IPADyF/IPK)+(IPAST/IPK)*(IPAST/IPK)+(IPAIyT/IPK)*(IPAIyT/IPK)+(IPAOtros/IPK)*(IPAOtros/IPK)));
-		float IDLL=(1-((IPLDyF/IPK)*(IPLDyF/IPK)+(IPLST/IPK)*(IPLST/IPK)+(IPLIyT/IPK)*(IPLIyT/IPK)+(IPLOtros/IPK)*(IPLOtros/IPK)));
+		float IDLA=(1-((IPADyF/IPA)*(IPADyF/IPA)+(IPAST/IPA)*(IPAST/IPA)+(IPAIyT/IPA)*(IPAIyT/IPA)+(IPAOtros/IPA)*(IPAOtros/IPA)));
+		float IDLL=(1-((IPLDyF/IPL)*(IPLDyF/IPL)+(IPLST/IPL)*(IPLST/IPL)+(IPLIyT/IPL)*(IPLIyT/IPL)+(IPLOtros/IPL)*(IPLOtros/IPL)));
 		
-		float IDL=IDLK+IDLA+IDLL;
+		float IDL=(IDLK+IDLA+IDLL)/3;
 		
 		dto.setValor(IDL);
 		
