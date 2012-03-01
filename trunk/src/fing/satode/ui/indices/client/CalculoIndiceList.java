@@ -64,10 +64,10 @@ public class CalculoIndiceList implements EntryPoint {
 		horizontalBotonera.add(new Label("Tipo"));
 		horizontalBotonera.add(tipoFiltro);
 		horizontalBotonera.add(buscarB);
-		horizontalBotonera.add(graficarIDL);
 		horizontalBotonera.add(nuevoIDL);
-		horizontalBotonera.add(graficarIGR);
+		horizontalBotonera.add(graficarIDL);
 		horizontalBotonera.add(nuevoIGR);
+		horizontalBotonera.add(graficarIGR);
 		
 		RootPanel.get("botones").add(horizontalBotonera);
 		
