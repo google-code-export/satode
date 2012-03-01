@@ -55,6 +55,7 @@ public class CalculoIndiceList implements EntryPoint {
 	final Label eliminarLabel= new Label("Eliminar");
 	final ListBox tipoFiltro= new ListBox();
 	final Button graficarIDL= new Button("Graficar IDL");
+	final Button graficarIGR= new Button("Graficar IGR");
 	
 	@Override
 	public void onModuleLoad() {
@@ -65,6 +66,7 @@ public class CalculoIndiceList implements EntryPoint {
 		horizontalBotonera.add(buscarB);
 		horizontalBotonera.add(graficarIDL);
 		horizontalBotonera.add(nuevoIDL);
+		horizontalBotonera.add(graficarIGR);
 		horizontalBotonera.add(nuevoIGR);
 		
 		RootPanel.get("botones").add(horizontalBotonera);
@@ -73,26 +75,19 @@ public class CalculoIndiceList implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				IIndicesAsync serverIndice=GWT.create(IIndices.class);
-				
-				serverIndice.exportarGraficosIDL(new AsyncCallback<Void>() {
-					
-					@Override
-					public void onSuccess(Void result) {
-						
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						caught.printStackTrace();
-						Window.alert("ERROR AJAX");
-					}
-				});
-				
+				Window.open("/gaficaidl.gidl.pdf", "_blank", null);
 			}
 		});
 		
+		graficarIGR.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.open("/gaficaigr.gigr.pdf", "_blank", null);
+			}
+		});
+		
+
 		nuevoIDL.addClickHandler(new ClickHandler() {
 			
 			@Override
