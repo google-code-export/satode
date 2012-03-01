@@ -15,5 +15,7 @@ public interface IIndicesAsync {
 
 	void exportarGraficosIDL(AsyncCallback<Void> callback);
 
+	void calcularIGR(CalculoIndiceDTO dto, AsyncCallback<Void> asyncCallback);
+
 
 }
