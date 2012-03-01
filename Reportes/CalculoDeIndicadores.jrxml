@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CalculoDeIndicadores" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="212"/>
+	<property name="ireport.y" value="202"/>
+	<parameter name="tipo" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+     calculosdeindices.`valor` AS calculosdeindices_valor,
+     calculosdeindices.`fecha` AS calculosdeindices_fecha
+FROM
+     `calculosdeindices` calculosdeindices
+Where calculosdeindices.`tipo` =1]]>
+	</queryString>
+	<field name="calculosdeindices_valor" class="java.lang.Float"/>
+	<field name="calculosdeindices_fecha" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="525" splitType="Stretch">
+			<bar3DChart>
+				<chart>
+					<reportElement x="0" y="28" width="555" height="235"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Valores del IDL"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{calculosdeindices_fecha}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{calculosdeindices_valor}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel color="#000000" backgroundColor="#FFFFFF"/>
+					<categoryAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont/>
+							<tickLabelFont/>
+						</axisFormat>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+		</band>
+	</detail>
+</jasperReport>
