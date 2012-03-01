@@ -154,6 +154,10 @@
     <url-pattern>/fing.satode.ui.indices.CalculoIndiceList/usuario</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.general.Inicial/usuario</url-pattern>
+  </servlet-mapping>
   
   <servlet-mapping>
     <servlet-name>usuarios</servlet-name>
@@ -185,6 +189,62 @@
     <url-pattern>/fing.satode.ui.usuarios.PerfilList/usuario</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.registros.EventoList/usuario</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.StockSuministroList/usuario/usuario</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.SuministroList/usuario/usuario</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.SolicitudEnvioList/usuario</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.desastres.CostoList/usuario</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.puntoReferencias.PuntoReferenciaList/usuario</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.DepositoList/usuario</url-pattern>
+  </servlet-mapping>
+            
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.TipoSuministroList/usuario</url-pattern>
+  </servlet-mapping>
+
+ <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.desastres.TipoCostoList/usuario</url-pattern>
+  </servlet-mapping>
+
+ <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.SuministroList/usuario</url-pattern>
+  </servlet-mapping>
+
+ <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.deposito.StockSuministros/usuario</url-pattern>
+  </servlet-mapping>
+
+
  <servlet>
     <servlet-name>evento</servlet-name>
     <servlet-class>fing.satode.ui.registros.server.EventoImpl</servlet-class>
