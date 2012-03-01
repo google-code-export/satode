@@ -31,6 +31,15 @@ public class PerfilDTO implements Serializable, IsSerializable{
 	public void setPermisos(ArrayList<PermisoDTO> permisos) {
 		this.permisos = permisos;
 	}
+	public boolean tienePermiso(String per) {
+		for(PermisoDTO p:permisos){
+			if(p.getPermiso().equals(per)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
     
     
 }

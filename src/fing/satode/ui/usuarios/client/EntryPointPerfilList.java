@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -22,6 +23,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 import fing.satode.data.PerfilDTO;
 import fing.satode.data.PermisoDTO;
+import fing.satode.ui.desastres.client.EntryPointDesastre.FormDialogBox;
 
 
 public class EntryPointPerfilList implements EntryPoint {
@@ -78,7 +80,7 @@ public class EntryPointPerfilList implements EntryPoint {
 				int row=1;
 				for(PerfilDTO p : result){
 					final Long id= p.getId();
-					final Button modificarB = new Button("");
+					final Image modificarB = new Image("/images/modificar.png");
 					modificarB.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -88,7 +90,9 @@ public class EntryPointPerfilList implements EntryPoint {
 							dialog.show();
 						}
 					});
-					final Button eliminarB = new Button("");
+					
+				
+					final Image eliminarB = new Image("/images/eliminar.png");
 					eliminarB.addClickHandler(new ClickHandler() {
 						
 						@Override
