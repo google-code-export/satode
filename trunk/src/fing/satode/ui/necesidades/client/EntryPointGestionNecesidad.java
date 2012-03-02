@@ -545,7 +545,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 								DepositoCantidad depoCan=new DepositoCantidad();
 								depoCan.setDeposito(cuenta.getDeposito());
 								depoCan.setCantidad(cantidad);
-								if(!cantidades.containsKey(s.getId())){
+								if(!cantidades.containsKey(s.getTipoSuministro().getId())){
 									cantidades.put(s.getTipoSuministro().getId(),new ArrayList<DepositoCantidad>());
 								}
 								ArrayList<DepositoCantidad> listaDepoCan= cantidades.get(s.getTipoSuministro().getId());
