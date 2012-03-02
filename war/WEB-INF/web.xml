@@ -122,6 +122,11 @@
 
   <servlet-mapping>
     <servlet-name>desastres</servlet-name>
+    <url-pattern>/fing.satode.ui.desastres.EstadoDesastre/desastres</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>desastres</servlet-name>
     <url-pattern>/fing.satode.ui.desastres.TipoCostoList/desastres</url-pattern>
   </servlet-mapping>
 
@@ -147,6 +152,11 @@
   <servlet-mapping>
     <servlet-name>usuarios</servlet-name>
     <url-pattern>/fing.satode.ui.usuarios.Login/usuario</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>usuarios</servlet-name>
+    <url-pattern>/fing.satode.ui.desastres.EstadoDesastre/usuario</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
