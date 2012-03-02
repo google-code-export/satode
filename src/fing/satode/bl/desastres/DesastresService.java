@@ -5,15 +5,24 @@ import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 
 import fing.satode.bl.base.ServiceBase;
+import fing.satode.constantes.EstadoNecesidad;
+import fing.satode.constantes.EstadoSolicitudEnvio;
 import fing.satode.data.CostoDTO;
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.EstadoDesastreDTO;
+import fing.satode.data.NecesidadDTO;
+import fing.satode.data.SolicitudEnvioDTO;
 import fing.satode.data.TipoCostoDTO;
 import fing.satode.dominio.Costo;
 import fing.satode.dominio.Desastre;
+import fing.satode.dominio.Necesidad;
+import fing.satode.dominio.SolicitudEnvio;
 import fing.satode.dominio.TipoCosto;
+import fing.satode.pl.deposito.SolicitudEnvioDAO;
 import fing.satode.pl.desastres.CostoDAO;
 import fing.satode.pl.desastres.DesastreDAO;
 import fing.satode.pl.desastres.TipoCostoDAO;
+import fing.satode.pl.necesidades.NecesidadesDAO;
 
 @Transactional
 public class DesastresService extends ServiceBase {
@@ -103,6 +112,49 @@ public class DesastresService extends ServiceBase {
 		ArrayList<CostoDTO> listaDTOS= new ArrayList<CostoDTO>();
 		ArrayList<Costo> listaDes= CostoDAO.getInstance().listaoCosto(idDesastre);
 		for(Costo d: listaDes){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
+
+	public EstadoDesastreDTO reporteEstadoDesastre(Long idDesastre) {
+		EstadoDesastreDTO dto=new EstadoDesastreDTO();
+
+		dto.setNecesidadesLocales(getDTOsNececidades(NecesidadesDAO.getInstance().buscarNecesidades(idDesastre, Long.valueOf(EstadoNecesidad.INGRESADA), true)));
+		dto.setNecesidadesPendientes(getDTOsNececidades(NecesidadesDAO.getInstance().buscarNecesidades(idDesastre, Long.valueOf(EstadoNecesidad.INGRESADA), false)));
+		dto.getNecesidadesPendientes().addAll(getDTOsNececidades(NecesidadesDAO.getInstance().buscarNecesidades(idDesastre, Long.valueOf(EstadoNecesidad.EN_PROCESO), false)));
+		dto.setNecesidadesRechazadas(getDTOsNececidades(NecesidadesDAO.getInstance().buscarNecesidades(idDesastre, Long.valueOf(EstadoNecesidad.RECHAZADA), false)));
+		dto.setNecesidadesAprobadas(getDTOsNececidades(NecesidadesDAO.getInstance().buscarNecesidades(idDesastre, Long.valueOf(EstadoNecesidad.ACEPTADA), false)));
+		
+		dto.setSolicitudPendiente(getDTSSolicitudEnvio(SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(0L, 0L, EstadoSolicitudEnvio.NUEVA)));
+		dto.setSolicitudEnviadasNoRecibidas(getDTSSolicitudEnvio(SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(0L, 0L, EstadoSolicitudEnvio.ENVIADA)));
+		dto.setSolicitudEnvioRecibidas(getDTSSolicitudEnvio(SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(0L, 0L, EstadoSolicitudEnvio.RECIBIDA_OK)));
+		dto.getSolicitudEnvioRecibidas().addAll(getDTSSolicitudEnvio(SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(0L, 0L, EstadoSolicitudEnvio.RECIBIDA_OBS)));
+		
+		dto.setCostos(getDTOsCostos(CostoDAO.getInstance().listaoCosto(idDesastre)));
+		
+		return dto;
+	}
+
+	private ArrayList<CostoDTO> getDTOsCostos(ArrayList<Costo> costos) {
+		ArrayList<CostoDTO> listaDTOS= new ArrayList<CostoDTO>();
+		for(Costo d: costos){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
+
+	private ArrayList<SolicitudEnvioDTO> getDTSSolicitudEnvio(ArrayList<SolicitudEnvio> solicitudesEnvio) {
+		ArrayList<SolicitudEnvioDTO> listaDTOS= new ArrayList<SolicitudEnvioDTO>();
+		for(SolicitudEnvio d: solicitudesEnvio){
+			listaDTOS.add(d.getDTO());
+		}
+		return listaDTOS;
+	}
+
+	private ArrayList<NecesidadDTO> getDTOsNececidades(ArrayList<Necesidad> necesidades) {
+		ArrayList<NecesidadDTO> listaDTOS= new ArrayList<NecesidadDTO>();
+		for(Necesidad d: necesidades){
 			listaDTOS.add(d.getDTO());
 		}
 		return listaDTOS;

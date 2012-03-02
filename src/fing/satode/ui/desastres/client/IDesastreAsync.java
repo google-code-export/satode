@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import fing.satode.data.CostoDTO;
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.EstadoDesastreDTO;
 import fing.satode.data.TipoCostoDTO;
 
 public interface IDesastreAsync {
@@ -35,5 +36,8 @@ public interface IDesastreAsync {
 	void eliminarCosto(CostoDTO dto, AsyncCallback<Void> callback);
 
 	void listaCosto(Long idDesastre, AsyncCallback<ArrayList<CostoDTO>> callback);
+
+	void reporteEstadoDesastre(Long idDesastre,
+			AsyncCallback<EstadoDesastreDTO> callback);
 
 }

@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import fing.satode.data.CostoDTO;
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.EstadoDesastreDTO;
 import fing.satode.data.TipoCostoDTO;
 
 
@@ -31,4 +32,7 @@ public interface IDesastre extends RemoteService {
 	public void nuevoCosto(CostoDTO dto);
 	public void modificarCosto(CostoDTO dto);
 	public void eliminarCosto(CostoDTO dto);
+	
+	public  EstadoDesastreDTO reporteEstadoDesastre(Long idDesastre);
+	
 }
