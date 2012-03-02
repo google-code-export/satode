@@ -493,7 +493,23 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 						serverNecesidad.nuevoGestionNecesidad(dto, new AsyncCallback<Void>() {
 							
 							@Override
-							public void onSuccess(Void result) {}
+							public void onSuccess(Void result){
+								INecesidadAsync serverNecesidad=GWT.create(INecesidad.class);
+							
+								serverNecesidad.buscarGestionNecesidadPorNecesidad(id, new AsyncCallback<GestionNecesidadDTO>() {
+									
+									@Override
+									public void onSuccess(GestionNecesidadDTO result) {
+										dto.setId(result.getId());
+									}
+									
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+										
+									}
+								});
+							}
 							
 							@Override
 							public void onFailure(Throwable caught) {

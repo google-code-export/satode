@@ -59,6 +59,12 @@ public class NecesidadesDAO extends DAOBase {
 		}
 	}
 
+	public ArrayList<GestionNecesidad>  buscarGestionNecesidadesPorDesastre(Long idDesastre) {
+			List list=sess().createQuery("from GestionNecesidad where( necesidad.desastre.id="+idDesastre+" ) ").list();
+			ArrayList<GestionNecesidad> res= new ArrayList<GestionNecesidad>(list);
+			return res;
+	}
+	
 	public void nuevoGestionNecesidad(GestionNecesidad necesidad) {
 		Long id=(Long)sess().save(necesidad);
 		necesidad.setId(id);

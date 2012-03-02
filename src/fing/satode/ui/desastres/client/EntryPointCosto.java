@@ -183,8 +183,11 @@ public class EntryPointCosto implements EntryPoint {
 					row++;
 				}
 				costoGrid.setWidget(row, 3, new Label("TOTALES"));
+				costoGrid.getCellFormatter().setStyleName(row, 3, "tbl-cab");
 				costoGrid.setWidget(row, 4, new Label(String.valueOf(pesos)));
+				costoGrid.getCellFormatter().setStyleName(row, 4, "total");
 				costoGrid.setWidget(row, 5, new Label(String.valueOf(dolares)));
+				costoGrid.getCellFormatter().setStyleName(row, 5, "total");
 				vertical.add(costoGrid);
 				
 			}

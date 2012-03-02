@@ -101,7 +101,11 @@ public class EntryPointInicial implements EntryPoint  {
 		 		    	 public void execute() {
 		 		 	        setWindowHref("/CalculoIndiceList.html");}};// Create a menu bar	         
 	 				
-	 				MenuBar menu = new MenuBar();
+	 			 	Command  menuCommandEstadoDesastre= new Command() {
+		 		    	 public void execute() {
+		 		 	        setWindowHref("/EstadoDesastre.html");}};// Create a menu bar	         
+
+		 		 	MenuBar menu = new MenuBar();
 	 			    menu.setAutoOpen(true);
 	 			    menu.setWidth("100%");
 	 			    menu.setAnimationEnabled(true);
@@ -151,6 +155,9 @@ public class EntryPointInicial implements EntryPoint  {
    	 			    	desastresMenu.addSeparator();
    	 			    	desastresMenu.addItem("Declaracion Desastres", menuCommandDesastre);
 	 			    }
+   	 			    if(usuarioGlobal.getPerfil().tienePermiso("MNU_ESTADO_DESASTRE")){
+   	 			    	desastresMenu.addItem("Estado Desastre", menuCommandEstadoDesastre);
+   	 			    }
    	 			    if(usuarioGlobal.getPerfil().tienePermiso("MNU_INGRESO_NECESIDADES")){
    	 			    	desastresMenu.addSeparator();
    	 			    	desastresMenu.addItem("Ingreso Necesidades", menuCommandNecesidades);
@@ -216,9 +223,7 @@ public class EntryPointInicial implements EntryPoint  {
  			
  			@Override
  			public void onFailure(Throwable caught) {
- 				
- 				caught.printStackTrace();
- 				Window.alert("ERROR AJAX");
+ 				setWindowHref("/Login.html");
  			}
  		});
 	 		 		

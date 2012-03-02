@@ -15,7 +15,9 @@ import fing.satode.data.SolicitudEnvioDTO;
 import fing.satode.data.TipoCostoDTO;
 import fing.satode.dominio.Costo;
 import fing.satode.dominio.Desastre;
+import fing.satode.dominio.GestionNecesidad;
 import fing.satode.dominio.Necesidad;
+import fing.satode.dominio.PlanSuministro;
 import fing.satode.dominio.SolicitudEnvio;
 import fing.satode.dominio.TipoCosto;
 import fing.satode.pl.deposito.SolicitudEnvioDAO;
@@ -127,10 +129,34 @@ public class DesastresService extends ServiceBase {
 		dto.setNecesidadesAprobadas(getDTOsNececidades(NecesidadesDAO.getInstance().buscarNecesidades(idDesastre, Long.valueOf(EstadoNecesidad.ACEPTADA), false)));
 		
 		dto.setSolicitudPendiente(getDTSSolicitudEnvio(SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(0L, 0L, EstadoSolicitudEnvio.NUEVA)));
-		dto.setSolicitudEnviadasNoRecibidas(getDTSSolicitudEnvio(SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(0L, 0L, EstadoSolicitudEnvio.ENVIADA)));
-		dto.setSolicitudEnvioRecibidas(getDTSSolicitudEnvio(SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(0L, 0L, EstadoSolicitudEnvio.RECIBIDA_OK)));
-		dto.getSolicitudEnvioRecibidas().addAll(getDTSSolicitudEnvio(SolicitudEnvioDAO.getInstance().buscarSolicitudesEnvio(0L, 0L, EstadoSolicitudEnvio.RECIBIDA_OBS)));
 		
+		ArrayList<SolicitudEnvio> solicitudesPEndientes=new ArrayList<SolicitudEnvio>();
+		ArrayList<SolicitudEnvio> solicitudesNoRecibidas=new ArrayList<SolicitudEnvio>();
+		ArrayList<SolicitudEnvio> solicitudesRecibidas=new ArrayList<SolicitudEnvio>();
+		
+		for(GestionNecesidad n:NecesidadesDAO.getInstance().buscarGestionNecesidadesPorDesastre(idDesastre)){
+			for(PlanSuministro ps:n.getPlanesSuministros()){
+				for(SolicitudEnvio solEnv:ps.getSolicitudesEnvios()){
+					switch(solEnv.getEstado()){
+						case EstadoSolicitudEnvio.NUEVA:
+							solicitudesPEndientes.add(solEnv);
+							break;
+						case EstadoSolicitudEnvio.ENVIADA:
+							solicitudesNoRecibidas.add(solEnv);
+							break;
+						case EstadoSolicitudEnvio.RECIBIDA_OK:
+							solicitudesRecibidas.add(solEnv);
+							break;							
+						case EstadoSolicitudEnvio.RECIBIDA_OBS:
+							solicitudesRecibidas.add(solEnv);
+							break;												}
+				}
+			}
+		}
+		
+		dto.setSolicitudEnviadasNoRecibidas(getDTSSolicitudEnvio(solicitudesPEndientes));
+		dto.setSolicitudEnvioRecibidas(getDTSSolicitudEnvio(solicitudesRecibidas));
+		dto.setSolicitudEnviadasNoRecibidas(getDTSSolicitudEnvio(solicitudesNoRecibidas));
 		dto.setCostos(getDTOsCostos(CostoDAO.getInstance().listaoCosto(idDesastre)));
 		
 		return dto;
