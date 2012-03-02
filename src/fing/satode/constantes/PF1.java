@@ -18,7 +18,7 @@ public class PF1 implements Serializable, IsSerializable{
 
 	public static String ORGANIZACIONBASICA_TXT= "Organizaci\u00F3n b\u00E1sica de entidades a nivel nacional en comisiones y con un enfoque principalmente de respuesta a emergencias.";
 	public static String LEGISLACION_TXT= "Legislaci\u00F3n que establece una organizaci\u00F3n descentralizada para gesti\u00F3n integral de riesgos, interinstitucional y multisectorial, y la formulaci\u00F3n de un plan general de gesti\u00F3n de riesgos.";
-	public static String SISTEMASINTERINTITUCIONALES_TXT= "Sistemas interinstitucionales de gesti\u00F3n de riesgo activos a nivel local en varias ciudades; trabajo interministerial a nivel nacional para dise\u00F1o de pol\u00EDticas públicas sobre reducci\u00F3n de vulnerabilidad.";
+	public static String SISTEMASINTERINTITUCIONALES_TXT= "Sistemas interinstitucionales de gesti\u00F3n de riesgo activos a nivel local en varias ciudades; trabajo interministerial a nivel nacional para dise\u00F1o de pol\u00EDticas p\u00FAblicas sobre reducci\u00F3n de vulnerabilidad.";
 	public static String EJECUCIONCONTINUA_TXT= "Ejecuci\u00F3n continua de proyectos de gesti\u00F3n de riesgos asociados con programas de adaptaci\u00F3n al cambio clim\u00E1tico, protecci\u00F3n ambiental, energ\u00EDa, saneamiento y reducci\u00F3n de la pobreza.";
 	public static String PERSONALEXPERTO_TXT= "Personal experto con amplia experiencia incorporando la gesti\u00F3n de riesgos en la planificaci\u00F3n del desarrollo humano sostenible en la mayor\u00EDa de ciudades; sistemas de informaci\u00F3n de alta tecnolog\u00EDa.";
 	

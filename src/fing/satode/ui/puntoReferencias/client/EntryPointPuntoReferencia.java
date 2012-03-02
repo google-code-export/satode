@@ -13,6 +13,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
@@ -98,6 +99,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 				puntosReferencias.getCellFormatter().setStyleName(0,6, "tbl-cab");
 				puntosReferencias.getCellFormatter().setStyleName(0,7, "tbl-cab");
 				puntosReferencias.getCellFormatter().setStyleName(0,8, "tbl-cab");
+				puntosReferencias.getCellFormatter().setStyleName(0,9, "tbl-cab");
 				puntosReferencias.setBorderWidth(1);
 				int row=1;
 				
@@ -181,7 +183,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 		final Grid grid= new Grid(7,2);
 		final CheckBox puntoEntrega = new CheckBox();
 	    final CheckBox puntoEntrada = new CheckBox();
@@ -220,9 +222,9 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 			a=accion;
 	    	id=idPuntoReferencia;
 	    	
-	    	if(a=="modificar") label.setText("Modificar Punto de Referencia");
-			if(a=="eliminar") label.setText("Eliminar Punto de Referencia");
-			if(a=="nuevo") label.setText("Nuevo Punto de Referencia");
+	    	if(a=="modificar") panelPrincipal.setCaptionText("Modificar Punto de Referencia");
+			if(a=="eliminar") panelPrincipal.setCaptionText("Eliminar Punto de Referencia");
+			if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo Punto de Referencia");
 			
 			grid.setWidget(0, 0, new Label("Punto de Entrada"));
 			grid.setWidget(1, 0, new Label("Punto de Entrega"));
@@ -515,7 +517,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 				descripcion.setEnabled(false);
 			    
 		    }
-			vertical.add(label);
+			panelPrincipal.add(vertical);
 			vertical.add(grid);
 			vertical.add(gridHospital);
 			vertical.add(gridRefugio);
@@ -542,7 +544,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 

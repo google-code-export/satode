@@ -16,11 +16,11 @@ public class PF5 implements Serializable, IsSerializable{
 	public final static int ESTRETEGIASRETENCION=5;
 	
 	
-	public static String POCOSINMUEBLESASEGURADOS_TXT= "Muy pocos inmuebles públicos de la naci\u00F3n est\u00E1n asegurados y excepcionalmente algunos a nivel local.";
-	public static String SEGUROSOBLIGATORIOSNOINF_TXT= "Disposiciones de aseguramiento de bienes públicos de obligatorio cumplimiento; deficiente aseguramiento de la infraestructura.";
-	public static String SEGUROSBINESPUBLICOS_TXT= "Progresivo aseguramiento de bienes públicos e infraestructura del nivel nacional y de algunas ciudades.";
-	public static String PROGRMAASEGURAMINETO_TXT= "Dise\u00F1o de programas de aseguramiento colectivo de edificios, infraestructura pública o en concesi\u00F3n en la mayor\u00EDa de ciudades.";
-	public static String ESTRETEGIASRETENCION_TXT= "An\u00E1lisis e implantaci\u00F3n generalizada de estrategias de retenci\u00F3n y transferencia de p\u00E9rdidas sobre los activos públicos, considerando consorcios de reaseguro, titularizaci\u00F3n de riesgo, bonos cat, etc.";
+	public static String POCOSINMUEBLESASEGURADOS_TXT= "Muy pocos inmuebles p\u00FAblicos de la naci\u00F3n est\u00E1n asegurados y excepcionalmente algunos a nivel local.";
+	public static String SEGUROSOBLIGATORIOSNOINF_TXT= "Disposiciones de aseguramiento de bienes p\u00FAblicos de obligatorio cumplimiento; deficiente aseguramiento de la infraestructura.";
+	public static String SEGUROSBINESPUBLICOS_TXT= "Progresivo aseguramiento de bienes p\u00FAblicos e infraestructura del nivel nacional y de algunas ciudades.";
+	public static String PROGRMAASEGURAMINETO_TXT= "Dise\u00F1o de programas de aseguramiento colectivo de edificios, infraestructura p\u00FAblica o en concesi\u00F3n en la mayor\u00EDa de ciudades.";
+	public static String ESTRETEGIASRETENCION_TXT= "An\u00E1lisis e implantaci\u00F3n generalizada de estrategias de retenci\u00F3n y transferencia de p\u00E9rdidas sobre los activos p\u00FAblicos, considerando consorcios de reaseguro, titularizaci\u00F3n de riesgo, bonos cat, etc.";
 	
 	public static String getTXT(int constante){
 		switch (constante) {

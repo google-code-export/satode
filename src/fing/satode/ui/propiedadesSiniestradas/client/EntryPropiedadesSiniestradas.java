@@ -142,13 +142,11 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			
 			@Override
 			public void onSuccess(UsuarioDTO result) {
-				// TODO Auto-generated method stub
 				usuarioGlobal=result;
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -423,16 +421,13 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			id = idParcela;
 
 			if (a == "modificar"){
-				panelTitulo.setTitle("Modificar Parcela");
-				panelTitulo.setCaptionText("Modificar Parcela");
+				panelTitulo.setCaptionText("Modificar Propiedad Siniestrada");
 			}
 			if (a == "eliminar"){
-				panelTitulo.setTitle("Eliminar Parcela");
-				panelTitulo.setCaptionText("Eliminar Parcela");
+				panelTitulo.setCaptionText("Eliminar Propiedad Siniestrada");
 			}
 			if (a == "nuevo"){
-				panelTitulo.setTitle("Nueva Parcela");
-				panelTitulo.setCaptionText("Nueva Parcela");
+				panelTitulo.setCaptionText("Nueva Propiedad Siniestrada");
 			}
 			
 			fotosBorradas = new ArrayList<FotoDTO>();
@@ -2273,7 +2268,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 		private UnidadParcelaDTO unidad;
 		final HorizontalPanel horizontal = new HorizontalPanel();
 		final VerticalPanel vertical = new VerticalPanel();
-		final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 		final Grid grid = new Grid(4, 2);
 
 		final TextBox descripcion = new TextBox();
@@ -2290,11 +2285,11 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 			unidad = uni;
 
 			if (a == "modificar")
-				label.setText("Modificar Unidad Parcela");
+				panelPrincipal.setCaptionText("Modificar Unidad Parcela");
 			if (a == "eliminar")
-				label.setText("Eliminar Unidad Parcela");
+				panelPrincipal.setCaptionText("Eliminar Unidad Parcela");
 			if (a == "nuevo")
-				label.setText("Nueva Unidad Parcela");
+				panelPrincipal.setCaptionText("Nueva Unidad Parcela");
 
 			grid.setWidget(0, 0, new Label("Descripcion"));
 			grid.setWidget(1, 0, new Label("Nivel del Agua en la vivienda (m)"));
@@ -2344,7 +2339,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 				nivelPiso.setEnabled(false);
 			}
 
-			vertical.add(label);
+			panelPrincipal.add(vertical);
 			vertical.add(grid);
 			horizontal.add(aceptar);
 			horizontal.add(cancelar);
@@ -2367,7 +2362,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 			});
 
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 

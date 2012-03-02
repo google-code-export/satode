@@ -19,8 +19,8 @@ public class RR2 implements Serializable, IsSerializable{
 	public static String INVENTARIOALGUNOS_TXT= "Inventario de cuencas y zonas de mayor deterioro ambiental o consideradas de mayor sensitividad.";
 	public static String EXPEDICIONDISPOSICIONES_TXT= "Expedici\u00F3n de disposiciones legales de orden nacional y de algunas de nivel local que establecen la obligatoriedad de reforestaci\u00F3n, protecci\u00F3n ambiental y ordenamiento de cuencas.";
 	public static String PLANESORDENAMINETO_TXT= "Formulaci\u00F3n de algunos planes de ordenamiento e intervenci\u00F3n de cuencas hidrogr\u00E1ficas estrat\u00E9gicas y de zonas sensitivas, teniendo en cuenta aspectos relacionados con la vulnerabilidad y el riesgo.";
-	public static String INVENTARIOSAPRECIABLES_TXT= "Apreciable número de regiones/cuencas con planes de protecci\u00F3n ambiental, estudios de impacto y ordenamiento de zonas agr\u00EDcolas, que consideran el riesgo como determinante para la intervenci\u00F3n.";
-	public static String CONSIDERABLESINVENTARIOS_TXT= "Intervenci\u00F3n de un número considerable de cuencas deterioradas y de zonas sensitivas y ecosistemas estrat\u00E9gicos; la mayor\u00EDa de los municipios con planes de intervenci\u00F3n y protecci\u00F3n ambiental.";
+	public static String INVENTARIOSAPRECIABLES_TXT= "Apreciable n\u00FAmero de regiones/cuencas con planes de protecci\u00F3n ambiental, estudios de impacto y ordenamiento de zonas agr\u00EDcolas, que consideran el riesgo como determinante para la intervenci\u00F3n.";
+	public static String CONSIDERABLESINVENTARIOS_TXT= "Intervenci\u00F3n de un n\u00FAmero considerable de cuencas deterioradas y de zonas sensitivas y ecosistemas estrat\u00E9gicos; la mayor\u00EDa de los municipios con planes de intervenci\u00F3n y protecci\u00F3n ambiental.";
 	
 	public static String getTXT(int constante){
 		switch (constante) {

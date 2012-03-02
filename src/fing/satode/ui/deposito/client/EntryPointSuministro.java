@@ -13,6 +13,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
@@ -237,7 +238,8 @@ public class EntryPointSuministro implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		//final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 	  
 	    final Grid gridFecha= new Grid(1,2);
 	    final DatePicker datePicker = new DatePicker();
@@ -264,9 +266,9 @@ public class EntryPointSuministro implements EntryPoint {
 			    });
 			    datePicker.setValue(new Date(), true);
 		    	
-		    	if(a=="modificar") label.setText("Modificar Donacion");
-				if(a=="eliminar") label.setText("Eliminar Donacion");
-				if(a=="nuevo") label.setText("Nuevo Donacion");
+		    	if(a=="modificar") panelPrincipal.setCaptionText("Modificar Donacion");
+				if(a=="eliminar") panelPrincipal.setCaptionText("Eliminar Donacion");
+				if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo Donacion");
 				
 				gridSuministros.setWidget(0, 0, new Label("Fecha"));
 				gridSuministros.setWidget(1, 0, new Label("Donante"));
@@ -402,7 +404,7 @@ public class EntryPointSuministro implements EntryPoint {
 			    	nuevoB.setEnabled(false);
 			    }
 			    
-				vertical.add(label);
+				panelPrincipal.add(vertical);
 				vertical.add(gridSuministros);
 		    	horizontal.add(aceptar);
 				horizontal.add(cancelar);
@@ -425,7 +427,7 @@ public class EntryPointSuministro implements EntryPoint {
 				});
 					
 				setAnimationEnabled(true);
-				add(vertical);
+				add(panelPrincipal);
 				center();
 		}
 		
@@ -544,7 +546,8 @@ public class EntryPointSuministro implements EntryPoint {
 		private SuministroDTO suministro;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		//final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 	    final Grid grid= new Grid(4,2);
 	    final Grid gridFecha= new Grid(1,2);
 		
@@ -573,9 +576,9 @@ public class EntryPointSuministro implements EntryPoint {
 		    });
 		    datePicker.setValue(new Date(), true);
 	    	
-	    	if(a=="modificar") label.setText("Modificar Suministro");
-			if(a=="eliminar") label.setText("Eliminar Suministro");
-			if(a=="nuevo") label.setText("Nuevo Suministro");
+	    	if(a=="modificar") panelPrincipal.setCaptionText("Modificar Suministro");
+			if(a=="eliminar") panelPrincipal.setCaptionText("Eliminar Suministro");
+			if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo Suministro");
 			
 			grid.setWidget(0, 0, new Label("Tipo de Suministro"));
 			grid.setWidget(1, 0, new Label("Cantidad"));
@@ -648,7 +651,7 @@ public class EntryPointSuministro implements EntryPoint {
 		    	fechavencimiento.setEnabled(false);
 		    }
 		    
-			vertical.add(label);
+			panelPrincipal.add(vertical);
 			vertical.add(grid);
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
@@ -671,7 +674,7 @@ public class EntryPointSuministro implements EntryPoint {
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 

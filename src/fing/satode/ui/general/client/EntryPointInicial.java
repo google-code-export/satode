@@ -30,7 +30,6 @@ public class EntryPointInicial implements EntryPoint  {
  			
  			@Override
  			public void onSuccess(UsuarioDTO result) {
- 				// TODO Auto-generated method stub
  				usuarioGlobal=result;
  				
  				if(usuarioGlobal!=null){
@@ -217,7 +216,7 @@ public class EntryPointInicial implements EntryPoint  {
  			
  			@Override
  			public void onFailure(Throwable caught) {
- 				// TODO Auto-generated method stub
+ 				
  				caught.printStackTrace();
  				Window.alert("ERROR AJAX");
  			}

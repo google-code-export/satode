@@ -5,5 +5,5 @@
 	<inherits name="fing.satode.ui.general.Inicial" />
 	<source path="client" />
 	<entry-point
-		class="fing.satode.ui.indices.client.CalculoIndiceList" />
+		class="fing.satode.ui.indices.client.EntryPointCalculoIndiceList" />
 </module>

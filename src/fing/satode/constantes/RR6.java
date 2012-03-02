@@ -19,8 +19,8 @@ public class RR6 implements Serializable, IsSerializable{
 	public static String ESPORADICAADECUACION_TXT= "Refuerzo y adecuaci\u00F3n espor\u00E1dica de edificaciones y l\u00EDneas vitales por remodelaciones o cambios de uso o por modificaciones.";
 	public static String EXPEDICIONNORMAS_TXT= "Expedici\u00F3n de normas de intervenci\u00F3n de la vulnerabilidad de edificios existentes; refuerzo de algunos edificios esenciales como hospitales o considerados de car\u00E1cter indispensable.";
 	public static String PROGRAMASMASIVOS_TXT= "Algunos programas masivos de evaluaci\u00F3n de vulnerabilidad, rehabilitaci\u00F3n y refuerzo de hospitales, escuelas y edificios de control de l\u00EDneas vitales; obligatoriedad de reforzamientos.";
-	public static String EDIFICACIONESREFORZADAS_TXT= "Progresivo número de edificios públicos reforzados, l\u00EDneas vitales intervenidas; algunos edificios del sector privado reforzados por iniciativa propia o por est\u00EDmulos fiscales ofrecidos por el gobierno.";
-	public static String MASIFICACIONREFUERZOS_TXT= "Masificaci\u00F3n del refuerzo de los principales edificios públicos y privados; programas permanentes de incentivos para rehabilitaci\u00F3n de vivienda de estratos socio-econ\u00F3micos de bajos ingresos.";
+	public static String EDIFICACIONESREFORZADAS_TXT= "Progresivo n\u00FAmero de edificios p\u00FAblicos reforzados, l\u00EDneas vitales intervenidas; algunos edificios del sector privado reforzados por iniciativa propia o por est\u00EDmulos fiscales ofrecidos por el gobierno.";
+	public static String MASIFICACIONREFUERZOS_TXT= "Masificaci\u00F3n del refuerzo de los principales edificios p\u00FAblicos y privados; programas permanentes de incentivos para rehabilitaci\u00F3n de vivienda de estratos socio-econ\u00F3micos de bajos ingresos.";
 	
 	public static String getTXT(int constante){
 		switch (constante) {

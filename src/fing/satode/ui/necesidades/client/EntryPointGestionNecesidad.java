@@ -18,6 +18,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -82,7 +83,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
 		HorizontalPanel botonera= new HorizontalPanel();
 		Grid desastreGrid=new Grid(1,2);
 		Grid estadoGrid=new Grid(1,2);
@@ -111,7 +111,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<DesastreDTO> result) {
-				// TODO Auto-generated method stub
 				desastreGlobal=result;
 				DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
 				for(DesastreDTO d: result){
@@ -148,13 +147,11 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<TipoSuministroDTO> result) {
-				// TODO Auto-generated method stub
 				tipoSuministrosGlobal=result;
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 				
@@ -165,7 +162,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<CuentaCorrienteSuministroDTO> result) {
-				// TODO Auto-generated method stub
 				stocks= new HashMap<Long, ArrayList<CuentaCorrienteSuministroDTO>>();
 				for(CuentaCorrienteSuministroDTO dto:result){
 					if(!stocks.containsKey(dto.getTipoSuministro().getId())){
@@ -197,13 +193,11 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			
 			@Override
 			public void onSuccess(UsuarioDTO result) {
-				// TODO Auto-generated method stub
 				usuarioGlobal=result;
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -286,7 +280,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 										
 										@Override
 										public void onSuccess(GestionNecesidadDTO result) {
-											// TODO Auto-generated method stub
 											for(PlanSuministroDTO ps:result.getPlanesSuministros()){
 												for(SolicitudEnvioDTO se:ps.getSolicitudesEnvios()){
 													se.setEstado(EstadoSolicitudEnvio.NUEVA);
@@ -297,14 +290,13 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 												
 												@Override
 												public void onSuccess(Void result) {
-													// TODO Auto-generated method stub
 													cargarLista();
 												}
 												
 												@Override
 												public void onFailure(Throwable caught) {
-													// TODO Auto-generated method stub
-													
+													caught.printStackTrace();
+													Window.alert("ERROR AJAX");
 												}
 											});
 										}
@@ -338,7 +330,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 								
 								@Override
 								public void onSuccess(Void result) {
-									// TODO Auto-generated method stub
 									cargarLista();
 								}
 								
@@ -378,7 +369,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel panelSuministros= new VerticalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 	  
 	    final Grid gridFecha= new Grid(1,2);
 	    
@@ -408,10 +399,10 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 		    });
 		    datePicker.setValue(new Date(), true);
 	    	
-	    	if(a=="modificar") label.setText("Modificar Gestion Necesidad");
-			if(a=="procesar") label.setText("Procesar Necesidad");
-			if(a=="nuevo") label.setText("Nuevo Gestion Necesidad");
-			if(a=="ver") label.setText("Ver Gestion Necesidad");
+	    	if(a=="modificar") panelPrincipal.setCaptionText("Modificar Gestion Necesidad");
+			if(a=="procesar") panelPrincipal.setCaptionText("Procesar Necesidad");
+			if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo Gestion Necesidad");
+			if(a=="ver") panelPrincipal.setCaptionText("Ver Gestion Necesidad");
 			
 			gridFormulario.setWidget(0, 0, new Label("Fecha"));
 			gridFormulario.setWidget(1, 0, new Label("Desastre"));
@@ -490,7 +481,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 				
 				@Override
 				public void onSuccess(GestionNecesidadDTO result) {
-					// TODO Auto-generated method stub
 					dto=result;
 					boolean yaExiste=true;
 					if(dto==null){
@@ -633,7 +623,6 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 				
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
 					caught.printStackTrace();
 					Window.alert("ERROR AJAX");
 				}
@@ -649,7 +638,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 	    	datePicker.setVisible(false);
 			  
 			
-			vertical.add(label);
+			panelPrincipal.add(vertical);
 			vertical.add(gridFormulario);
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
@@ -672,7 +661,7 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 
@@ -705,14 +694,12 @@ public class EntryPointGestionNecesidad implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							hide();
 							cargarLista();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}

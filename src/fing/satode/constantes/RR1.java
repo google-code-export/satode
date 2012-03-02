@@ -18,7 +18,7 @@ public class RR1 implements Serializable, IsSerializable{
 	
 	public static String CONSIDERACIONALGUNOS_TXT= "Consideraci\u00F3n de algunos elementos de identificaci\u00F3n de riesgos y protecci\u00F3n ambiental en la planificaci\u00F3n f\u00EDsica.";
 	public static String PROMULGACION_TXT= "Promulgaci\u00F3n de legislaci\u00F3n nacional y de algunas regulaciones locales que consideran algunas amenazas como determinantes del ordenamiento territorial y planificaci\u00F3n del desarrollo.";
-	public static String PROGRESIVAFORMULACION_TXT= "Progresiva formulaci\u00F3n de reglamentos de uso del suelo en varias ciudades que tienen en cuenta amenazas y riesgos; prescripciones de diseño y construcci\u00F3n obligatorias con base en microzonificaciones.";
+	public static String PROGRESIVAFORMULACION_TXT= "Progresiva formulaci\u00F3n de reglamentos de uso del suelo en varias ciudades que tienen en cuenta amenazas y riesgos; prescripciones de dise\u00F1o y construcci\u00F3n obligatorias con base en microzonificaciones.";
 	public static String AMPLIAFORMULACION_TXT= "Amplia formulaci\u00F3n y actualizaci\u00F3n de planes de ordenamiento territorial con enfoque preventivo en la mayor\u00EDa de los municipios; mayor utilizaci\u00F3n de las microzonificaciones con fines de seguridad.";
 	public static String CONTROLGENERALIZADO_TXT= "Aprobaci\u00F3n y control generalizado del cumplimiento de los planes de ordenamiento territorial que incluyen el riesgo como determinante y de las disposiciones de seguridad urbana respectivas.";
 	
