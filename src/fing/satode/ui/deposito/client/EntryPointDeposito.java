@@ -89,8 +89,8 @@ public class EntryPointDeposito implements EntryPoint {
 				depositos.setWidget(0, 3, new Label("Direcci\u00F3n"));
 				depositos.setWidget(0, 4, new Label("Telefono"));
 				depositos.setWidget(0, 5, new Label("Mail"));
-				depositos.setWidget(0, 6, new Label("Area en m2"));
-				depositos.setWidget(0, 7, new Label("Area en m3"));
+				depositos.setWidget(0, 6, new Label("Area en m\u00B2"));
+				depositos.setWidget(0, 7, new Label("Area en m\u00B3"));
 				depositos.setWidget(0, 8, modificarLabel);
 				depositos.setWidget(0, 9, eliminarLabel);
 				
@@ -196,8 +196,8 @@ public class EntryPointDeposito implements EntryPoint {
 			grid.setWidget(3, 0, new Label("Direcci\u00F3n"));
 			grid.setWidget(4, 0, new Label("Telefono"));
 			grid.setWidget(5, 0, new Label("Mail"));
-			grid.setWidget(6, 0, new Label("Area en m2"));
-			grid.setWidget(7, 0, new Label("Area en m3"));
+			grid.setWidget(6, 0, new Label("Area en m\u00B2"));
+			grid.setWidget(7, 0, new Label("Area en m\u00B3"));
 			
 			grid.setWidget(0, 1, responsable);
 			grid.setWidget(1, 1, departamentos);
@@ -402,10 +402,34 @@ public class EntryPointDeposito implements EntryPoint {
 				}
 			}
 			
+			if(direccion.getText().trim().length()==0){
+				Window.alert("Indique Direccion");
+				return null;
+			}
 			dto.setDireccion(direccion.getText());
+			
+			if(telefono.getText().trim().length()==0){
+				Window.alert("Indique Telefono");
+				return null;
+			}
 			dto.setTelefono(telefono.getText());
+			
+			if(mail.getText().trim().length()==0){
+				Window.alert("Indique Mail");
+				return null;
+			}			
 			dto.setMail(mail.getText());
+			
+			if(area2.getText().trim().length()==0){
+				Window.alert("Indique Area en m\u00B2");
+				return null;
+			}	
 			dto.setArea2(getFloat(area2.getText()));
+			
+			if(area3.getText().trim().length()==0){
+				Window.alert("Indique Area en m\u00B3");
+				return null;
+			}
 			dto.setArea3(getFloat(area3.getText()));
 			
 			return dto;

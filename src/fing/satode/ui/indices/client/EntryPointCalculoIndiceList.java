@@ -61,6 +61,7 @@ import fing.satode.data.TipoCostoDTO;
 import fing.satode.data.UsuarioDTO;
 import fing.satode.ui.desastres.client.IDesastre;
 import fing.satode.ui.desastres.client.IDesastreAsync;
+import fing.satode.ui.general.data.KeyNumeric;
 import fing.satode.ui.usuarios.client.IUsuario;
 import fing.satode.ui.usuarios.client.IUsuarioAsync;
 
@@ -258,6 +259,9 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 	    	tipo.setEnabled(false);
 	    	
 	    	grid.setBorderWidth(1);
+	    	
+	    	valVivSocial.addKeyboardListener(new KeyNumeric());
+	    	valHectaria.addKeyboardListener(new KeyNumeric());
 	    	
 			captionPrincipal.add(vertical);
 			vertical.add(grid);

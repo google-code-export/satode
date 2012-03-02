@@ -9,7 +9,6 @@ public class KeyNumeric implements KeyboardListener {
 
 	@Override
 	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
-		// TODO Auto-generated method stub
 		if (!Character.isDigit(keyCode) && (keyCode != (char) KEY_TAB)
 		         && (keyCode != (char) KEY_BACKSPACE)
 		         && (keyCode != (char) KEY_DELETE) && (keyCode != (char) KEY_ENTER) 
@@ -19,9 +18,16 @@ public class KeyNumeric implements KeyboardListener {
 		         && keyCode != '.') {
 		       // TextBox.cancelKey() suppresses the current keyboard event.
 			if(Character.isLetter(keyCode)){
-				((TextBox)sender).cancelKey();
+				if(keyCode != 'a' && keyCode != 'b' && keyCode != 'c'
+						&& keyCode != 'd' && keyCode != 'e' && keyCode != 'f'
+						&& keyCode != 'g' && keyCode != 'h' && keyCode != 'i'){
+					((TextBox)sender).cancelKey();
+				}
 			}
 		 }
+		
+		
+		
 	}
 
 	@Override
