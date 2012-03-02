@@ -1,5 +1,3 @@
-insert into permisos(permiso) values('MNU_USUARIOS');
-insert into permisos(permiso) values('MNU_PERFILES');
 insert into permisos(permiso) values('MNU_REGISTROS');
 insert into permisos(permiso) values('MNU_EVENTOS');
 insert into permisos(permiso) values('MNU_PROPIEDADES_SINIESTRADAS');
@@ -19,7 +17,7 @@ insert into permisos(permiso) values('MNU_MANTENIMIENTOS_DEPOSITOS');
 insert into permisos(permiso) values('MNU_TIPOS_SUMINISTROS');
 insert into permisos(permiso) values('MNU_TIPOS_COSTOS');
 insert into permisos(permiso) values('MNU_CALCULO_INDICES');
-
+insert into permisos(permiso) values('MNU_ESTADO_DESASTRE');
 
 
 
