@@ -15,6 +15,7 @@ public interface IDesastreAsync {
 
 	void nuevoDesastre(DesastreDTO dto, AsyncCallback<Void> callback);
 
+	
 	void eliminarDesastre(DesastreDTO dto, AsyncCallback<Void> callback);
 
 	void modificarDesastre(DesastreDTO dto, AsyncCallback<Void> callback);
