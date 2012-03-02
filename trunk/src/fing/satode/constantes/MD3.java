@@ -17,7 +17,7 @@ public class MD3 implements Serializable, IsSerializable{
 	
 			
 	public static String DOTACIONBASICA_TXT= "Dotaci\u00F3n b\u00E1sica e inventario de los recursos de s\u00F3lo las entidades operativas y comisiones de emergencia.";
-	public static String CENTROSRESERVAS_TXT= "Centros de reservas y de equipos especializados de emergencia a nivel nacional y en algunas ciudades; inventarios de recursos de otras entidades públicas y privadas.";
+	public static String CENTROSRESERVAS_TXT= "Centros de reservas y de equipos especializados de emergencia a nivel nacional y en algunas ciudades; inventarios de recursos de otras entidades p\u00FAblicas y privadas.";
 	public static String OPERACIONES_TXT= "Centros de Operaciones de Emergencia bien dotados con equipos de comunicaciones y adecuados sistemas de registro; equipamiento especializado y centros de reservas en varias ciudades.";
 	public static String OPERACIONESSISTEMATIZADOS_TXT= "Centros de Operaciones de Emergencia bien dotados y sistematizados en la mayor\u00EDa de ciudades; progresiva dotaci\u00F3n complementaria de las entidades operativas.";
 	public static String REDESDEAPOYO_TXT= "Redes de apoyo interinstitucional, de centros de reservas y entre Centros de Operaciones de Emergencia funcionando permanentemente; amplias facilidades de comunicaciones, transporte y abastecimiento en caso de emergencia.";

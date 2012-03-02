@@ -18,7 +18,7 @@ public class MD4 implements Serializable, IsSerializable{
 			
 	public static String ALGUNOSSIMULACROS_TXT= "Algunos simulacros institucionales internos y en conjunto con otras entidades operativas en algunas ciudades.";
 	public static String EJERCICIOSESPORADISOCOS_TXT= "Ejercicios espor\u00E1dicos de simulaci\u00F3n de situaciones emergencia y respuesta interinstitucional con todas las entidades operativas.";
-	public static String SIMULACIONESESCRITORIO_TXT= "Simulaciones de escritorio y simulacros con la participaci\u00F3n adicional de las entidades de servicios públicos y de la administraci\u00F3n local en varias ciudades.";
+	public static String SIMULACIONESESCRITORIO_TXT= "Simulaciones de escritorio y simulacros con la participaci\u00F3n adicional de las entidades de servicios p\u00FAblicos y de la administraci\u00F3n local en varias ciudades.";
 	public static String SIMULACIONCONPERSONAS_TXT= "Coordinaci\u00F3n de simulaciones y simulacros con la participaci\u00F3n de personas de la comunidad, el sector privado y los medios de comunicaci\u00F3n a nivel nacional y en algunas ciudades.";
 	public static String PLANESEMERGENCIA_TXT= "Prueba de planes de emergencia y contingencia y actualizaci\u00F3n de procedimientos operativos con base en ejercicios de simulaci\u00F3n y simulacros frecuentes en la mayor\u00EDa de ciudades.";
 	

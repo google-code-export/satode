@@ -64,7 +64,7 @@ import fing.satode.ui.desastres.client.IDesastreAsync;
 import fing.satode.ui.usuarios.client.IUsuario;
 import fing.satode.ui.usuarios.client.IUsuarioAsync;
 
-public class CalculoIndiceList implements EntryPoint {
+public class EntryPointCalculoIndiceList implements EntryPoint {
 
 	final Button nuevoIDL = new Button("Nuevo IDL");
 	final Button nuevoIGR = new Button("Nuevo IGR");
@@ -83,8 +83,7 @@ public class CalculoIndiceList implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
-
+		
 		horizontalBotonera.add(new Label("Tipo"));
 		horizontalBotonera.add(tipoFiltro);
 		horizontalBotonera.add(buscarB);
@@ -116,7 +115,6 @@ public class CalculoIndiceList implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				FormDialogIDLBox dialog= new FormDialogIDLBox(0L, "nuevo");
 				dialog.show();
 			}
@@ -126,7 +124,6 @@ public class CalculoIndiceList implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				FormDialogIGRBox dialog= new FormDialogIGRBox();
 				dialog.show();
 			}
@@ -136,7 +133,6 @@ public class CalculoIndiceList implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				cargarLista();
 			}
 		});
@@ -164,7 +160,6 @@ public class CalculoIndiceList implements EntryPoint {
 	}
 	
 	private void cargarLista() {
-		// TODO Auto-generated method stub
 		RootPanel.get("indices").clear();
 		vertical.clear();
 		RootPanel.get("indices").add(vertical);
@@ -177,7 +172,6 @@ public class CalculoIndiceList implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<CalculoIndiceDTO> result) {
-				// TODO Auto-generated method stub
 				calculoIndicesGlobal=result;
 				calculoIndiceGrid = new Grid(calculoIndicesGlobal.size()+1,5);
 				calculoIndiceGrid.setWidget(0, 0, new Label("ID"));
@@ -236,8 +230,7 @@ public class CalculoIndiceList implements EntryPoint {
 		
 	
 	    public FormDialogIDLBox(Long idDesastre, String accion) {
-			// TODO Auto-generated constructor stub
-	    	a=accion;
+			a=accion;
 	    	id=idDesastre;
 	    	
 	 	    
@@ -284,7 +277,6 @@ public class CalculoIndiceList implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					// TODO Auto-generated method stub
 					FormDialogIDLBox.this.procesar();
 				}
 			});
@@ -297,7 +289,6 @@ public class CalculoIndiceList implements EntryPoint {
 		}
 
 		protected void procesar() {
-			// TODO Auto-generated method stub
 			CalculoIndiceDTO dto=validar();
 			if(dto!=null){
 				dto.setId(id);
@@ -321,7 +312,6 @@ public class CalculoIndiceList implements EntryPoint {
 		}
 
 		private CalculoIndiceDTO validar() {
-			// TODO Auto-generated method stub
 			CalculoIndiceDTO dto= new CalculoIndiceDTO();
 			
 			if(! (getFloat(valVivSocial.getText())>0)){
@@ -345,7 +335,6 @@ public class CalculoIndiceList implements EntryPoint {
 		}
 		
 		private Float getFloat(String text) {
-			// TODO Auto-generated method stub
 			if(text==null || text.trim().length()==0){
 				return 0F;
 			}
@@ -359,8 +348,7 @@ public class CalculoIndiceList implements EntryPoint {
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
 		final CaptionPanel captionPrincipal=new CaptionPanel("Nuevo calculo de IGR");
-		final Label label = new Label();
-	    final Grid grid= new Grid(3,2);
+		final Grid grid= new Grid(3,2);
 	    final Label fecha = new Label();
 	    final TextBox observacion =new TextBox();
 	    final ListBox tipo=new ListBox();
@@ -596,7 +584,6 @@ public class CalculoIndiceList implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					// TODO Auto-generated method stub
 					FormDialogIGRBox.this.procesar();
 				}
 			});
@@ -609,7 +596,6 @@ public class CalculoIndiceList implements EntryPoint {
 		}
 
 		protected void procesar() {
-			// TODO Auto-generated method stub
 			CalculoIndiceDTO dto=validar();
 			if(dto!=null){
 				dto.setUsuario(usuarioGlobal);
@@ -632,7 +618,6 @@ public class CalculoIndiceList implements EntryPoint {
 		}
 
 		private CalculoIndiceDTO validar() {
-			// TODO Auto-generated method stub
 			CalculoIndiceDTO dto= new CalculoIndiceDTO();
 			
 			

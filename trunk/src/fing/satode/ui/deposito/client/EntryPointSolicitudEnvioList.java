@@ -1,18 +1,16 @@
 package fing.satode.ui.deposito.client;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -23,23 +21,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DatePicker;
 
 import fing.satode.constantes.EstadoSolicitudEnvio;
 import fing.satode.constantes.ItemConstante;
-import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
-import fing.satode.data.DesastreDTO;
-import fing.satode.data.NecesidadDTO;
 import fing.satode.data.PuntoReferenciaDTO;
 import fing.satode.data.SolicitudEnvioDTO;
 import fing.satode.data.SolicitudEnvioSuministroDTO;
-import fing.satode.data.SolicitudSuministroDTO;
-import fing.satode.data.TipoSuministroDTO;
-import fing.satode.ui.necesidades.client.INecesidad;
-import fing.satode.ui.necesidades.client.INecesidadAsync;
-import fing.satode.ui.necesidades.client.EntryPointNecesidad.FormDialogBox;
-import fing.satode.ui.necesidades.client.EntryPointNecesidad.FormDialogSuministroBox;
 import fing.satode.ui.puntoReferencias.client.IPuntoReferencia;
 import fing.satode.ui.puntoReferencias.client.IPuntoReferenciaAsync;
 
@@ -89,7 +77,6 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -105,7 +92,6 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<PuntoReferenciaDTO> result) {
-				// TODO Auto-generated method stub
 				puntosEntregaGlobal=result;
 				for(PuntoReferenciaDTO d:result){
 					puntosEntrega.addItem(d.getId().toString()+"-"+d.getDepartamento().getNombre()+"-"+d.getCiudad().getNombre()+"-"+d.getDireccion(),d.getId().toString());
@@ -152,7 +138,6 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<SolicitudEnvioDTO> result) {
-				// TODO Auto-generated method stub
 				solicitudesEnvio=result;
 				Grid principal= new Grid(result.size()+1,7);
 				
@@ -229,7 +214,6 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -242,7 +226,8 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		//final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 	  
 	    final Grid gridForm= new Grid(6,2);
 	    private Grid gridSuministros;
@@ -261,9 +246,9 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			a=accion;
 			id=idSolicitudEnvio;
 			
-			if(a=="enviar") label.setText("Enviar Solicitud");
-			if(a=="ver") label.setText("Ver Solicitud");
-			if(a=="recibir") label.setText("Recibir Solicitud de Envio");
+			if(a=="enviar") panelPrincipal.setCaptionText("Enviar Solicitud");
+			if(a=="ver") panelPrincipal.setCaptionText("Ver Solicitud");
+			if(a=="recibir") panelPrincipal.setCaptionText("Recibir Solicitud de Envio");
 			
 			if (  a == "recibir" || a == "enviar" || a=="ver"){
 				SolicitudEnvioDTO dto=null;
@@ -339,7 +324,7 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			gridForm.setWidget(5,0, gridSuministros);
 			
 			
-			vertical.add(label);
+			panelPrincipal.add(vertical);
 			vertical.add(gridForm);	
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
@@ -362,7 +347,7 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 
@@ -387,14 +372,12 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}
@@ -409,14 +392,12 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}

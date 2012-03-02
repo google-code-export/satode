@@ -10,6 +10,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -128,7 +129,7 @@ public class EntryPointTipoCostoList implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 	    final Grid grid= new Grid(2,2);
 	    final TextBox nombre=new TextBox();
 	    final TextBox descripcion=new TextBox();
@@ -149,9 +150,9 @@ public class EntryPointTipoCostoList implements EntryPoint {
 	    	
 	    	grid.setBorderWidth(1);
 	    	
-			if(a=="modificar") label.setText("Modificar Tipo Costo");
-			if(a=="eliminar") label.setText("Eliminar Tipo Costo");
-			if(a=="nuevo") label.setText("Nuevo Tipo Costo");
+			if(a=="modificar") panelPrincipal.setCaptionText("Modificar Tipo Costo");
+			if(a=="eliminar") panelPrincipal.setCaptionText("Eliminar Tipo Costo");
+			if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo Tipo Costo");
 			
 			if(a=="modificar" ||a=="eliminar"){
 				TipoCostoDTO dto=null;
@@ -172,7 +173,7 @@ public class EntryPointTipoCostoList implements EntryPoint {
 				descripcion.setEnabled(false);
 			}
 			
-			vertical.add(label);
+			panelPrincipal.add(vertical);
 			vertical.add(grid);
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
@@ -196,7 +197,7 @@ public class EntryPointTipoCostoList implements EntryPoint {
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 

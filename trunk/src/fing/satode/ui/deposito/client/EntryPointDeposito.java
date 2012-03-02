@@ -15,6 +15,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -61,7 +62,6 @@ public class EntryPointDeposito implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				FormDialogBox dialog= new FormDialogBox(0L, "nuevo");
 				dialog.show();
 			}
@@ -115,7 +115,6 @@ public class EntryPointDeposito implements EntryPoint {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							// TODO Auto-generated method stub
 							FormDialogBox dialog= new FormDialogBox(id, "modificar");
 							dialog.show();
 						}
@@ -127,7 +126,6 @@ public class EntryPointDeposito implements EntryPoint {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							// TODO Auto-generated method stub
 							FormDialogBox dialog= new FormDialogBox(id, "eliminar");
 							dialog.show();
 						}
@@ -142,7 +140,6 @@ public class EntryPointDeposito implements EntryPoint {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -155,13 +152,11 @@ public class EntryPointDeposito implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<DepartamentoDTO> result) {
-				// TODO Auto-generated method stub
 				departamentosGlobal=result;
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -173,8 +168,8 @@ public class EntryPointDeposito implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
-	    final Grid grid= new Grid(8,2);
+		final CaptionPanel panelPrincipal = new CaptionPanel();
+		final Grid grid= new Grid(8,2);
 	    final TextBox direccion=new TextBox();
 	    final TextBox telefono=new TextBox();
 	    final TextBox mail=new TextBox();
@@ -191,9 +186,9 @@ public class EntryPointDeposito implements EntryPoint {
 			a=accion;
 	    	id=idDeposito;
 	    	
-	    	if(a=="modificar") label.setText("Modificar Deposito");
-			if(a=="eliminar") label.setText("Eliminar Deposito");
-			if(a=="nuevo") label.setText("Nuevo Deposito");
+	    	if(a=="modificar") panelPrincipal.setCaptionText("Modificar Deposito");
+			if(a=="eliminar") panelPrincipal.setCaptionText("Eliminar Deposito");
+			if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo Deposito");
 			
 			grid.setWidget(0, 0, new Label("Responsable"));
 			grid.setWidget(1, 0, new Label("Departamento"));
@@ -222,7 +217,6 @@ public class EntryPointDeposito implements EntryPoint {
 				
 				@Override
 				public void onChange(ChangeEvent event) {
-					// TODO Auto-generated method stub
 					ciudades.clear();
 					Long id=Long.valueOf(departamentos.getValue(departamentos.getSelectedIndex()));
 					for(DepartamentoDTO dto:departamentosGlobal){
@@ -287,7 +281,8 @@ public class EntryPointDeposito implements EntryPoint {
 			    ciudades.setEnabled(false);
 			    
 		    }
-			vertical.add(label);
+			//vertical.add(label);
+		    panelPrincipal.add(vertical);
 			vertical.add(grid);
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
@@ -305,18 +300,16 @@ public class EntryPointDeposito implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					// TODO Auto-generated method stub
 					FormDialogBox.this.procesar();
 				}
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 
 		protected void procesar() {
-			// TODO Auto-generated method stub
 			DepositoDTO dto=validar();
 			if(dto!=null){
 				dto.setId(id);
@@ -328,14 +321,12 @@ public class EntryPointDeposito implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}
@@ -347,14 +338,12 @@ public class EntryPointDeposito implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}
@@ -366,14 +355,12 @@ public class EntryPointDeposito implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}
@@ -383,7 +370,6 @@ public class EntryPointDeposito implements EntryPoint {
 		}
 
 		private DepositoDTO validar() {
-			// TODO Auto-generated method stub
 			DepositoDTO dto= new DepositoDTO();
 			
 			if(responsable.getText().trim().length()==0){
@@ -427,7 +413,6 @@ public class EntryPointDeposito implements EntryPoint {
 		}
 		
 		private Float getFloat(String text) {
-			// TODO Auto-generated method stub
 			if(text==null || text.trim().length()==0){
 				return 0F;
 			}

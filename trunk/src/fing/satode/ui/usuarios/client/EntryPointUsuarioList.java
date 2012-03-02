@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
@@ -48,14 +49,12 @@ public class EntryPointUsuarioList implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
 		
 		RootPanel.get("botones").add(nuevoB);
 		nuevoB.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				FormDialogBox dialog= new FormDialogBox(0L, "nuevo");
 				dialog.show();
 			}
@@ -66,7 +65,6 @@ public class EntryPointUsuarioList implements EntryPoint {
 				
 	
 	private void cargarLista() {
-		// TODO Auto-generated method stub
 		RootPanel.get("usuarios").clear();
 		vertical.clear();
 		RootPanel.get("usuarios").add(vertical);
@@ -76,7 +74,6 @@ public class EntryPointUsuarioList implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<UsuarioDTO> result) {
-				// TODO Auto-generated method stub
 				usuariosGlobal= result;
 				usuarios = new Grid(result.size()+1,4);
 				usuarios.getElement().setId("myTable");
@@ -99,7 +96,6 @@ public class EntryPointUsuarioList implements EntryPoint {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							// TODO Auto-generated method stub
 							FormDialogBox dialog= new FormDialogBox(id, "modificar");
 							dialog.show();
 						}
@@ -111,7 +107,6 @@ public class EntryPointUsuarioList implements EntryPoint {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							// TODO Auto-generated method stub
 							FormDialogBox dialog= new FormDialogBox(id, "eliminar");
 							dialog.show();
 						}
@@ -127,7 +122,6 @@ public class EntryPointUsuarioList implements EntryPoint {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR");
 			}
@@ -137,13 +131,11 @@ public class EntryPointUsuarioList implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<PerfilDTO> result) {
-				// TODO Auto-generated method stub
 				perfilesGlobal=result;
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -155,7 +147,7 @@ public class EntryPointUsuarioList implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 		final Grid grid= new Grid(5,2);
 		final TextBox nombreCompleto= new TextBox();
 		final TextBox usuario= new TextBox();
@@ -183,7 +175,7 @@ public class EntryPointUsuarioList implements EntryPoint {
 			horizontal.add(cancelar);
 			
 			if(accion=="modificar"){
-				label.setText("Modificar Usuario");
+				panelPrincipal.setCaptionText("Modificar Usuario");
 				UsuarioDTO usuarioAModificar=null;
 				for(UsuarioDTO p:usuariosGlobal){
 					if(id.equals(p.getId())){
@@ -206,13 +198,13 @@ public class EntryPointUsuarioList implements EntryPoint {
 					index++;
 				}
 				
-				vertical.add(label);
+				panelPrincipal.add(vertical);
 				vertical.add(grid);
 				vertical.add(horizontal);
 				
 				
 			}else if(accion=="eliminar"){
-				label.setText("Eliminar Usuario");
+				panelPrincipal.setCaptionText("Eliminar Usuario");
 				UsuarioDTO usuarioAModificar=null;
 				for(UsuarioDTO p:usuariosGlobal){
 					if(id.equals(p.getId())){
@@ -241,19 +233,19 @@ public class EntryPointUsuarioList implements EntryPoint {
 				}
 				perfiles.setEnabled(false);
 				
-				vertical.add(label);
+				panelPrincipal.add(vertical);
 				vertical.add(grid);
 				vertical.add(horizontal);
 				
 			}else if(accion=="nuevo"){
-				label.setText("Nuevo Usuario");
+				panelPrincipal.setCaptionText("Nuevo Usuario");
 				
 				perfiles.addItem("Seleccionar", "0");
 				for(PerfilDTO pdto:perfilesGlobal){
 					perfiles.addItem(pdto.getNombre(), pdto.getId().toString());
 				}
 
-				vertical.add(label);
+				panelPrincipal.add(vertical);
 				vertical.add(grid);
 				vertical.add(horizontal);
 			}
@@ -270,18 +262,16 @@ public class EntryPointUsuarioList implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					// TODO Auto-generated method stub
 					FormDialogBox.this.procesar();
 				}
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 
 		protected void procesar() {
-			// TODO Auto-generated method stub
 			UsuarioDTO usuarioDTO= validar();
 			if(usuarioDTO!=null){
 			
@@ -292,14 +282,12 @@ public class EntryPointUsuarioList implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							FormDialogBox.this.hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 								caught.printStackTrace();
 								Window.alert("ERROR AJAX");
 						}
@@ -312,14 +300,12 @@ public class EntryPointUsuarioList implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							FormDialogBox.this.hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 								caught.printStackTrace();
 								Window.alert("ERROR AJAX");
 						}
@@ -332,14 +318,12 @@ public class EntryPointUsuarioList implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							FormDialogBox.this.hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 								caught.printStackTrace();
 								Window.alert("ERROR AJAX");
 						}
@@ -350,7 +334,6 @@ public class EntryPointUsuarioList implements EntryPoint {
 		}
 
 		private UsuarioDTO validar() {
-			// TODO Auto-generated method stub
 			boolean ok=true;
 			if(usuario.getText().trim().length()==0){
 				Window.alert("Indique usuario");
@@ -372,7 +355,7 @@ public class EntryPointUsuarioList implements EntryPoint {
 					}else{
 						if(!password.getText().trim().equals(passwordConfirm.getText().trim())){
 							ok=false;
-							Window.alert("El password y la confimrmación no coinciden");
+							Window.alert("El password y la confimrmaci\u00F3n no coinciden");
 						}else if(nombreCompleto.getText().trim().length()==0){
 							Window.alert("Indique nombre completo");
 							ok=false;

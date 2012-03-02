@@ -26,7 +26,6 @@ public class EntryPointLogin   implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 		
-		// TODO Auto-generated method stub
 		final TextBox usuario = new TextBox();
 		final PasswordTextBox password= new PasswordTextBox();
 		final Button send  =new Button("Enviar");
@@ -39,13 +38,11 @@ public class EntryPointLogin   implements EntryPoint {
 			
 			@Override
 			public void onSuccess(Void result) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -54,14 +51,12 @@ public class EntryPointLogin   implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				final IUsuarioAsync serverUsuario = GWT.create(IUsuario.class);
 				
 				serverUsuario.login(usuario.getText(), password.getText(), new AsyncCallback<Boolean>() {
 					
 					@Override
 					public void onSuccess(Boolean result) {
-						// TODO Auto-generated method stub
 						if(result){
 							setWindowHref("/Inicial.html");							 
 						}else{
@@ -76,7 +71,6 @@ public class EntryPointLogin   implements EntryPoint {
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
 						Window.alert("ERROR EN LA SOLICITUD");
 					}
 				});

@@ -18,9 +18,9 @@ public class MD1 implements Serializable, IsSerializable{
 		
 	public static String PERSONALVOLUNTARIODIF_TXT= "Diferentes organismos atienden emergencias, sin mayores recursos y varios de ellos con s\u00F3lo personal voluntario.";
 	public static String LEGISLACIONESPECIFICA_TXT= "Legislaci\u00F3n espec\u00EDfica define una estructura interinstitucional, roles de las entidades operativas y establece la coordinaci\u00F3n de comisiones de emergencia en todo el territorio.";
-	public static String APRECIABLECONDINACION_TXT= "Apreciable coordinaci\u00F3n, en algunas ciudades, entre las entidades operativas en la preparaci\u00F3n conjunta, comunicaciones, búsqueda y rescate, red de urgencias y manejo de alojamientos temporales.";
-	public static String COORDINACIONPERMANENTE_TXT= "Coordinaci\u00F3n permanente para responder en caso de emergencia entre las entidades operativas, de servicios públicos, las autoridades locales y organismos de la sociedad civil en la mayor\u00EDa de ciudades.";
-	public static String AVANZADAINTEGRACION_TXT= "Avanzada integraci\u00F3n interinstitucional entre entidades públicas, privadas y comunitarias, con adecuados protocolos de coordinaci\u00F3n horizontal y vertical en todos los niveles territoriales.";
+	public static String APRECIABLECONDINACION_TXT= "Apreciable coordinaci\u00F3n, en algunas ciudades, entre las entidades operativas en la preparaci\u00F3n conjunta, comunicaciones, b\u00FAsqueda y rescate, red de urgencias y manejo de alojamientos temporales.";
+	public static String COORDINACIONPERMANENTE_TXT= "Coordinaci\u00F3n permanente para responder en caso de emergencia entre las entidades operativas, de servicios p\u00FAblicos, las autoridades locales y organismos de la sociedad civil en la mayor\u00EDa de ciudades.";
+	public static String AVANZADAINTEGRACION_TXT= "Avanzada integraci\u00F3n interinstitucional entre entidades p\u00FAblicas, privadas y comunitarias, con adecuados protocolos de coordinaci\u00F3n horizontal y vertical en todos los niveles territoriales.";
 	
 	public static String getTXT(int constante){
 		switch (constante) {

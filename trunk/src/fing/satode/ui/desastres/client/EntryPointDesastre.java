@@ -13,6 +13,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -184,7 +185,8 @@ public class EntryPointDesastre implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		//final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 	    final Grid grid= new Grid(1,3);
 	    private Grid gridEventos;
 	    final Label fecha = new Label();
@@ -246,9 +248,9 @@ public class EntryPointDesastre implements EntryPoint {
 				
 				row++;
 			}
-			if(a=="modificar") label.setText("Modificar Desastre");
-			if(a=="eliminar") label.setText("Eliminar Desastre");
-			if(a=="nuevo") label.setText("Nuevo Desastre");
+			if(a=="modificar") panelPrincipal.setCaptionText("Modificar Desastre");
+			if(a=="eliminar") panelPrincipal.setCaptionText("Eliminar Desastre");
+			if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo Desastre");
 			
 			if(a=="modificar" ||a=="eliminar"){
 				DesastreDTO dto=null;
@@ -279,7 +281,7 @@ public class EntryPointDesastre implements EntryPoint {
 				}
 			}
 			
-			vertical.add(label);
+			panelPrincipal.add(vertical);
 			vertical.add(grid);
 	    	vertical.add(gridEventos);
 	    	horizontal.add(aceptar);
@@ -304,7 +306,7 @@ public class EntryPointDesastre implements EntryPoint {
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 

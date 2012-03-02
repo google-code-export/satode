@@ -14,6 +14,7 @@ import com.google.gwt.logging.client.DefaultLevel.Severe;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -73,7 +74,6 @@ public class EntryPointNecesidad implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
-		// TODO Auto-generated method stub
 		HorizontalPanel botonera= new HorizontalPanel();
 		Grid desastreGrid=new Grid(1,2);
 		Grid estadoGrid=new Grid(1,2);
@@ -102,7 +102,6 @@ public class EntryPointNecesidad implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<DesastreDTO> result) {
-				// TODO Auto-generated method stub
 				desastreGlobal=result;
 				DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
 				for(DesastreDTO d: result){
@@ -139,13 +138,11 @@ public class EntryPointNecesidad implements EntryPoint {
 			
 			@Override
 			public void onSuccess(ArrayList<TipoSuministroDTO> result) {
-				// TODO Auto-generated method stub
 				tipoSuministrosGlobal=result;
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 				
@@ -175,13 +172,11 @@ public class EntryPointNecesidad implements EntryPoint {
 			
 			@Override
 			public void onSuccess(UsuarioDTO result) {
-				// TODO Auto-generated method stub
 				usuarioGlobal=result;
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 			}
@@ -275,7 +270,6 @@ public class EntryPointNecesidad implements EntryPoint {
 			}
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
 				caught.printStackTrace();
 				Window.alert("ERROR AJAX");
 				
@@ -288,7 +282,7 @@ public class EntryPointNecesidad implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 	  
 	    final Grid gridFecha= new Grid(1,2);
 	    
@@ -318,10 +312,10 @@ public class EntryPointNecesidad implements EntryPoint {
 		    });
 		    datePicker.setValue(new Date(), true);
 	    	
-	    	if(a=="modificar") label.setText("Modificar Necesidad");
-			if(a=="eliminar") label.setText("Eliminar Necesidad");
-			if(a=="nuevo") label.setText("Nuevo Necesidad");
-			if(a=="ver") label.setText("Ver Necesidad");
+	    	if(a=="modificar") panelPrincipal.setCaptionText("Modificar Necesidad");
+			if(a=="eliminar") panelPrincipal.setCaptionText("Eliminar Necesidad");
+			if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo Necesidad");
+			if(a=="ver") panelPrincipal.setCaptionText("Ver Necesidad");
 			
 			gridFormulario.setWidget(0, 0, new Label("Fecha"));
 			gridFormulario.setWidget(1, 0, new Label("Desastre"));
@@ -474,7 +468,7 @@ public class EntryPointNecesidad implements EntryPoint {
 			    }
 			
 			
-			vertical.add(label);
+			panelPrincipal.add(vertical);
 			vertical.add(gridFormulario);
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
@@ -497,7 +491,7 @@ public class EntryPointNecesidad implements EntryPoint {
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 
@@ -541,14 +535,12 @@ public class EntryPointNecesidad implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}
@@ -561,14 +553,12 @@ public class EntryPointNecesidad implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							// TODO Auto-generated method stub
 							cargarLista();
 							hide();
 						}
 						
 						@Override
 						public void onFailure(Throwable caught) {
-							// TODO Auto-generated method stub
 							caught.printStackTrace();
 							Window.alert("ERROR AJAX");
 						}

@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -126,7 +127,8 @@ public class EntryPointTipoSuministro implements EntryPoint {
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
 		final VerticalPanel vertical= new VerticalPanel();
-		final Label label = new Label();
+		//final Label label = new Label();
+		final CaptionPanel panelPrincipal = new CaptionPanel();
 	    final Grid grid= new Grid(4,2);
 	    final TextBox nombre=new TextBox();
 	    final TextBox descripcion=new TextBox();
@@ -140,9 +142,9 @@ public class EntryPointTipoSuministro implements EntryPoint {
 	    	a=accion;
 	    	id=idDeposito;
 	    	
-	    	if(a=="modificar") label.setText("Modificar Tipo Suministro");
-			if(a=="eliminar") label.setText("Eliminar  Tipo Suministro");
-			if(a=="nuevo") label.setText("Nuevo  Tipo Suministro");
+	    	if(a=="modificar") panelPrincipal.setCaptionText("Modificar Tipo Suministro");
+			if(a=="eliminar") panelPrincipal.setCaptionText("Eliminar  Tipo Suministro");
+			if(a=="nuevo") panelPrincipal.setCaptionText("Nuevo  Tipo Suministro");
 			
 			grid.setWidget(0, 0, new Label("Nombre"));
 			grid.setWidget(1, 0, new Label("Descripci\u00F3n"));
@@ -183,7 +185,7 @@ public class EntryPointTipoSuministro implements EntryPoint {
 		    	fechavencimiento.setEnabled(false);
 		    }
 		    
-			vertical.add(label);
+		    panelPrincipal.add(vertical);
 			vertical.add(grid);
 	    	horizontal.add(aceptar);
 			horizontal.add(cancelar);
@@ -207,7 +209,7 @@ public class EntryPointTipoSuministro implements EntryPoint {
 			});
 				
 			setAnimationEnabled(true);
-			add(vertical);
+			add(panelPrincipal);
 			center();
 		}
 
