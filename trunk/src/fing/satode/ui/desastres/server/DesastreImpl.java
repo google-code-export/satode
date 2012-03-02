@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fing.satode.bl.base.ServiceFactory;
 import fing.satode.data.CostoDTO;
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.EstadoDesastreDTO;
 import fing.satode.data.TipoCostoDTO;
 import fing.satode.ui.base.ServerImpl;
 import fing.satode.ui.desastres.client.IDesastre;
@@ -77,6 +78,11 @@ public class DesastreImpl extends ServerImpl implements IDesastre {
 	@Override
 	public ArrayList<CostoDTO> listaCosto(Long idDesastre) {
 		return ServiceFactory.getInstance().getDesastresService().listaCosto(idDesastre);
+	}
+
+	@Override
+	public EstadoDesastreDTO reporteEstadoDesastre(Long idDesastre) {
+		return ServiceFactory.getInstance().getDesastresService().reporteEstadoDesastre(idDesastre);
 	}
 
 }
