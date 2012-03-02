@@ -10,7 +10,7 @@
 .gwt-MenuBar .gwt-MenuItem-selected {
   background: #E3E8F3;
 }
-
+  
 .gwt-MenuBar-horizontal {
   background: #e3e8f3 url(images/hborder.png) repeat-x 0px -2003px;
   border: 1px solid #e0e0e0;
@@ -167,6 +167,28 @@ html>body .gwt-MenuBarPopup {
 }
 .gwt-DialogBox{
  background:#CCFF99;	
+}
+.total{
+	font-size: 25px;
+	font: bold;
+}
+
+titulo1{
+	font-size: 35px;
+	font: bold;
+	
+}
+titulo2{
+	font-size: 25px;
+	font: bold;
+	
+}
+
+.fondocomobarra{
+		background:#CCFF99;
+}
+.fondoblanco{
+		background:white;
 }
 .tbl-cab{
 	background:#E3E8F3;
