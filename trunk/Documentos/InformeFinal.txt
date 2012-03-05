@@ -4,6 +4,7 @@ Abstract: una media pagina con: problema que se resuelve, metodo de solucion y r
 Indice.
 Introduccion con: contexto (proyecto de grado, quanam), antecedentes (problema, BI, data mining, sistemas de apoyo a la toma de decisiones), objetivos del proyecto, definicion del problema,
 Resumen del estado del arte, metodo propuesto, implementacion, testeos, resultados obtenidos, conclusiones y organizacion del informe (una 5 paginas por lo menos)
+
 Definicion del problema y definicion de requerimientos: cual es el problema a resolver en detalle, requerimientos generales (para un producto), requerimientos especificos (para el prototipo)
 tanto funcionales como no funcionales.
 Resumen del estado del arte y metodo propuesto en detalle.
