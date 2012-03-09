@@ -1,17 +1,6 @@
 package fing.satode.ui.propiedadesSiniestradas.client;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.struts2.util.TabbedPane;
-
-import sun.security.action.GetLongAction;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -32,13 +21,11 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TabBar;
-import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
 import fing.satode.com.reveregroup.carousel.client.Carousel;
 import fing.satode.com.reveregroup.carousel.client.Photo;
-
 import fing.satode.constantes.AguaEnVivienda;
 import fing.satode.constantes.AlojamientoInundacion;
 import fing.satode.constantes.Banios;
@@ -47,7 +34,6 @@ import fing.satode.constantes.CategoriaVivienda;
 import fing.satode.constantes.ConservacionVivienda;
 import fing.satode.constantes.Energia;
 import fing.satode.constantes.EstadoPared;
-import fing.satode.constantes.EstadoSuministro;
 import fing.satode.constantes.EstadoTerminacion;
 import fing.satode.constantes.ItemConstante;
 import fing.satode.constantes.MaterialParedes;
@@ -65,20 +51,14 @@ import fing.satode.constantes.TenenciaVivienda;
 import fing.satode.data.CiudadDTO;
 import fing.satode.data.DatosViviendaDTO;
 import fing.satode.data.DepartamentoDTO;
-import fing.satode.data.DepositoDTO;
 import fing.satode.data.FotoDTO;
 import fing.satode.data.HacinamientoDTO;
 import fing.satode.data.InundacionDTO;
 import fing.satode.data.ParcelaDTO;
 import fing.satode.data.ProblemasViviendaDTO;
-import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoParcelaDTO;
 import fing.satode.data.UnidadParcelaDTO;
 import fing.satode.data.UsuarioDTO;
-import fing.satode.dominio.TipoParcela;
-import fing.satode.ui.deposito.client.IDeposito;
-import fing.satode.ui.deposito.client.IDepositoAsync;
-import fing.satode.ui.deposito.client.EntryPointSuministro.FormDialogSuministroBox;
 import fing.satode.ui.general.client.IBasicos;
 import fing.satode.ui.general.client.IBasicosAsync;
 import fing.satode.ui.general.data.KeyNumeric;
@@ -257,6 +237,11 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 	public class FormDialogBox extends DialogBox {
 		private String a;
 		private Long id;
+		private int indexFotoAntes= 0;
+		private int indexFotoDespues= 0;
+		private int cantFotosAntes = 0;
+		private int cantFotosDespues = 0;
+		
 		final HorizontalPanel horizontal1 = new HorizontalPanel();
 		final HorizontalPanel horizontal3 = new HorizontalPanel();
 		final HorizontalPanel horizFotos = new HorizontalPanel();
@@ -376,8 +361,6 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		final CheckBox fotoAntesDespues = new CheckBox();
 		final Label labelFoto = new Label();
 		
-		final Carousel carruselAntes=new Carousel();
-		final Carousel carruselDespues=new Carousel();
 		final Button sigCarruselAntes = new Button("Siguiente");
 		final Button antCarruselAntes = new Button("Anterior");
 		final Button sigCarruselDespues = new Button("Siguiente");
@@ -396,7 +379,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		// Attach an image to the pictures viewer
 		private OnLoadPreloadedImageHandler showImageFotosAntes = new OnLoadPreloadedImageHandler() {
 		    public void onLoad(PreloadedImage image) {
-		      image.setWidth("250px");
+		      image.setWidth("500px");
+		      panelImagesAntes.clear();
 		      panelImagesAntes.add(image);
 		    }
 		  };
@@ -404,7 +388,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		// Attach an image to the pictures viewer
 			private OnLoadPreloadedImageHandler showImageFotosDespues = new OnLoadPreloadedImageHandler() {
 			    public void onLoad(PreloadedImage image) {
-			      image.setWidth("250px");
+			      image.setWidth("500px");
+			      panelImagesDespues.clear();
 			      panelImagesDespues.add(image);
 			    }
 		 };
@@ -742,15 +727,55 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					carruselAntes.next();
+					indexFotoAntes++;
+					if(indexFotoAntes>=cantFotosAntes)
+					{
+						indexFotoAntes=0;
+						
+					}
+					int count = 0;
+					for(FotoDTO foto:parcelaDTO.getFotos()){
+						if(foto.isAntes()){
+							if(count == indexFotoAntes)
+							{
+								new PreloadedImage("/ImageServer.image?id="+foto.getId(), showImageFotosAntes);
+								
+							}
+							count++;
+						}
+						
+					}
 				}
 			});
+			
+			
 			
 			antCarruselAntes.addClickHandler(new ClickHandler() {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					carruselAntes.prev();
+					indexFotoAntes--;
+					if(indexFotoAntes<0)
+					{
+						indexFotoAntes=cantFotosAntes--;
+						if(cantFotosAntes<0)
+						{
+							cantFotosAntes= 0;
+						}
+						
+					}
+					int count = 0;
+					for(FotoDTO foto:parcelaDTO.getFotos()){
+						if(foto.isAntes()){
+							if(count == indexFotoAntes)
+							{
+								new PreloadedImage("/ImageServer.image?id="+foto.getId(), showImageFotosAntes);
+								
+							}
+							count++;
+						}
+						
+					}
 				}
 			});
 			
@@ -758,7 +783,24 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					carruselDespues.next();
+					indexFotoDespues++;
+					if(indexFotoDespues>=cantFotosDespues)
+					{
+						indexFotoAntes=0;
+						
+					}
+					int count = 0;
+					for(FotoDTO foto:parcelaDTO.getFotos()){
+						if(!foto.isAntes()){
+							if(count == indexFotoDespues)
+							{
+								new PreloadedImage("/ImageServer.image?id="+foto.getId(), showImageFotosDespues);
+								
+							}
+							count++;
+						}
+						
+					}
 				}
 			});
 			
@@ -766,7 +808,30 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					carruselDespues.prev();
+					indexFotoDespues--;
+					if(indexFotoDespues<0)
+					{
+						indexFotoDespues=cantFotosDespues--;
+						if(cantFotosDespues<0)
+						{
+							cantFotosDespues= 0;
+						}
+						
+					}
+					int count = 0;
+					for(FotoDTO foto:parcelaDTO.getFotos()){
+						if(!foto.isAntes()){
+							if(count == indexFotoDespues)
+							{
+								new PreloadedImage("/ImageServer.image?id="+foto.getId(), showImageFotosDespues);
+								
+							}
+							count++;
+						}
+						
+					}
+					
+					
 				}
 			});
 			
@@ -774,7 +839,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					int indiceFotoActual = carruselAntes.getCurrentPhotoIndex();
+					int indiceFotoActual = indexFotoAntes;
 					int count = 0;
 					for(FotoDTO foto:parcelaDTO.getFotos()){
 						if(foto.isAntes()){
@@ -793,7 +858,9 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 									verticalFotosAntes.setVisible(false);
 								}else{
 									photosAntes.remove(f);
-									carruselAntes.setPhotos(photosAntes);
+									//carruselAntes.setPhotos(photosAntes);
+									// TODO Auto-generated method stub 
+									
 								}
 								
 							}
@@ -808,7 +875,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					int indiceFotoActual = carruselDespues.getCurrentPhotoIndex();
+					int indiceFotoActual = 0;//= carruselDespues.getCurrentPhotoIndex();
+					// TODO Auto-generated method stub
 					int count = 0;
 					for(FotoDTO foto:parcelaDTO.getFotos()){
 						if(!foto.isAntes()){
@@ -827,7 +895,8 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 									verticalFotosDespues.setVisible(false);
 								}else{
 									photosDespues.remove(f);
-									carruselDespues.setPhotos(photosDespues);
+									//carruselDespues.setPhotos(photosDespues);
+									// TODO Auto-generated method stub
 								}
 								
 							}
@@ -1067,6 +1136,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						photo.setWidth(50);
 						photo.setCaption(foto.getNombre());
 						photosAntes.add(photo);
+						cantFotosAntes++;
 					}else{
 						new PreloadedImage("/ImageServer.image?id="+foto.getId(), showImageFotosDespues);
 						Photo photo = new Photo("/ImageServer.image?id="+foto.getId());
@@ -1074,31 +1144,34 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						photo.setWidth(50);
 						photo.setCaption(foto.getNombre());
 						photosDespues.add(photo);
+						cantFotosDespues++;
 					}
 				}
-				if(photosAntes.size()>0){
+				/*if(photosAntes.size()>0){
 					carruselAntes.setPhotos(photosAntes);
 					carruselAntes.setVisible(true);
 					carruselAntes.setPixelSize(800,500);
-					//carruselAntes.setVelocity(10);
 					carruselAntes.setTitle("Imagenes Antes");
+					
+					
 				}else{
 					carruselAntes.setVisible(false);
 					verticalFotosAntes.setVisible(false);
 				}
+				
+				
 
 				if(photosDespues.size()>0){
 					carruselDespues.setPhotos(photosDespues);
 					carruselDespues.setVisible(true);
 					carruselDespues.setPixelSize(800,500);
-					//carruselDespues.setVelocity(10);
 					carruselDespues.setTitle("Imagenes Despues");
 				}else{
 					carruselDespues.setVisible(false);
 					verticalFotosDespues.setVisible(false);
 				}
-				
-				
+				*/
+				// TODO Auto-generated method stub
 				
 				direccion.setText(parcelaDTO.getDireccion());
 				telefono.setText(parcelaDTO.getTelefono());
@@ -1646,13 +1719,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				departamentos.setEnabled(false);
 				ciudades.setEnabled(false);
 
-				// UnidadesParcelas
-				/*
-				 * final TextBox descripcion=new TextBox(); final TextBox
-				 * nivelAgua=new TextBox(); final TextBox metros2afectados=new
-				 * TextBox(); final ListBox nivelPiso=new ListBox(); ;
-				 */
-
+				
 				// Datos Vivienda
 				obsMaterialTecho.setEnabled(false);
 				obsMaterialPiso.setEnabled(false);
@@ -1746,14 +1813,16 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			verticalFoto.add(panelFotosAntes);
 			verticalFoto.add(panelFotosDespues);
 			panelFotosAntes.add(verticalFotosAntes);
-			verticalFotosAntes.add(carruselAntes);
+			//verticalFotosAntes.add(carruselAntes);
+			verticalFotosAntes.add(panelImagesAntes);
 			verticalFotosAntes.add(horizFotosAntes);
 			horizFotosAntes.add(antCarruselAntes);
 			horizFotosAntes.add(elimFotoAntes);
 			horizFotosAntes.add(sigCarruselAntes);
 
 			panelFotosDespues.add(verticalFotosDespues);
-			verticalFotosDespues.add(carruselDespues);
+			//verticalFotosDespues.add(carruselDespues);
+			verticalFotosDespues.add(panelImagesDespues);
 			verticalFotosDespues.add(horizFotosDespues);
 			horizFotosDespues.add(antCarruselDespues);
 			horizFotosDespues.add(elimFotoDespues);
@@ -1834,8 +1903,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
+							setWindowHref("/PropiedadesSiniestradasList.html");
 						}
 						
 						@Override
@@ -1854,8 +1922,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						
 						@Override
 						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
+							setWindowHref("/PropiedadesSiniestradasList.html");
 						}
 						
 						@Override
@@ -1872,8 +1939,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 						
 						@Override
 						public void onSuccess(Void result) {
-							cargarLista();
-							hide();
+							setWindowHref("/PropiedadesSiniestradasList.html");
 						}
 						
 						@Override
