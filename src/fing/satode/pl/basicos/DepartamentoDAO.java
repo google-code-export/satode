@@ -28,4 +28,9 @@ public class DepartamentoDAO extends DAOBase {
 		
 		return res;
 	}
+
+	public Departamento buscarPorId(Long id) {
+		// TODO Auto-generated method stub
+		return (Departamento)sess().get(Departamento.class, id);
+	}
 }

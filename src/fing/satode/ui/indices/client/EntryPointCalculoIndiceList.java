@@ -6,7 +6,9 @@ import java.util.Map;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.linker.IFrameLinker;
 import com.google.gwt.dev.util.collect.HashMap;
+import com.google.gwt.dom.client.IFrameElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -17,6 +19,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -57,6 +60,10 @@ import fing.satode.constantes.TipoIndice;
 import fing.satode.data.CalculoIndiceDTO;
 import fing.satode.data.CostoDTO;
 import fing.satode.data.DesastreDTO;
+import fing.satode.data.IdlDTO;
+import fing.satode.data.IdlDepartamentoDTO;
+import fing.satode.data.IdlTipoEventoDTO;
+import fing.satode.data.IgrDTO;
 import fing.satode.data.TipoCostoDTO;
 import fing.satode.data.UsuarioDTO;
 import fing.satode.ui.desastres.client.IDesastre;
@@ -99,7 +106,15 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("/gaficaidl.gidl.pdf", "_blank", null);
+				//Window.open("/gaficaidl.gidl.pdf", "_blank", null);
+				RootPanel.get("indices").clear();
+				vertical.clear();
+				RootPanel.get("indices").add(vertical);
+				Frame frame =new Frame("/gaficaidl.gidl.pdf");
+				frame.setSize("700px", "500px");
+				
+				vertical.add(frame);
+				
 			}
 		});
 		
@@ -107,7 +122,14 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Window.open("/gaficaigr.gigr.pdf", "_blank", null);
+				//Window.open("/gaficaigr.gigr.pdf", "_blank", null);
+				RootPanel.get("indices").clear();
+				vertical.clear();
+				RootPanel.get("indices").add(vertical);
+				Frame frame =new Frame("/gaficaigr.gigr.pdf");
+				frame.setSize("700px", "500px");
+				
+				vertical.add(frame);
 			}
 		});
 		
@@ -174,14 +196,15 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 			@Override
 			public void onSuccess(ArrayList<CalculoIndiceDTO> result) {
 				calculoIndicesGlobal=result;
-				calculoIndiceGrid = new Grid(calculoIndicesGlobal.size()+1,5);
+				calculoIndiceGrid = new Grid(calculoIndicesGlobal.size()+1,6);
 				calculoIndiceGrid.setWidget(0, 0, new Label("ID"));
 				calculoIndiceGrid.setWidget(0, 1, new Label("Tipo"));
 				calculoIndiceGrid.setWidget(0, 2, new Label("Fecha"));
 				calculoIndiceGrid.setWidget(0, 3, new Label("Observacion"));
 				calculoIndiceGrid.setWidget(0, 4, new Label("Valor"));
+				calculoIndiceGrid.setWidget(0, 5, new Label("Analizar"));
 				
-				for(int i=0;i<5;i++){
+				for(int i=0;i<6;i++){
 					calculoIndiceGrid.getCellFormatter().setStyleName(0,i, "tbl-cab");
 				}
 				
@@ -195,7 +218,37 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 					calculoIndiceGrid.setWidget(row, 3, new Label(e.getObservaciones()));
 					calculoIndiceGrid.setWidget(row, 4, new Label(String.valueOf(e.getValor())));
 				
-					final Long id= e.getId();
+					if(e.getTipo()== TipoIndice.IDL){
+						final IdlDTO idlDto= (IdlDTO)e;
+						
+						Button analizar=new Button("Analizar");
+						analizar.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								// TODO Auto-generated method stub
+								IIndicesAsync serverIndice=GWT.create(IIndices.class);
+								
+								serverIndice.getCalculoIndice(idlDto.getId(), new AsyncCallback<CalculoIndiceDTO>() {
+									
+									@Override
+									public void onSuccess(CalculoIndiceDTO result) {
+										FormIDLAnalizar1 form=new FormIDLAnalizar1((IdlDTO)result);
+										form.show();	
+									}
+									
+									@Override
+									public void onFailure(Throwable caught) {
+										caught.printStackTrace();
+										Window.alert("ERROR AJAX");
+									}
+								});
+							}
+						});
+						
+						calculoIndiceGrid.setWidget(row, 5, analizar);
+					}
+					
 					row++;
 				}
 				
@@ -213,6 +266,136 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 	
 	}
 
+	public class FormIDLAnalizar1 extends DialogBox
+	{
+		private IdlDTO idto;
+		private CaptionPanel captionPrincipal=new CaptionPanel("IDL-Pesos por departamento");
+		private VerticalPanel vertical=new VerticalPanel();
+		private Button cerrar=new Button("Cerrar");
+		private Grid gridAux=new Grid(1,2);
+		
+		public FormIDLAnalizar1(IdlDTO dto )
+		{
+			idto=dto;
+			Grid deptos=new Grid(dto.getDepartamentos().size()+1, 3);
+			for(int i=0;i<3;i++){
+				deptos.getCellFormatter().setStyleName(0,i, "tbl-cab");
+			}
+			deptos.setBorderWidth(1);
+			deptos.setWidget(0, 0, new Label("Departamento"));
+			deptos.setWidget(0, 1, new Label("%"));
+			deptos.setWidget(0, 2, new Label("Analizar"));
+			int row=1;
+			float tot=0;
+			for(IdlDepartamentoDTO d:dto.getDepartamentos())
+			{
+				deptos.setWidget(row, 0, new Label(d.getDepartamento().getNombre()));
+				deptos.setWidget(row, 1, new Label(String.valueOf(d.getPorcentaje())));
+				//deptos.setWidget(row, 0, new Label(String.valueOf(d.getPorcentaje())));
+				tot+=d.getPorcentaje();
+				final IdlDepartamentoDTO df=d;
+				Button analizar=new Button("Analizar");
+				analizar.addClickHandler(new ClickHandler() {
+					
+					@Override
+					public void onClick(ClickEvent event) {
+						FormIDLAnalizar2 form=new FormIDLAnalizar2(df);
+						form.show();
+					}
+				});
+				
+				deptos.setWidget(row, 2,analizar);
+				
+				row++;
+			}
+		//	Label totalLb=new Label(String.valueOf(tot));
+		
+			cerrar.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					// TODO Auto-generated method stub
+					FormIDLAnalizar1.this.hide();
+				}
+			});
+			
+			Frame frame = new Frame("/idlgraficos.gidl.idldepartamentos?id="+dto.getId());
+			frame.setSize("600px", "380px");
+			
+			gridAux.setWidget(0, 0, frame);
+			gridAux.setWidget(0, 1, deptos);
+			vertical.add(gridAux);
+			//vertical.add(totalLb);
+			vertical.add(cerrar);
+			captionPrincipal.add(vertical);
+			add(captionPrincipal);
+			center();
+		}
+	}
+	
+	public class FormIDLAnalizar2 extends DialogBox
+	{
+		private IdlDepartamentoDTO idto;
+		private CaptionPanel captionPrincipal=new CaptionPanel("IDL-Pesos por tipo de evento");
+		private VerticalPanel vertical=new VerticalPanel();
+		private Button cerrar=new Button("Cerrar");
+		private Grid gridAux=new Grid(1,2);
+		
+		public FormIDLAnalizar2(IdlDepartamentoDTO dto )
+		{
+			idto=dto;
+			int size=(dto.getTiposEventos().size()/2)+2;
+			Grid tipoevent=new Grid(size, 4);
+			
+			for(int i=0;i<4;i++){
+				tipoevent.getCellFormatter().setStyleName(0,i, "tbl-cab");
+			}
+			tipoevent.setBorderWidth(1);
+			tipoevent.setWidget(0, 0, new Label("Tipo Evento"));
+			tipoevent.setWidget(0, 1, new Label("%"));
+			tipoevent.setWidget(0, 2, new Label("Tipo Evento"));
+			tipoevent.setWidget(0, 3, new Label("%"));
+			int row=1;
+			float tot=0;
+			for(IdlTipoEventoDTO d:dto.getTiposEventos())
+			{
+				if(row %2 ==0){
+					tipoevent.setWidget(row/2, 2, new Label(d.getTipoEvento().getNombre()));
+					tipoevent.setWidget(row/2, 3, new Label(String.valueOf(d.getPocentaje())));
+					tot+=d.getPocentaje();
+				}else{
+					tipoevent.setWidget((row+1)/2, 0, new Label(d.getTipoEvento().getNombre()));
+					tipoevent.setWidget((row+1)/2, 1, new Label(String.valueOf(d.getPocentaje())));
+					tot+=d.getPocentaje();
+				}
+				row++;
+			}
+			
+		
+			cerrar.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					// TODO Auto-generated method stub
+					FormIDLAnalizar2.this.hide();
+				}
+			});
+			
+			//Frame frame = new Frame("/idlgraficos.gidl.idldepartamentos?id="+dto.getId());
+			//frame.setSize("500px", "300px");
+			
+			//vertical.add(frame);
+			
+			
+			
+			vertical.add(tipoevent);
+			
+			vertical.add(cerrar);
+			captionPrincipal.add(vertical);
+			add(captionPrincipal);
+			center();
+		}
+	}
 	public class FormDialogIDLBox extends DialogBox{
 		private String a;
 		private Long id;
@@ -220,12 +403,17 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 		final VerticalPanel vertical= new VerticalPanel();
 		final CaptionPanel captionPrincipal=new CaptionPanel("Nuevo calculo de indice");
 		final Label label = new Label();
-	    final Grid grid= new Grid(5,2);
+	    final Grid grid= new Grid(7,3);
 	    final Label fecha = new Label();
 	    final TextBox observacion=new TextBox();
 	    final TextBox valVivSocial=new TextBox();
 	    final TextBox valHectaria=new TextBox();
 	    final ListBox tipo=new ListBox();
+	    final DatePicker datePickerInicio = new DatePicker();
+	    final Label fechaInicio= new Label();
+	    final DatePicker datePickerFin = new DatePicker();
+	    final Label fechaFin= new Label();
+	    
 	    final Button cancelar= new Button("Cancelar");
 		final Button aceptar= new Button("Calcular");
 		
@@ -239,6 +427,25 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 	        String dateString = format.format(new Date());
 	        fecha.setText(dateString);
 	        
+	        datePickerInicio.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			      public void onValueChange(ValueChangeEvent<Date> event) {
+			        Date date = (Date)event.getValue();
+			        DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+			        String dateString = format.format(date);
+			        fechaInicio.setText(dateString);
+			      }
+			    });
+			datePickerInicio.setValue(new Date(), true);
+		    	
+	        datePickerFin.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			      public void onValueChange(ValueChangeEvent<Date> event) {
+			        Date date = (Date)event.getValue();
+			        DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+			        String dateString = format.format(date);
+			        fechaFin.setText(dateString);
+			      }
+			    });
+			datePickerFin.setValue(new Date(), true);
 		    
 	    	grid.setWidget(0, 0, new Label("Fecha"));
 	    	grid.setWidget(0, 1, fecha);
@@ -254,6 +461,14 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 
 	    	grid.setWidget(4, 0, new Label("Valor Hectaria de cultivos"));
 	    	grid.setWidget(4, 1, valHectaria);
+
+	    	grid.setWidget(5, 0, new Label("Fecha Inicio"));
+	    	grid.setWidget(5, 1, fechaInicio);
+	    	grid.setWidget(5, 2, datePickerInicio);
+
+	    	grid.setWidget(6, 0, new Label("Fecha Fin"));
+	    	grid.setWidget(6, 1, fechaFin);
+	    	grid.setWidget(6, 2, datePickerFin);
 
 	    	tipo.addItem(TipoIndice.getTXT(TipoIndice.IDL),String.valueOf(TipoIndice.IDL));
 	    	tipo.setEnabled(false);
@@ -293,7 +508,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 		}
 
 		protected void procesar() {
-			CalculoIndiceDTO dto=validar();
+			IdlDTO dto=validar();
 			if(dto!=null){
 				dto.setId(id);
 				dto.setUsuario(usuarioGlobal);
@@ -315,8 +530,8 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 			}
 		}
 
-		private CalculoIndiceDTO validar() {
-			CalculoIndiceDTO dto= new CalculoIndiceDTO();
+		private IdlDTO validar() {
+			IdlDTO dto= new IdlDTO();
 			
 			if(! (getFloat(valVivSocial.getText())>0)){
 				Window.alert("Indique el valor de vivienda social");
@@ -328,6 +543,14 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 				return null;
 			}
 			
+			if(datePickerFin.getValue().before(datePickerInicio.getValue()))
+			{
+				Window.alert("La fecha de fin del periodo tiene que ser mayor a la de inicio.");
+				return null;				
+			}
+			
+			dto.setFechaInicio(datePickerInicio.getValue());
+			dto.setFechaFino(datePickerFin.getValue());
 			dto.setFecha(new Date());
 			dto.setObservaciones(observacion.getText());
 			dto.setTipo(Integer.valueOf(tipo.getValue(tipo.getSelectedIndex())));
@@ -600,7 +823,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 		}
 
 		protected void procesar() {
-			CalculoIndiceDTO dto=validar();
+			IgrDTO dto=validar();
 			if(dto!=null){
 				dto.setUsuario(usuarioGlobal);
 				IIndicesAsync serverIndice=GWT.create(IIndices.class);
@@ -621,9 +844,8 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 			}
 		}
 
-		private CalculoIndiceDTO validar() {
-			CalculoIndiceDTO dto= new CalculoIndiceDTO();
-			
+		private IgrDTO validar() {
+			IgrDTO dto= new IgrDTO();
 			
 			
 			if(ir1.getSelectedIndex()<1){

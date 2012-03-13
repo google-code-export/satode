@@ -1,6 +1,9 @@
 package fing.satode.bl.indices;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,9 +11,18 @@ import fing.satode.bl.base.ServiceBase;
 import fing.satode.bl.base.ServiceFactory;
 import fing.satode.data.CalculoIndiceDTO;
 import fing.satode.data.IDLX;
+import fing.satode.data.IdlDTO;
+import fing.satode.data.IdlDepartamentoDTO;
+import fing.satode.data.IgrDTO;
 import fing.satode.dominio.CalculoIndice;
 import fing.satode.dominio.Departamento;
 import fing.satode.dominio.Evento;
+import fing.satode.dominio.IDL;
+import fing.satode.dominio.IGR;
+import fing.satode.dominio.IdlDepartamento;
+import fing.satode.dominio.IdlEvento;
+import fing.satode.dominio.IdlTipoEvento;
+import fing.satode.dominio.TipoEvento;
 import fing.satode.pl.basicos.DepartamentoDAO;
 import fing.satode.pl.indices.IndicesDAO;
 import fing.satode.pl.registros.EventoDAO;
@@ -22,11 +34,17 @@ public class IndicesService extends ServiceBase {
 		ArrayList<CalculoIndiceDTO> listaDTOS= new ArrayList<CalculoIndiceDTO>();
 		ArrayList<CalculoIndice> listaDes= IndicesDAO.getInstance().listaCalculoIndice();
 		for(CalculoIndice d: listaDes){
-			listaDTOS.add(d.getDTO());
+			listaDTOS.add(d.getDTOSimple());
 		}
 		return listaDTOS;
 	}
 
+	public CalculoIndiceDTO getCalculoIndice(Long id) {
+		CalculoIndice calculo= IndicesDAO.getInstance().getCalculoIndice(id);
+		return calculo.getDTO();
+	}
+
+	
 	public void nuevoCalculoIndice(CalculoIndiceDTO dto) {
 		CalculoIndice necesidad= new CalculoIndice(dto);
 		IndicesDAO.getInstance().nuevoCalculoIndice(necesidad);
@@ -46,12 +64,13 @@ public class IndicesService extends ServiceBase {
 		ArrayList<CalculoIndiceDTO> listaDTOS= new ArrayList<CalculoIndiceDTO>();
 		ArrayList<CalculoIndice> listaDes= IndicesDAO.getInstance().buscarCalculoIndice(tipo);
 		for(CalculoIndice d: listaDes){
-			listaDTOS.add(d.getDTO());
+			listaDTOS.add(d.getDTOSimple());
 		}
 		return listaDTOS;
 	}
 
-	public void calcularIDL(CalculoIndiceDTO dto) {
+	public void calcularIDL(IdlDTO dto) {
+		
 		IDLX xsKDyF= calcularXs("K","DyF",dto);
 		IDLX xsKST= calcularXs("K","ST",dto);
 		IDLX xsKIyT= calcularXs("K","IyT",dto);
@@ -114,6 +133,9 @@ public class IndicesService extends ServiceBase {
 		float IPLIyT=0;
 		float IPLOtros=0;
 		
+		HashMap<Integer, IdlDepartamento> deptos=new HashMap<Integer, IdlDepartamento>();
+		
+				
 		for(int i=1;i<20;i++){
 			IPKDyF+=CLemKDyF[i];
 			IPKST+=CLemKST[i];
@@ -129,7 +151,21 @@ public class IndicesService extends ServiceBase {
 			IPLST+=CLemLST[i];
 			IPLIyT+=CLemLIyT[i];
 			IPLOtros+=CLemLOtros[i];
+			
+			if(!deptos.containsKey(i))
+			{
+				IdlDepartamento depto=new IdlDepartamento();
+				depto.setDepartamento(DepartamentoDAO.getInstance().buscarPorId(Long.valueOf(Integer.valueOf(i).toString())));
+				deptos.put(Integer.valueOf(i),depto);
+			}
+			
+			IdlDepartamento depto= deptos.get(Integer.valueOf(i));
+			depto.setPorcentaje(CLemKDyF[i]+CLemKST[i]+CLemKIyT[i]+CLemKOtros[i]+CLemADyF[i]+CLemAST[i]+CLemAIyT[i]+CLemAOtros[i]+CLemLDyF[i]+CLemLST[i]+CLemLIyT[i]+CLemLOtros[i]);
 		}
+		
+		float total=IPKDyF+IPKST+IPKIyT+IPKOtros+IPADyF+IPAST+IPAIyT+IPAOtros+IPLDyF+IPLST+IPLIyT+IPLOtros;
+		
+		//Registo en la base
 		IPKDyF*=100;
 		IPKST*=100;
 		IPKIyT*=100;
@@ -144,6 +180,46 @@ public class IndicesService extends ServiceBase {
 		IPLST*=100;
 		IPLIyT*=100;
 		IPLOtros*=100;
+
+
+		Set<IdlDepartamentoDTO> deptosDTOs=new HashSet<IdlDepartamentoDTO>();
+		ArrayList<Evento> eventosPais=EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(), 0L,idsDeEventos());
+		
+		for(IdlDepartamento d: deptos.values())
+		{
+			
+			ArrayList<Evento> eventos=EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(), d.getDepartamento().getId(),idsDeEventos());
+			if(total>0)
+				d.setPorcentaje((d.getPorcentaje()/total)*100);
+			else
+				d.setPorcentaje(0);
+		
+			ArrayList<TipoEvento> tipoEventos=EventoDAO.getInstance().listaTiposEventos();
+			Set<IdlTipoEvento> tiposEventos=new HashSet<IdlTipoEvento>();
+			
+			for(TipoEvento t:tipoEventos){
+				ArrayList<Long> tipoE=new ArrayList<Long>();
+				tipoE.add(t.getId());
+				IdlTipoEvento idlTipoEvento=new IdlTipoEvento();
+				Set<IdlEvento> eventosIdl=new HashSet<IdlEvento>();
+				for(Evento e: EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(), d.getDepartamento().getId() ,tipoE))
+				{
+					eventosIdl.add(new IdlEvento(e.getDTO()));
+				}
+				if(eventos.size()>0)
+					idlTipoEvento.setPocentaje((eventosIdl.size()/eventos.size())*100);
+				
+				idlTipoEvento.setEventos(eventosIdl);
+				idlTipoEvento.setTipoEvento(t);
+				tiposEventos.add(idlTipoEvento);
+			}
+			
+			d.setTiposEventos(tiposEventos);
+			deptosDTOs.add(d.getDTO());
+		}
+		
+		//Fin registro en la base
+		
 		
 		float IPK=IPKDyF+IPKST+IPKIyT+IPKOtros;
 		float IPA=IPADyF+IPAST+IPAIyT+IPAOtros;
@@ -161,12 +237,13 @@ public class IndicesService extends ServiceBase {
 		float IDL=(IDLK+IDLA+IDLL)/3;
 		
 		dto.setValor(IDL);
+		dto.setDepartamentos(deptosDTOs);
 		
-		IndicesDAO.getInstance().nuevoCalculoIndice(new CalculoIndice(dto));
+		IndicesDAO.getInstance().nuevoCalculoIndice(new IDL(dto));
 		
 	}
 
-	private IDLX calcularXs(String xValor,String evento ,CalculoIndiceDTO dto) {
+	private IDLX calcularXs(String xValor,String evento ,IdlDTO dto) {
 		
 		ArrayList<Long> tipoeventosdeslizamientosyflujos= idsDeEventosDeslizamientosYFlujos();
 		ArrayList<Long> tipoeventossismotectonicos= idsDeEventosSismoTectonicos();
@@ -265,7 +342,7 @@ public class IndicesService extends ServiceBase {
 		return xs;
 	}
 
-	private IDLX calcularXsDadoTipoEventos(String xValor,ArrayList<Long> tipoeventosindicado,CalculoIndiceDTO dto) {
+	private IDLX calcularXsDadoTipoEventos(String xValor,ArrayList<Long> tipoeventosindicado,IdlDTO dto) {
 		
 		IDLX xs= new IDLX();
 		xs.setValoresPorDepartamento(new IDLX[20]);
@@ -281,7 +358,7 @@ public class IndicesService extends ServiceBase {
 			float totalN=0;
 			for(Departamento d:DepartamentoDAO.getInstance().listaDepartamentos()){
 				int fallecidos=0;	
-				ArrayList<Evento> eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(d.getId(),tipoeventosindicado);
+				ArrayList<Evento> eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(), d.getId(),tipoeventosindicado);
 				for(Evento e:eventos){
 					fallecidos+=e.getMuertos();
 				}
@@ -290,7 +367,7 @@ public class IndicesService extends ServiceBase {
 				//Xm  la suma total de X para todos los tipos de eventos considerados en el municipio m;  
 	
 				fallecidos=0;
-				eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(d.getId(),tipoeventos);
+				eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(),d.getId(),tipoeventos);
 				for(Evento e:eventos){
 					fallecidos+=e.getMuertos();
 				}
@@ -302,7 +379,10 @@ public class IndicesService extends ServiceBase {
 			}
 			xs.setValorXec(totalFallecidos);
 			xs.setValorXc(totalFallecidosTodsLosEventos);
-			xs.setN(4/totalN);
+			if(totalN>0)
+				xs.setN(4/totalN);
+			else
+				xs.setN(0);
 		}
 		if(xValor.equals("A")){
 			
@@ -311,7 +391,7 @@ public class IndicesService extends ServiceBase {
 			float totalN=0;
 			for(Departamento d:DepartamentoDAO.getInstance().listaDepartamentos()){
 				int afectados=0;	
-				ArrayList<Evento> eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(d.getId(),tipoeventosindicado);
+				ArrayList<Evento> eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(),d.getId(),tipoeventosindicado);
 				for(Evento e:eventos){
 					afectados+=e.getAfectados();
 				}
@@ -320,7 +400,7 @@ public class IndicesService extends ServiceBase {
 				//Xm  la suma total de X para todos los tipos de eventos considerados en el municipio m;  
 	
 				afectados=0;
-				eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(d.getId(),tipoeventos);
+				eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(),d.getId(),tipoeventos);
 				for(Evento e:eventos){
 					afectados+=e.getAfectados();
 				}
@@ -332,7 +412,10 @@ public class IndicesService extends ServiceBase {
 			}
 			xs.setValorXec(totalAfectados);
 			xs.setValorXc(totalAfectadosTodsLosEventos);
-			xs.setN(4/totalN);
+			if(totalN>0)
+				xs.setN(4/totalN);
+			else
+				xs.setN(0);
 		}
 		if(xValor.equals("L")){
 			
@@ -341,7 +424,7 @@ public class IndicesService extends ServiceBase {
 			float totalN=0;
 			for(Departamento d:DepartamentoDAO.getInstance().listaDepartamentos()){
 				int perdidas=0;	
-				ArrayList<Evento> eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(d.getId(),tipoeventosindicado);
+				ArrayList<Evento> eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(),d.getId(),tipoeventosindicado);
 				for(Evento e:eventos){
 					perdidas+=e.getVivAfectadas()*0.25*dto.getValorVivindaSocial()+e.getVivDestruida()*dto.getValorVivindaSocial()+e.getCultivosBosques()*dto.getHectariaDeCultivo();
 				}
@@ -350,7 +433,7 @@ public class IndicesService extends ServiceBase {
 				//Xm  la suma total de X para todos los tipos de eventos considerados en el municipio m;  
 	
 				perdidas=0;
-				eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(d.getId(),tipoeventos);
+				eventos= EventoDAO.getInstance().listaEventosPorDepratamentoYTiposDeEvento(dto.getFechaFino(),dto.getFechaInicio(),d.getId(),tipoeventos);
 				for(Evento e:eventos){
 					perdidas+=e.getVivAfectadas()*0.25*dto.getValorVivindaSocial()+e.getVivDestruida()*dto.getValorVivindaSocial()+e.getCultivosBosques()*dto.getHectariaDeCultivo();
 				}
@@ -362,7 +445,10 @@ public class IndicesService extends ServiceBase {
 			}
 			xs.setValorXec(totalPerdidas);
 			xs.setValorXc(totalPerdidasTodsLosEventos);
-			xs.setN(4/totalN);
+			if(totalN>0)
+				xs.setN(4/totalN);
+			else
+				xs.setN(0);
 		}
 		return xs;
 	}
@@ -409,7 +495,7 @@ public class IndicesService extends ServiceBase {
 		return ids;
 	}
 
-	public void calcularIGR(CalculoIndiceDTO dto) {
+	public void calcularIGR(IgrDTO  dto) {
 		Float valIr = Float.valueOf((dto.getIr1() + dto.getIr2() + dto.getIr3()+ dto.getIr4()+ dto.getIr5()+ dto.getIr6())/6);
 		Float valRr = Float.valueOf((dto.getRr1() + dto.getRr2() + dto.getRr3()+ dto.getRr4()+ dto.getRr5()+ dto.getRr6())/6);
 		Float valMd = Float.valueOf((dto.getMd1() + dto.getMd2() + dto.getMd3()+ dto.getMd4()+ dto.getMd5()+ dto.getMd6())/6);
@@ -417,7 +503,8 @@ public class IndicesService extends ServiceBase {
 		Float val = Float.valueOf((valIr + valRr + valMd + valPf)/4);
 		val= val/5;
 		dto.setValor(val);
-		IndicesDAO.getInstance().nuevoCalculoIndice(new CalculoIndice(dto));
+		
+		IndicesDAO.getInstance().nuevoCalculoIndice(new IGR(dto));
 		
 	}
 

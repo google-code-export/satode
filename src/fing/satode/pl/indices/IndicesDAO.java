@@ -77,4 +77,8 @@ public class IndicesDAO extends DAOBase {
 		return res;
 	}
 
+	public CalculoIndice getCalculoIndice(Long id) {
+		return (CalculoIndice)sess().get(CalculoIndice.class,id);
+	}
+
 }

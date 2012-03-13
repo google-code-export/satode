@@ -8,6 +8,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import fing.satode.data.CalculoIndiceDTO;
 import fing.satode.data.DepartamentoDTO;
+import fing.satode.data.IdlDTO;
+import fing.satode.data.IgrDTO;
 import fing.satode.data.NecesidadDTO;
 import fing.satode.data.PerfilDTO;
 import fing.satode.data.PermisoDTO;
@@ -20,8 +22,8 @@ import fing.satode.dominio.Usuario;
 public interface IIndices extends RemoteService {
 
 	public ArrayList<CalculoIndiceDTO> buscarCalculoIndice(int tipo);
-	public void calcularIDL(CalculoIndiceDTO dto);
+	public void calcularIDL(IdlDTO dto);
 	public void exportarGraficosIDL();
-	public void calcularIGR(CalculoIndiceDTO dto);
-
+	public void calcularIGR(IgrDTO dto);
+	public CalculoIndiceDTO getCalculoIndice(Long id) ;
 }
