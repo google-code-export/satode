@@ -69,5 +69,10 @@
 		<mapping class="fing.satode.dominio.TipoCosto"  />
 		<mapping class="fing.satode.dominio.Costo"  />
 		<mapping class="fing.satode.dominio.CalculoIndice"  />
+		<mapping class="fing.satode.dominio.IDL"  />
+		<mapping class="fing.satode.dominio.IdlDepartamento"  />
+		<mapping class="fing.satode.dominio.IdlEvento"  />
+		<mapping class="fing.satode.dominio.IdlTipoEvento"  />
+		<mapping class="fing.satode.dominio.IGR"  />
 		</session-factory>
 </hibernate-configuration>

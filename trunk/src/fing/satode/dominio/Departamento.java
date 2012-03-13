@@ -37,7 +37,7 @@ public class Departamento implements Serializable{
 	        joinColumns=@JoinColumn(name="departamento_id"),
 	        inverseJoinColumns=@JoinColumn(name="id")
 	    )
-	private Collection<Ciudad> ciudades;
+	private Collection<Ciudad> ciudades=new ArrayList<Ciudad>();
 	 
 	public Departamento(){}
 	 

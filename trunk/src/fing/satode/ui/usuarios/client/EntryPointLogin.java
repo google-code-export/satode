@@ -62,7 +62,7 @@ public class EntryPointLogin   implements EntryPoint {
 						}else{
 							DialogBox dialogBox = new DialogBox();
 							VerticalPanel panel = new VerticalPanel();
-							panel.add(new HTML("<b>Usuario o contraseña inv&aacutelida</b>"));
+							panel.add(new HTML("<b>Usuario o frase secreta inv&aacutelida</b>"));
 							dialogBox.add(panel);
 							dialogBox.center();
 							dialogBox.show();

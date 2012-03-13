@@ -6,14 +6,17 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fing.satode.data.CalculoIndiceDTO;
 
-@Entity
-@Table(name="calculosdeindices")
+
+@Entity @Table(name="calculosdeindices")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class CalculoIndice implements Serializable{
 	
 	private static final long serialVersionUID = 1L;	
@@ -90,6 +93,18 @@ public class CalculoIndice implements Serializable{
 	}
 	
 	public CalculoIndiceDTO getDTO(){
+		CalculoIndiceDTO dto=new CalculoIndiceDTO();
+		dto.setId(id);
+		dto.setFecha(fecha);
+		dto.setObservaciones(observaciones);
+		dto.setUsuario(usuario.getDTO());
+		dto.setValor(valor);
+		dto.setTipo(tipo);
+		
+		return dto;
+	}
+
+	public CalculoIndiceDTO getDTOSimple() {
 		CalculoIndiceDTO dto=new CalculoIndiceDTO();
 		dto.setId(id);
 		dto.setFecha(fecha);

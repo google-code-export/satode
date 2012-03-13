@@ -1,6 +1,7 @@
 package fing.satode.pl.registros;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -50,8 +51,22 @@ private static EventoDAO instance;
 		sess().delete(evento);
 	}
 
-	public ArrayList<Evento> listaEventosPorDepratamentoYTiposDeEvento(Long idDepartamento ,ArrayList<Long> tiposEventos) {
-		
+//	public ArrayList<Evento> listaEventosPorDepratamentoYTiposDeEvento(Long idDepartamento ,ArrayList<Long> tiposEventos) {
+	//		
+	//	String tiposEventosQuery="( ";
+	//	boolean entra=false;
+	//	for(Long id:tiposEventos){
+	//		if(entra)tiposEventosQuery+=" , ";
+	//		tiposEventosQuery+=id;
+	//		entra=true;
+	//	}
+	//	tiposEventosQuery+=" )";
+	//	List list=sess().createQuery("from Evento where ( departamento.id="+idDepartamento+" and tipoEvento.id in "+tiposEventosQuery+" )order by fechaInicio desc").list();
+	//	ArrayList<Evento> res= new ArrayList<Evento>(list);
+	//	return res;
+	//}
+
+	public ArrayList<Evento> listaEventosPorDepratamentoYTiposDeEvento(Date fechaFino,	Date fechaInicio, Long idDepartamento, ArrayList<Long> tiposEventos) {
 		String tiposEventosQuery="( ";
 		boolean entra=false;
 		for(Long id:tiposEventos){
@@ -60,9 +75,13 @@ private static EventoDAO instance;
 			entra=true;
 		}
 		tiposEventosQuery+=" )";
-		List list=sess().createQuery("from Evento where ( departamento.id="+idDepartamento+" and tipoEvento.id in "+tiposEventosQuery+" )order by fechaInicio desc").list();
+		List list=null;
+		if(idDepartamento!=0){
+			list=sess().createQuery("from Evento where ( fechaInicio>=:fi and fechaInicio <= :ff  and departamento.id="+idDepartamento+" and tipoEvento.id in "+tiposEventosQuery+" )order by fechaInicio desc").setDate("fi", fechaInicio).setDate("ff", fechaFino).list();
+		}else{
+			list=sess().createQuery("from Evento where ( fechaInicio>=:fi and fechaInicio <= :ff  and tipoEvento.id in "+tiposEventosQuery+" )order by fechaInicio desc").setDate("fi", fechaInicio).setDate("ff", fechaFino).list();
+		}
 		ArrayList<Evento> res= new ArrayList<Evento>(list);
-		return res;
-	}
+		return res;	}
 	
 }

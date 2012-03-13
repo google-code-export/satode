@@ -17,6 +17,8 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 import fing.satode.bl.base.ServiceFactory;
 import fing.satode.data.CalculoIndiceDTO;
+import fing.satode.data.IdlDTO;
+import fing.satode.data.IgrDTO;
 import fing.satode.pl.base.DAOBase;
 import fing.satode.ui.base.ServerImpl;
 import fing.satode.ui.indices.client.IIndices;
@@ -32,7 +34,7 @@ public class CalculoIndiceImpl extends ServerImpl implements IIndices {
 	}
 
 	@Override
-	public void calcularIDL(CalculoIndiceDTO dto) {
+	public void calcularIDL(IdlDTO dto) {
 		ServiceFactory.getInstance().getIndicesService().calcularIDL(dto);
 	}
 
@@ -41,8 +43,12 @@ public class CalculoIndiceImpl extends ServerImpl implements IIndices {
 	}
 
 	@Override
-	public void calcularIGR(CalculoIndiceDTO dto) {
+	public void calcularIGR(IgrDTO dto) {
 		ServiceFactory.getInstance().getIndicesService().calcularIGR(dto);
 		
+	}
+	
+	public CalculoIndiceDTO getCalculoIndice(Long id) {
+		return ServiceFactory.getInstance().getIndicesService().getCalculoIndice(id);
 	}
 }
