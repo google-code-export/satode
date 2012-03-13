@@ -382,7 +382,16 @@
     <servlet-name>graficaIDL</servlet-name>
     <url-pattern>*.gidl.pdf</url-pattern>
   </servlet-mapping>
-	 
+	
+	  <servlet>
+    <servlet-name>graficaIDLDepartamentos</servlet-name>
+    <servlet-class>fing.satode.ui.general.server.GraficaIDLDepartamentosServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>graficaIDLDepartamentos</servlet-name>
+    <url-pattern>*.gidl.idldepartamentos</url-pattern>
+  </servlet-mapping>
+	  
 	  <servlet>
     <servlet-name>graficaIGR</servlet-name>
     <servlet-class>fing.satode.ui.general.server.GraficaIGRServlet</servlet-class>
