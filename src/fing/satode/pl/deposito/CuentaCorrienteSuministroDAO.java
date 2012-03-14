@@ -8,6 +8,7 @@ import fing.satode.dominio.CuentaCorrienteSuministro;
 import fing.satode.dominio.Deposito;
 import fing.satode.dominio.Necesidad;
 import fing.satode.dominio.Suministro;
+import fing.satode.dominio.TipoSuministro;
 import fing.satode.pl.base.DAOBase;
 
 public class CuentaCorrienteSuministroDAO extends DAOBase {
@@ -39,6 +40,18 @@ public class CuentaCorrienteSuministroDAO extends DAOBase {
 		return cuenta;
 	}
 
+	public CuentaCorrienteSuministro getCuentaCorriente(Long idDeposto,	Long idTipoSuministro) {
+		CuentaCorrienteSuministro cuenta=(CuentaCorrienteSuministro)sess().createQuery("from CuentaCorrienteSuministro where deposito.id="+idDeposto +" and tipoSuministro.id="+idTipoSuministro+"").uniqueResult();
+		if(cuenta==null){
+			cuenta = new CuentaCorrienteSuministro();
+			cuenta.setTipoSuministro((TipoSuministro)sess().get(TipoSuministro.class, idTipoSuministro));
+			cuenta.setCantidad(0);
+			cuenta.setDeposito((Deposito)sess().get(Deposito.class, idDeposto));
+			Long id=(Long)sess().save(cuenta);
+			cuenta.setId(id);
+		}		
+		return cuenta;
+	}
 	public void modificarCuentaCorriente(CuentaCorrienteSuministro cuenta) {
 		// TODO Auto-generated method stub
 		sess().update(cuenta);

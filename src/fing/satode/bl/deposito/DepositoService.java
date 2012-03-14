@@ -10,6 +10,7 @@ import fing.satode.data.CuentaCorrienteSuministroDTO;
 import fing.satode.data.DepositoDTO;
 import fing.satode.data.DonacionDTO;
 import fing.satode.data.SolicitudEnvioDTO;
+import fing.satode.data.SolicitudEnvioSuministroDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.dominio.CuentaCorrienteSuministro;
@@ -173,6 +174,11 @@ public class DepositoService extends ServiceBase {
 		// TODO Auto-generated method stub
 		dto.setEstado(EstadoSolicitudEnvio.ENVIADA);
 		SolicitudEnvioDAO.getInstance().modificarSolicitudEnvio(new SolicitudEnvio(dto));
+		
+		for(SolicitudEnvioSuministroDTO s :dto.getSolicitudesEnvioSuministros()){
+			CuentaCorrienteSuministro cuenta=CuentaCorrienteSuministroDAO.getInstance().getCuentaCorriente(dto.getDeposito().getId(),s.getTipoSuministro().getId());			
+			cuenta.setCantidad(cuenta.getCantidad()-s.getCantidad());
+		}
 	}
 
 	public void recibirSolicitudEnvio(SolicitudEnvioDTO dto) {
