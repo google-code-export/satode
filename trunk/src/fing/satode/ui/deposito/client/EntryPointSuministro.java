@@ -34,6 +34,7 @@ import fing.satode.data.PuntoReferenciaDTO;
 import fing.satode.data.SuministroDTO;
 import fing.satode.data.TipoSuministroDTO;
 import fing.satode.ui.general.data.KeyNumeric;
+import fing.satode.ui.propiedadesSiniestradas.client.EntryPropiedadesSiniestradas.FormDialogBox;
 import fing.satode.ui.puntoReferencias.client.IPuntoReferencia;
 import fing.satode.ui.puntoReferencias.client.IPuntoReferenciaAsync;
 
@@ -298,7 +299,7 @@ public class EntryPointSuministro implements EntryPoint {
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						FormDialogSuministroBox dialog= new FormDialogSuministroBox(null, "nuevo");
+						FormDialogSuministroBox dialog= new FormDialogSuministroBox(null, "nuevo",FormDialogBox.this);
 						dialog.show();
 					}
 				});
@@ -374,7 +375,7 @@ public class EntryPointSuministro implements EntryPoint {
 							
 							@Override
 							public void onClick(ClickEvent event) {
-								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar");
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar",FormDialogBox.this);
 								dialog.show();
 							}
 						});
@@ -385,7 +386,7 @@ public class EntryPointSuministro implements EntryPoint {
 							
 							@Override
 							public void onClick(ClickEvent event) {
-								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar");
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar",FormDialogBox.this);
 								dialog.show();
 							}
 						});
@@ -558,13 +559,16 @@ public class EntryPointSuministro implements EntryPoint {
 	    final DatePicker datePicker = new DatePicker();
 	    final Button cancelar= new Button("Cancelar");
 		final Button aceptar= new Button("Aceptar");
-		
+		private DialogBox llamador;
 		
 	
 	    @SuppressWarnings("deprecation")
-		public FormDialogSuministroBox(SuministroDTO sum, String accion) {
+		public FormDialogSuministroBox(SuministroDTO sum, String accion, DialogBox dialog) {
 			a=accion;
 	    	suministro=sum;
+	    	llamador=dialog;
+	    	llamador.setStyleName("gwt-DialogBoxOpaco");
+	    	
 	    	 // Set the value in the text box when the user selects a date
 		    datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
 		      public void onValueChange(ValueChangeEvent<Date> event) {
@@ -662,7 +666,8 @@ public class EntryPointSuministro implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					FormDialogSuministroBox.this.hide();
-				}
+					llamador.setStyleName("gwt-DialogBox");
+			 	}
 			});
 			
 			aceptar.addClickHandler(new ClickHandler() {
@@ -731,7 +736,7 @@ public class EntryPointSuministro implements EntryPoint {
 							
 							@Override
 							public void onClick(ClickEvent event) {
-								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar");
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar",llamador);
 								dialog.show();
 							}
 						});
@@ -742,7 +747,7 @@ public class EntryPointSuministro implements EntryPoint {
 							
 							@Override
 							public void onClick(ClickEvent event) {
-								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar");
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar",llamador);
 								dialog.show();
 							}
 						});
@@ -751,6 +756,8 @@ public class EntryPointSuministro implements EntryPoint {
 						row++;
 					}
 					hide();
+				   	
+					llamador.setStyleName("gwt-DialogBox");
 			}
 		}
 

@@ -26,6 +26,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DatePicker;
@@ -245,6 +246,21 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 								});
 							}
 						});
+						calculoIndiceGrid.setWidget(row, 5, analizar);
+												
+					}else{
+						final IgrDTO igrDto= (IgrDTO)e;
+						
+						Button analizar=new Button("Analizar");
+						analizar.addClickHandler(new ClickHandler() {
+							
+							@Override
+							public void onClick(ClickEvent event) {
+								// TODO Auto-generated method stub
+								FormDialogIGRAnalizarBox form=new FormDialogIGRAnalizarBox(igrDto);
+								form.show();	
+							}
+						});
 						
 						calculoIndiceGrid.setWidget(row, 5, analizar);
 					}
@@ -274,9 +290,62 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 		private Button cerrar=new Button("Cerrar");
 		private Grid gridAux=new Grid(1,2);
 		
+		final Grid grid= new Grid(7,2);
+	    final Label fecha = new Label();
+	    final TextBox observacion=new TextBox();
+	    final TextBox valVivSocial=new TextBox();
+	    final TextBox valHectaria=new TextBox();
+	    final ListBox tipo=new ListBox();
+	    final Label fechaInicio= new Label();
+	    final Label fechaFin= new Label();
+		
 		public FormIDLAnalizar1(IdlDTO dto )
 		{
 			idto=dto;
+			
+			
+			DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+	        String dateString = format.format(dto.getFecha());
+	       
+	        fecha.setText(dateString);
+	        fechaInicio.setText(format.format(dto.getFechaInicio()));
+	        fechaFin.setText(format.format(dto.getFechaFino()));
+	        
+	    	grid.setWidget(0, 0, new Label("Fecha"));
+	    	grid.setWidget(0, 1, fecha);
+	    	
+	    	grid.setWidget(1, 0, new Label("Tipo"));
+	    	grid.setWidget(1, 1, tipo);
+	    	
+	    	grid.setWidget(2, 0, new Label("Observaciones"));
+	    	grid.setWidget(2, 1, observacion);
+	    	observacion.setText(dto.getObservaciones());
+	    	observacion.setEnabled(false);
+	    	
+	    	grid.setWidget(3, 0, new Label("Valor Vivienda Social"));
+	    	grid.setWidget(3, 1, valVivSocial);
+	    	valVivSocial.setText(String.valueOf(dto.getValorVivindaSocial()));
+	    	valVivSocial.setEnabled(false);
+	    
+	    	grid.setWidget(4, 0, new Label("Valor Hectaria de cultivos"));
+	    	grid.setWidget(4, 1, valHectaria);
+	    	valHectaria.setText(String.valueOf(dto.getHectariaDeCultivo()));
+	    	valHectaria.setEnabled(false);
+	    
+	    	grid.setWidget(5, 0, new Label("Fecha Inicio"));
+	    	grid.setWidget(5, 1, fechaInicio);
+
+	    	grid.setWidget(6, 0, new Label("Fecha Fin"));
+	    	grid.setWidget(6, 1, fechaFin);
+
+	    	for(int i=0; i<7;i++){
+	    		grid.getCellFormatter().setStyleName(i,0, "tbl-cab");
+	    	}
+	    	tipo.addItem(TipoIndice.getTXT(TipoIndice.IDL),String.valueOf(TipoIndice.IDL));
+	    	tipo.setEnabled(false);
+	    	
+	    	grid.setBorderWidth(1);
+			
 			Grid deptos=new Grid(dto.getDepartamentos().size()+1, 3);
 			for(int i=0;i<3;i++){
 				deptos.getCellFormatter().setStyleName(0,i, "tbl-cab");
@@ -299,7 +368,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 					
 					@Override
 					public void onClick(ClickEvent event) {
-						FormIDLAnalizar2 form=new FormIDLAnalizar2(df);
+						FormIDLAnalizar2 form=new FormIDLAnalizar2(df,FormIDLAnalizar1.this);
 						form.show();
 					}
 				});
@@ -321,8 +390,10 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 			
 			Frame frame = new Frame("/idlgraficos.gidl.idldepartamentos?id="+dto.getId());
 			frame.setSize("600px", "380px");
-			
-			gridAux.setWidget(0, 0, frame);
+			Grid aux=new Grid(2,1);
+			aux.setWidget(0, 0, grid);
+			aux.setWidget(1, 0, frame);
+			gridAux.setWidget(0, 0, aux);
 			gridAux.setWidget(0, 1, deptos);
 			vertical.add(gridAux);
 			//vertical.add(totalLb);
@@ -340,9 +411,12 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 		private VerticalPanel vertical=new VerticalPanel();
 		private Button cerrar=new Button("Cerrar");
 		private Grid gridAux=new Grid(1,2);
+		private DialogBox llamador;
 		
-		public FormIDLAnalizar2(IdlDepartamentoDTO dto )
+		public FormIDLAnalizar2(IdlDepartamentoDTO dto,DialogBox dialog )
 		{
+			dialog.setStyleName("gwt-DialogBoxOpaco");
+			llamador=dialog;
 			idto=dto;
 			int size=(dto.getTiposEventos().size()/2)+2;
 			Grid tipoevent=new Grid(size, 4);
@@ -378,6 +452,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 				public void onClick(ClickEvent event) {
 					// TODO Auto-generated method stub
 					FormIDLAnalizar2.this.hide();
+					llamador.setStyleName("gwt-DialogBox");
 				}
 			});
 			
@@ -569,6 +644,257 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 		}
 	}
 	
+public class FormDialogIGRAnalizarBox extends DialogBox{
+		
+		final HorizontalPanel horizontal= new HorizontalPanel();
+		final VerticalPanel vertical= new VerticalPanel();
+		final CaptionPanel captionPrincipal=new CaptionPanel("Nuevo calculo de IGR");
+		final Grid grid= new Grid(3,2);
+	    final Label fecha = new Label();
+	    final TextBox observacion =new TextBox();
+	    final ListBox tipo=new ListBox();
+	    final Button cancelar= new Button("Cancelar");
+		final CaptionPanel captionIR=new CaptionPanel("Indicadores de identificaci\u00F3n del Riesgo");
+		final CaptionPanel captionRR=new CaptionPanel("Indicadores de reducci\u00F3n del riesgo");
+		final CaptionPanel captionMD=new CaptionPanel("Indicadores de manejo de desastres");
+		final CaptionPanel captionPF=new CaptionPanel("Indicadores de gobernabilidad y protecci\u00F3n financiera");
+		final VerticalPanel verticalIR= new VerticalPanel();
+		final VerticalPanel verticalRR= new VerticalPanel();
+		final VerticalPanel verticalMD= new VerticalPanel();
+		final VerticalPanel verticalPF= new VerticalPanel();
+		
+		
+		final TextArea ir1 = new TextArea();
+		final TextArea ir2 = new TextArea();
+		final TextArea ir3 = new TextArea();
+		final TextArea ir4 = new TextArea();
+		final TextArea ir5 = new TextArea();
+		final TextArea ir6 = new TextArea();
+		final TextArea md1 = new TextArea();
+		final TextArea md2 = new TextArea();
+		final TextArea md3 = new TextArea();
+		final TextArea md4 = new TextArea();
+		final TextArea md5 = new TextArea();
+		final TextArea md6 = new TextArea();
+		final TextArea pf1 = new TextArea();
+		final TextArea pf2 = new TextArea();
+		final TextArea pf3 = new TextArea();
+		final TextArea pf4 = new TextArea();
+		final TextArea pf5 = new TextArea();
+		final TextArea pf6 = new TextArea();
+		final TextArea rr1 = new TextArea();
+		final TextArea rr2 = new TextArea();
+		final TextArea rr3 = new TextArea();
+		final TextArea rr4 = new TextArea();
+		final TextArea rr5 = new TextArea();
+		final TextArea rr6 = new TextArea();
+		
+	
+	    public FormDialogIGRAnalizarBox(IgrDTO dto) {
+			
+	    	
+	 	    
+	 	    DateTimeFormat format=DateTimeFormat.getFormat("dd/MM/yyyy");
+	        String dateString = format.format(dto.getFecha());
+	        fecha.setText(dateString);
+	        
+		    
+	    	grid.setWidget(0, 0, new Label("Fecha"));
+	    	grid.setWidget(0, 1, fecha);
+	    	
+	    	grid.setWidget(1, 0, new Label("Tipo"));
+	    	grid.setWidget(1, 1, tipo);
+	    	
+	    	grid.setWidget(2, 0, new Label("Observaciones"));
+	    	grid.setWidget(2, 1, observacion);
+	    	observacion.setText(dto.getObservaciones());
+	    	observacion.setEnabled(false);
+	    	
+	    	tipo.addItem(TipoIndice.getTXT(TipoIndice.IGR),String.valueOf(TipoIndice.IGR));
+	    	tipo.setEnabled(false);
+	    	
+	    	
+	    	 ir1.setText( IR1.getTXT(dto.getIr1())); 
+			 ir2.setText( IR2.getTXT(dto.getIr2())); 
+			 ir3.setText( IR3.getTXT(dto.getIr3())); 
+			 ir4.setText( IR4.getTXT(dto.getIr4())); 
+			 ir5.setText( IR5.getTXT(dto.getIr5())); 
+			 ir6.setText( IR6.getTXT(dto.getIr6())); 
+			 md1.setText( MD1.getTXT(dto.getMd1())); 
+			 md2.setText( MD2.getTXT(dto.getMd2())); 
+			 md3.setText( MD3.getTXT(dto.getMd3())); 
+			 md4.setText( MD4.getTXT(dto.getMd4())); 
+			 md5.setText( MD5.getTXT(dto.getMd5())); 
+			 md6.setText( MD6.getTXT(dto.getMd6())); 
+			 pf1.setText( PF1.getTXT(dto.getPf1())); 
+			 pf2.setText( PF2.getTXT(dto.getPf2())); 
+			 pf3.setText( PF3.getTXT(dto.getPf3())); 
+			 pf4.setText( PF4.getTXT(dto.getPf4())); 
+			 pf5.setText( PF5.getTXT(dto.getPf5())); 
+			 pf6.setText( PF6.getTXT(dto.getPf6())); 
+			 rr1.setText( RR1.getTXT(dto.getRr1())); 
+			 rr2.setText( RR2.getTXT(dto.getRr2())); 
+			 rr3.setText( RR3.getTXT(dto.getRr3())); 
+			 rr4.setText( RR4.getTXT(dto.getRr4())); 
+			 rr5.setText( RR5.getTXT(dto.getRr5())); 
+			 rr6.setText( RR6.getTXT(dto.getRr6())); 
+			 	
+			 ir1.setEnabled(false);
+			 ir2.setEnabled(false); 
+			 ir3.setEnabled(false); 
+			 ir4.setEnabled(false);
+			 ir5.setEnabled(false); 
+			 ir6.setEnabled(false);
+			 md1.setEnabled(false);
+			 md2.setEnabled(false);
+			 md3.setEnabled(false); 
+			 md4.setEnabled(false); 
+			 md5.setEnabled(false); 
+			 md6.setEnabled(false); 
+			 pf1.setEnabled(false); 
+			 pf2.setEnabled(false); 
+			 pf3.setEnabled(false); 
+			 pf4.setEnabled(false); 
+			 pf5.setEnabled(false); 
+			 pf6.setEnabled(false); 
+			 rr1.setEnabled(false); 
+			 rr2.setEnabled(false); 
+			 rr3.setEnabled(false); 
+			 rr4.setEnabled(false); 
+			 rr5.setEnabled(false); 
+			 rr6.setEnabled(false); 
+			 
+			 ir1.setVisibleLines(3);
+			 ir1.setWidth("400px");
+			 ir2.setVisibleLines(3);
+			 ir2.setWidth("400px");
+			 ir3.setVisibleLines(3);
+			 ir3.setWidth("400px");
+			 ir4.setVisibleLines(3);
+			 ir4.setWidth("400px");
+			 ir5.setVisibleLines(3);
+			 ir5.setWidth("400px");
+			 ir6.setVisibleLines(3);
+			 ir6.setWidth("400px");
+			 md1.setVisibleLines(3);
+			 md1.setWidth("400px");
+			 md2.setVisibleLines(3);
+			 md2.setWidth("400px");
+			 md3.setVisibleLines(3);
+			 md3.setWidth("400px");
+			 md4.setVisibleLines(3);
+			 md4.setWidth("400px");
+			 md5.setVisibleLines(3);
+			 md5.setWidth("400px");
+			 md6.setVisibleLines(3);
+			 md6.setWidth("400px");
+			 pf1.setVisibleLines(3);
+			 pf1.setWidth("400px");
+			 pf2.setVisibleLines(3);
+			 pf2.setWidth("400px");
+			 pf3.setVisibleLines(3);
+			 pf3.setWidth("400px");
+			 pf4.setVisibleLines(3);
+			 pf4.setWidth("400px");
+			 pf5.setVisibleLines(3);
+			 pf5.setWidth("400px");
+			 pf6.setVisibleLines(3);
+			 pf6.setWidth("400px");
+			 rr1.setVisibleLines(3);
+			 rr1.setWidth("400px");
+			 rr2.setVisibleLines(3);
+			 rr2.setWidth("400px");
+			 rr3.setVisibleLines(3);
+			 rr3.setWidth("400px");
+			 rr4.setVisibleLines(3);
+			 rr4.setWidth("400px");
+			 rr5.setVisibleLines(3);
+			 rr5.setWidth("400px");
+			 rr6.setVisibleLines(3);
+			 rr6.setWidth("400px");
+			 
+			 
+	    	grid.setBorderWidth(1);
+	    	
+			captionPrincipal.add(vertical);
+			vertical.add(grid);
+			vertical.add(captionIR);
+			HorizontalPanel h1=new HorizontalPanel();
+			h1.add(ir1);
+			h1.add(ir2);
+			verticalIR.add(h1);
+			HorizontalPanel h2=new HorizontalPanel();
+			h2.add(ir3);
+			h2.add(ir4);
+			verticalIR.add(h2);
+			HorizontalPanel h3=new HorizontalPanel();
+			h3.add(ir5);
+			h3.add(ir6);
+			verticalIR.add(h3);
+			captionIR.add(verticalIR);
+		
+			vertical.add(captionRR);
+			HorizontalPanel h4=new HorizontalPanel();
+			h4.add(rr1);
+			h4.add(rr2);
+			verticalRR.add(h4);
+			HorizontalPanel h5=new HorizontalPanel();
+			h5.add(rr3);
+			h5.add(rr4);
+			verticalRR.add(h5);
+			HorizontalPanel h6=new HorizontalPanel();
+			h6.add(rr5);
+			h6.add(rr6);
+			verticalRR.add(h6);
+			captionRR.add(verticalRR);
+			vertical.add(captionMD);
+			HorizontalPanel h7=new HorizontalPanel();
+			h7.add(md1);
+			h7.add(md2);
+			verticalMD.add(h7);
+			HorizontalPanel h8=new HorizontalPanel();
+			h8.add(md3);
+			h8.add(md4);
+			verticalMD.add(h8);
+			HorizontalPanel h9=new HorizontalPanel();
+			h9.add(md5);
+			h9.add(md6);
+			verticalMD.add(h9);
+			captionMD.add(verticalMD);
+			vertical.add(captionPF);
+			HorizontalPanel h10=new HorizontalPanel();
+			h10.add(pf1);
+			h10.add(pf2);
+			verticalPF.add(h10);
+			HorizontalPanel h11=new HorizontalPanel();
+			h11.add(pf3);
+			h11.add(pf4);
+			verticalPF.add(h11);
+			HorizontalPanel h12=new HorizontalPanel();
+			h12.add(pf5);
+			h12.add(pf6);
+			verticalPF.add(h12);
+			captionPF.add(verticalPF);
+			
+	    	horizontal.add(cancelar);
+			vertical.add(horizontal);
+			
+			cancelar.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					FormDialogIGRAnalizarBox.this.hide();
+				}
+			});
+			
+			
+			setAnimationEnabled(true);
+			add(captionPrincipal);
+			center();
+		}
+
+		
+	}
 	
 	public class FormDialogIGRBox extends DialogBox{
 		

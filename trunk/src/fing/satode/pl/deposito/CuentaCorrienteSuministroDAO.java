@@ -65,4 +65,9 @@ public class CuentaCorrienteSuministroDAO extends DAOBase {
 		
 		return res;
 	}
+
+	public void eliminarCuentaCorriente(CuentaCorrienteSuministro cuenta) {
+		// TODO Auto-generated method stub
+		sess().delete(cuenta);
+	}
 }

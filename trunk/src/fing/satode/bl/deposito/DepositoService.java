@@ -178,6 +178,11 @@ public class DepositoService extends ServiceBase {
 		for(SolicitudEnvioSuministroDTO s :dto.getSolicitudesEnvioSuministros()){
 			CuentaCorrienteSuministro cuenta=CuentaCorrienteSuministroDAO.getInstance().getCuentaCorriente(dto.getDeposito().getId(),s.getTipoSuministro().getId());			
 			cuenta.setCantidad(cuenta.getCantidad()-s.getCantidad());
+			if(cuenta.getCantidad()==0){
+				CuentaCorrienteSuministroDAO.getInstance().eliminarCuentaCorriente(cuenta);
+			}else{
+				CuentaCorrienteSuministroDAO.getInstance().modificarCuentaCorriente(cuenta);
+			}
 		}
 	}
 

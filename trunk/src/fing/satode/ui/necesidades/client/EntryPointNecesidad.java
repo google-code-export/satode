@@ -370,7 +370,7 @@ public class EntryPointNecesidad implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					FormDialogSuministroBox dialog= new FormDialogSuministroBox(null, "nuevo");
+					FormDialogSuministroBox dialog= new FormDialogSuministroBox(null, "nuevo",FormDialogBox.this);
 					dialog.show();
 				}
 			});
@@ -433,7 +433,7 @@ public class EntryPointNecesidad implements EntryPoint {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar");
+							FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar",FormDialogBox.this);
 							dialog.show();
 						}
 					});
@@ -444,7 +444,7 @@ public class EntryPointNecesidad implements EntryPoint {
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar");
+							FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar",FormDialogBox.this);
 							dialog.show();
 						}
 					});
@@ -618,14 +618,15 @@ public class EntryPointNecesidad implements EntryPoint {
 	    final TextBox costo =new TextBox();
 	    final Button cancelar= new Button("Cancelar");
 		final Button aceptar= new Button("Aceptar");
-		
+		private DialogBox llamador;
 		
 	
 	    @SuppressWarnings("deprecation")
-		public FormDialogSuministroBox(SolicitudSuministroDTO sum, String accion) {
+		public FormDialogSuministroBox(SolicitudSuministroDTO sum, String accion,DialogBox dialog) {
 			a=accion;
 	    	suministro=sum;
-	    	
+	    	llamador=dialog;
+	    	llamador.setStyleName("gwt-DialogBoxOpaco");
 	    	if(a=="modificar") label.setText("Modificar Suministro");
 			if(a=="eliminar") label.setText("Eliminar Suministro");
 			if(a=="nuevo") label.setText("Nuevo Suministro");
@@ -681,6 +682,7 @@ public class EntryPointNecesidad implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					FormDialogSuministroBox.this.hide();
+					llamador.setStyleName("gwt-DialogBox");
 				}
 			});
 			
@@ -748,7 +750,7 @@ public class EntryPointNecesidad implements EntryPoint {
 							
 							@Override
 							public void onClick(ClickEvent event) {
-								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar");
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "modificar",llamador);
 								dialog.show();
 							}
 						});
@@ -759,7 +761,7 @@ public class EntryPointNecesidad implements EntryPoint {
 							
 							@Override
 							public void onClick(ClickEvent event) {
-								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar");
+								FormDialogSuministroBox dialog= new FormDialogSuministroBox(sum, "eliminar",llamador);
 								dialog.show();
 							}
 						});
@@ -768,6 +770,7 @@ public class EntryPointNecesidad implements EntryPoint {
 						row++;
 					}
 					hide();
+					llamador.setStyleName("gwt-DialogBox");
 			}
 			
 			

@@ -718,7 +718,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 				
 				@Override
 				public void onClick(ClickEvent event) {
-					FormDialogBoxUnidadParcela dialog= new FormDialogBoxUnidadParcela(null, "nuevo");
+					FormDialogBoxUnidadParcela dialog= new FormDialogBoxUnidadParcela(null, "nuevo",FormDialogBox.this);
 					dialog.show();
 				}
 			});
@@ -1237,7 +1237,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						@Override
 						public void onClick(ClickEvent event) {
 							FormDialogBoxUnidadParcela dialog = new FormDialogBoxUnidadParcela(
-									uni, "modificar");
+									uni, "modificar",FormDialogBox.this);
 							dialog.show();
 						}
 					});
@@ -1249,7 +1249,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						@Override
 						public void onClick(ClickEvent event) {
 							FormDialogBoxUnidadParcela dialog = new FormDialogBoxUnidadParcela(
-									uni, "eliminar");
+									uni, "eliminar",FormDialogBox.this);
 							dialog.show();
 						}
 					});
@@ -2345,11 +2345,15 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 		final Button cancelar = new Button("Cancelar");
 		final Button aceptar = new Button("Aceptar");
 
+		private DialogBox llamador;
+		
 		@SuppressWarnings("deprecation")
-		public FormDialogBoxUnidadParcela(UnidadParcelaDTO uni, String accion) {
+		public FormDialogBoxUnidadParcela(UnidadParcelaDTO uni, String accion, DialogBox dialog) {
 			a = accion;
 			unidad = uni;
-
+			llamador=dialog;
+			llamador.setStyleName("gwt-DialogBoxOpaco");
+			
 			if (a == "modificar")
 				panelPrincipal.setCaptionText("Modificar Unidad Parcela");
 			if (a == "eliminar")
@@ -2416,6 +2420,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 				@Override
 				public void onClick(ClickEvent event) {
 					FormDialogBoxUnidadParcela.this.hide();
+					llamador.setStyleName("gwt-DialogBox");
 				}
 			});
 
@@ -2496,7 +2501,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 						@Override
 						public void onClick(ClickEvent event) {
 							FormDialogBoxUnidadParcela dialog = new FormDialogBoxUnidadParcela(
-									uni, "modificar");
+									uni, "modificar",llamador);
 							dialog.show();
 						}
 					});
@@ -2508,7 +2513,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 						@Override
 						public void onClick(ClickEvent event) {
 							FormDialogBoxUnidadParcela dialog = new FormDialogBoxUnidadParcela(
-									uni, "eliminar");
+									uni, "eliminar",llamador);
 							dialog.show();
 						}
 					});
@@ -2520,6 +2525,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 				
 			
 				hide();
+				llamador.setStyleName("gwt-DialogBox");
 			}
 		}
 

@@ -26,6 +26,8 @@ public class IDL extends CalculoIndice {
 	
 	private Date fechaInicio;
 	private Date fechaFino;
+	private float valorVivindaSocial;
+	private float hectariaDeCultivo;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	@org.hibernate.annotations.Cascade(
@@ -46,8 +48,27 @@ public class IDL extends CalculoIndice {
 		{
 			departamentos.add(new IdlDepartamento(d));
 		}
+		valorVivindaSocial=dto.getValorVivindaSocial();
+		hectariaDeCultivo=dto.getHectariaDeCultivo();
 		
 	}
+	
+	public float getValorVivindaSocial() {
+		return valorVivindaSocial;
+	}
+
+	public void setValorVivindaSocial(float valorVivindaSocial) {
+		this.valorVivindaSocial = valorVivindaSocial;
+	}
+
+	public float getHectariaDeCultivo() {
+		return hectariaDeCultivo;
+	}
+
+	public void setHectariaDeCultivo(float hectariaDeCultivo) {
+		this.hectariaDeCultivo = hectariaDeCultivo;
+	}
+
 	
 	public Date getFechaInicio() {
 		return fechaInicio;
@@ -82,6 +103,8 @@ public class IDL extends CalculoIndice {
 		dto.setUsuario(getUsuario().getDTO());
 		dto.setValor(getValor());
 		dto.setTipo(getTipo());
+		dto.setValorVivindaSocial(valorVivindaSocial);
+		dto.setHectariaDeCultivo(hectariaDeCultivo);
 		
 		dto.setFechaFino(fechaFino);
 		dto.setFechaInicio(fechaInicio);
@@ -104,6 +127,8 @@ public class IDL extends CalculoIndice {
 		dto.setUsuario(getUsuario().getDTO());
 		dto.setValor(getValor());
 		dto.setTipo(getTipo());
+		dto.setValorVivindaSocial(valorVivindaSocial);
+		dto.setHectariaDeCultivo(hectariaDeCultivo);
 		
 		dto.setFechaFino(fechaFino);
 		dto.setFechaInicio(fechaInicio);

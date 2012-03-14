@@ -15,6 +15,8 @@ public class IdlDTO extends CalculoIndiceDTO implements Serializable, IsSerializ
 	private Date fechaInicio;
 	private Date fechaFino;
 	private Set<IdlDepartamentoDTO> departamentos;
+	private float valorVivindaSocial;
+	private float hectariaDeCultivo;
 	
 	
 	public Date getFechaInicio() {
@@ -34,6 +36,18 @@ public class IdlDTO extends CalculoIndiceDTO implements Serializable, IsSerializ
 	}
 	public void setDepartamentos(Set<IdlDepartamentoDTO> departamentos) {
 		this.departamentos = departamentos;
+	}
+	public float getValorVivindaSocial() {
+		return valorVivindaSocial;
+	}
+	public void setValorVivindaSocial(float valorVivindaSocial) {
+		this.valorVivindaSocial = valorVivindaSocial;
+	}
+	public float getHectariaDeCultivo() {
+		return hectariaDeCultivo;
+	}
+	public void setHectariaDeCultivo(float hectariaDeCultivo) {
+		this.hectariaDeCultivo = hectariaDeCultivo;
 	}
 
 	
