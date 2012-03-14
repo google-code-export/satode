@@ -168,6 +168,11 @@ html>body .gwt-MenuBarPopup {
 .gwt-DialogBox{
  background:#CCFF99;	
 }
+.gwt-DialogBoxOpaco{
+ background:#CCFF99;	
+ filter: alpha(opacity=50); 
+ opacity: .5
+}
 .total{
 	font-size: 25px;
 	font: bold;
