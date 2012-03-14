@@ -16,8 +16,7 @@ public class CalculoIndiceDTO  implements Serializable, IsSerializable{
 	private Long id;
 	private Date fecha;
 	private float valor;
-	private float valorVivindaSocial;
-	private float hectariaDeCultivo;
+	
 	private String observaciones;
 	private UsuarioDTO usuario;
 	
@@ -71,22 +70,7 @@ public class CalculoIndiceDTO  implements Serializable, IsSerializable{
 		this.usuario = usuario;
 	}
 
-	public float getValorVivindaSocial() {
-		return valorVivindaSocial;
-	}
-
-	public void setValorVivindaSocial(float valorVivindaSocial) {
-		this.valorVivindaSocial = valorVivindaSocial;
-	}
-
-	public float getHectariaDeCultivo() {
-		return hectariaDeCultivo;
-	}
-
-	public void setHectariaDeCultivo(float hectariaDeCultivo) {
-		this.hectariaDeCultivo = hectariaDeCultivo;
-	}
-
+	
 	
 	
 	

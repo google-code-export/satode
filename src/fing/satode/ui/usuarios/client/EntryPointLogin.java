@@ -60,7 +60,7 @@ public class EntryPointLogin   implements EntryPoint {
 						if(result){
 							setWindowHref("/Inicial.html");							 
 						}else{
-							DialogBox dialogBox = new DialogBox();
+							DialogBox dialogBox = new DialogBox(true);
 							VerticalPanel panel = new VerticalPanel();
 							panel.add(new HTML("<b>Usuario o frase secreta inv&aacutelida</b>"));
 							dialogBox.add(panel);
