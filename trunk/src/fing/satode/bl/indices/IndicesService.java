@@ -207,7 +207,7 @@ public class IndicesService extends ServiceBase {
 					eventosIdl.add(new IdlEvento(e.getDTO()));
 				}
 				if(eventos.size()>0)
-					idlTipoEvento.setPocentaje((eventosIdl.size()/eventos.size())*100);
+					idlTipoEvento.setPocentaje((Float.valueOf(eventosIdl.size())/Float.valueOf(eventos.size()))*100);
 				
 				idlTipoEvento.setEventos(eventosIdl);
 				idlTipoEvento.setTipoEvento(t);
