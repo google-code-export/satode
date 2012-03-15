@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.LinkElement;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,7 +15,9 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -183,6 +186,7 @@ public class EntryPointEvento implements EntryPoint {
 		private String a;
 		private Long id;
 		final HorizontalPanel horizontal= new HorizontalPanel();
+		final Anchor ayuda =new Anchor("AYUDA sobre los campos del registro de eventos");
 		final VerticalPanel vertical= new VerticalPanel();
 		final Label label = new Label();
 		final Grid gridIzq= new Grid(18,3);
@@ -228,7 +232,7 @@ public class EntryPointEvento implements EntryPoint {
 	    final TextBox duracion= new TextBox();
 	    final ListBox duracionMedida = new ListBox();
 	    final TextBox observaciones= new TextBox();
-	    
+	    final CaptionPanel captionPanel=new CaptionPanel();
 		public FormDialogBox(Long idEvento , String accion){
 			super();
 			a=accion;
@@ -241,14 +245,26 @@ public class EntryPointEvento implements EntryPoint {
 			grid.setBorderWidth(1);
 			gridIzq.setBorderWidth(1);
 			gridDer.setBorderWidth(1);
-			vertical.add(label);
+			//vertical.add(label);
+			vertical.add(ayuda);
 			vertical.add(grid);
 			vertical.add(horizontal);
+			captionPanel.add(vertical);
 			
-			if(a=="modificar") label.setText("Modificar Evento");
-			if(a=="eliminar") label.setText("Eliminar Evento");
-			if(a=="nuevo") label.setText("Nuevo Evento");
+			if(a=="modificar") captionPanel.setCaptionText("Modificar Evento");
+			if(a=="eliminar") captionPanel.setCaptionText("Eliminar Evento");
+			if(a=="nuevo") captionPanel.setCaptionText("Nuevo Evento");
 
+			
+			ayuda.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					// TODO Auto-generated method stub
+					Window.open("/docs/Eventos.html", "Documentación de los campos del registro de eventos", null);
+				}
+			});
+			
 		    // Set the value in the text box when the user selects a date
 		    datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
 		      public void onValueChange(ValueChangeEvent event) {
@@ -606,7 +622,7 @@ public class EntryPointEvento implements EntryPoint {
 			});
 			
 			setAnimationEnabled(true);
-			add(vertical);
+			add(captionPanel);
 			
 		}
 
