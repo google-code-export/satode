@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CalculoDeIndicadores" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="198"/>
 	<parameter name="tipo" class="java.lang.Integer" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -10,18 +10,18 @@
      calculosdeindices.`fecha` AS calculosdeindices_fecha
 FROM
      `calculosdeindices` calculosdeindices
-Where calculosdeindices.`tipo` =1]]>
+Where calculosdeindices.`tipo` =$P{tipo}]]>
 	</queryString>
 	<field name="calculosdeindices_valor" class="java.lang.Float"/>
 	<field name="calculosdeindices_fecha" class="java.sql.Timestamp"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<detail>
-		<band height="525" splitType="Stretch">
+	<summary>
+		<band height="237">
 			<bar3DChart>
 				<chart>
-					<reportElement x="0" y="28" width="555" height="235"/>
+					<reportElement x="0" y="0" width="555" height="235"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -51,5 +51,5 @@ Where calculosdeindices.`tipo` =1]]>
 				</bar3DPlot>
 			</bar3DChart>
 		</band>
-	</detail>
+	</summary>
 </jasperReport>
