@@ -28,7 +28,7 @@
 
 
 		<!-- Echo all executed SQL to stdout for debugging -->
-		<property name="show_sql">true</property>
+		<property name="show_sql">false</property>
 
 		<!-- All the entity classes for hibernate to check for annotations here-->
 		<mapping class="fing.satode.dominio.Usuario"  />
