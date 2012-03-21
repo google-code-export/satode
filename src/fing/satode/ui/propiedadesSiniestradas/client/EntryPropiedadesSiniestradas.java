@@ -380,6 +380,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 		private OnLoadPreloadedImageHandler showImageFotosAntes = new OnLoadPreloadedImageHandler() {
 		    public void onLoad(PreloadedImage image) {
 		      image.setWidth("500px");
+		      image.setHeight("400px");
 		      panelImagesAntes.clear();
 		      panelImagesAntes.add(image);
 		    }
@@ -389,6 +390,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 			private OnLoadPreloadedImageHandler showImageFotosDespues = new OnLoadPreloadedImageHandler() {
 			    public void onLoad(PreloadedImage image) {
 			      image.setWidth("500px");
+			      image.setHeight("400px");
 			      panelImagesDespues.clear();
 			      panelImagesDespues.add(image);
 			    }
@@ -757,10 +759,10 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 					indexFotoAntes--;
 					if(indexFotoAntes<0)
 					{
-						indexFotoAntes=cantFotosAntes--;
-						if(cantFotosAntes<0)
+						indexFotoAntes=cantFotosAntes - 1;
+						if(indexFotoAntes<0)
 						{
-							cantFotosAntes= 0;
+							indexFotoAntes= 0;
 						}
 						
 					}
@@ -786,7 +788,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 					indexFotoDespues++;
 					if(indexFotoDespues>=cantFotosDespues)
 					{
-						indexFotoAntes=0;
+						indexFotoDespues=0;
 						
 					}
 					int count = 0;
@@ -811,10 +813,10 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 					indexFotoDespues--;
 					if(indexFotoDespues<0)
 					{
-						indexFotoDespues=cantFotosDespues--;
-						if(cantFotosDespues<0)
+						indexFotoDespues=cantFotosDespues - 1;
+						if(indexFotoDespues<0)
 						{
-							cantFotosDespues= 0;
+							indexFotoDespues= 0;
 						}
 						
 					}
@@ -846,7 +848,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 							if(count == indiceFotoActual)
 							{
 								fotosBorradas.add(foto);
-								Photo f = null;
+								/*Photo f = null;
 								for(Photo photo : photosAntes){
 									if(photo.getCaption().equals(foto.getNombre())){
 										f= photo;
@@ -854,15 +856,38 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 									}
 									
 								}
-								if(photosAntes.size()==1){
+								//if(photosAntes.size()==1){
+								if(cantFotosAntes==1){
 									verticalFotosAntes.setVisible(false);
 								}else{
-									photosAntes.remove(f);
+									//photosAntes.remove(f);
 									//carruselAntes.setPhotos(photosAntes);
+									indexFotoAntes--;
+									if(indexFotoAntes<0)
+									{
+										indexFotoAntes=cantFotosAntes - 1;
+										if(indexFotoAntes<0)
+										{
+											indexFotoAntes= 0;
+										}
+										
+									}
+									int count2 = 0;
+									for(FotoDTO foto2:parcelaDTO.getFotos()){
+										if(foto2.isAntes()){
+											if(count2 == indexFotoAntes)
+											{
+												new PreloadedImage("/ImageServer.image?id="+foto2.getId(), showImageFotosAntes);
+												
+											}
+											count2++;
+										}
+										
+									}
 									// TODO Auto-generated method stub 
 									
 								}
-								
+								cantFotosAntes--;*/
 							}
 							count++;
 						}
@@ -883,7 +908,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 							if(count == indiceFotoActual)
 							{
 								fotosBorradas.add(foto);
-								Photo f = null;
+								/*Photo f = null;
 								for(Photo photo : photosDespues){
 									if(photo.getCaption().equals(foto.getNombre())){
 										f= photo;
@@ -891,13 +916,37 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 									}
 									
 								}
-								if(photosDespues.size()==1){
+								//if(photosDespues.size()==1){
+								if(cantFotosDespues ==1){
 									verticalFotosDespues.setVisible(false);
 								}else{
-									photosDespues.remove(f);
+									//photosDespues.remove(f);
 									//carruselDespues.setPhotos(photosDespues);
+									indexFotoDespues--;
+									if(indexFotoDespues<0)
+									{
+										indexFotoDespues=cantFotosDespues - 1;
+										if(indexFotoDespues<0)
+										{
+											indexFotoDespues= 0;
+										}
+										
+									}
+									int count2 = 0;
+									for(FotoDTO foto2:parcelaDTO.getFotos()){
+										if(!foto2.isAntes()){
+											if(count2 == indexFotoDespues)
+											{
+												new PreloadedImage("/ImageServer.image?id="+foto2.getId(), showImageFotosDespues);
+												
+											}
+											count2++;
+										}
+										
+									}
 									// TODO Auto-generated method stub
 								}
+								cantFotosDespues--;*/
 								
 							}
 							count++;
