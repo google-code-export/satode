@@ -380,7 +380,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>graficaIDL</servlet-name>
-    <url-pattern>*.gidl.pdf</url-pattern>
+    <url-pattern>*.idlpdf</url-pattern>
   </servlet-mapping>
 	
 	  <servlet>
@@ -389,7 +389,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>graficaIDLDepartamentos</servlet-name>
-    <url-pattern>*.gidl.idldepartamentos</url-pattern>
+    <url-pattern>*.idldepartamentos</url-pattern>
   </servlet-mapping>
 	  
 	  <servlet>
@@ -398,7 +398,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>graficaIGR</servlet-name>
-    <url-pattern>*.gigr.pdf</url-pattern>
+    <url-pattern>*.igrpdf</url-pattern>
   </servlet-mapping>
 	  
 </web-app>
