@@ -178,7 +178,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 
 							final Long id = p.getId();
 							final Image modificarI = new Image(
-									"/images/modificar.png");
+									"images/modificar.png");
 							modificarI.addClickHandler(new ClickHandler() {
 
 								@Override
@@ -190,7 +190,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 							});
 
 							final Image eliminarI = new Image(
-									"/images/eliminar.png");
+									"images/eliminar.png");
 
 							eliminarI.addClickHandler(new ClickHandler() {
 
@@ -1280,7 +1280,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 					unidadesParcelas.setWidget(row, 3,
 							new Label(NivelPiso.getTXT(u.getNivelPiso())));
 					final UnidadParcelaDTO uni = u;
-					final Image modificarI = new Image("/images/modificar.png");
+					final Image modificarI = new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 
 						@Override
@@ -1291,7 +1291,7 @@ public class EntryPropiedadesSiniestradas implements EntryPoint {
 						}
 					});
 
-					final Image eliminarI = new Image("/images/eliminar.png");
+					final Image eliminarI = new Image("images/eliminar.png");
 
 					eliminarI.addClickHandler(new ClickHandler() {
 
@@ -2544,7 +2544,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 					unidadesParcelas.setWidget(row, 3,
 							new Label(NivelPiso.getTXT(u.getNivelPiso())));
 					final UnidadParcelaDTO uni = u;
-					final Image modificarI = new Image("/images/modificar.png");
+					final Image modificarI = new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 
 						@Override
@@ -2555,7 +2555,7 @@ IPropiedadesSiniestradasAsync servidorPropiedadesSiniestradas=GWT.create(IPropie
 						}
 					});
 
-					final Image eliminarI = new Image("/images/eliminar.png");
+					final Image eliminarI = new Image("images/eliminar.png");
 
 					eliminarI.addClickHandler(new ClickHandler() {
 
