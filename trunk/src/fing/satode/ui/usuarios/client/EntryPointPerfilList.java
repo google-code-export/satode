@@ -81,7 +81,7 @@ public class EntryPointPerfilList implements EntryPoint {
 				int row=1;
 				for(PerfilDTO p : result){
 					final Long id= p.getId();
-					final Image modificarB = new Image("/images/modificar.png");
+					final Image modificarB = new Image("images/modificar.png");
 					modificarB.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -92,7 +92,7 @@ public class EntryPointPerfilList implements EntryPoint {
 					});
 					
 				
-					final Image eliminarB = new Image("/images/eliminar.png");
+					final Image eliminarB = new Image("images/eliminar.png");
 					eliminarB.addClickHandler(new ClickHandler() {
 						
 						@Override

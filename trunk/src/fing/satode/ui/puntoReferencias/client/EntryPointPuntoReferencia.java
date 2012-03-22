@@ -124,7 +124,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 					puntosReferencias.setWidget(row, 7, new Label(TipoPuntoReferencia.getTXT(p.getTipo())));
 					
 					final Long id= p.getId();
-					final Image modificarI= new Image("/images/modificar.png");
+					final Image modificarI= new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -134,7 +134,7 @@ public class EntryPointPuntoReferencia implements EntryPoint {
 						}
 					});
 					
-					final Image eliminarI= new Image("/images/eliminar.png");
+					final Image eliminarI= new Image("images/eliminar.png");
 					
 					eliminarI.addClickHandler(new ClickHandler() {
 						

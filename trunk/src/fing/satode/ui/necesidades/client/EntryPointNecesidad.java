@@ -228,7 +228,7 @@ public class EntryPointNecesidad implements EntryPoint {
 					
 					final Long id= s.getId();
 					
-					final Image verI= new Image("/images/LOCATE.bmp");
+					final Image verI= new Image("images/LOCATE.bmp");
 						verI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -238,7 +238,7 @@ public class EntryPointNecesidad implements EntryPoint {
 						}
 					});
 					
-					final Image modificarI= new Image("/images/modificar.png");
+					final Image modificarI= new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -248,7 +248,7 @@ public class EntryPointNecesidad implements EntryPoint {
 						}
 					});
 					
-					final Image eliminarI= new Image("/images/eliminar.png");
+					final Image eliminarI= new Image("images/eliminar.png");
 					
 					eliminarI.addClickHandler(new ClickHandler() {
 						
@@ -428,7 +428,7 @@ public class EntryPointNecesidad implements EntryPoint {
 					suministros.setWidget(row, 0, new Label(s.getTipoSuministro().getNombre()));
 					suministros.setWidget(row, 1, new Label(String.valueOf(s.getCantidad())));
 					final SolicitudSuministroDTO sum= s;
-					final Image modificarI= new Image("/images/modificar.png");
+					final Image modificarI= new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -438,7 +438,7 @@ public class EntryPointNecesidad implements EntryPoint {
 						}
 					});
 					
-					final Image eliminarI= new Image("/images/eliminar.png");
+					final Image eliminarI= new Image("images/eliminar.png");
 					
 					eliminarI.addClickHandler(new ClickHandler() {
 						
@@ -745,7 +745,7 @@ public class EntryPointNecesidad implements EntryPoint {
 						suministros.setWidget(row, 0, new Label(s.getTipoSuministro().getNombre()));
 						suministros.setWidget(row, 1, new Label(String.valueOf(s.getCantidad())));
 						final SolicitudSuministroDTO sum= s;
-						final Image modificarI= new Image("/images/modificar.png");
+						final Image modificarI= new Image("images/modificar.png");
 						modificarI.addClickHandler(new ClickHandler() {
 							
 							@Override
@@ -755,7 +755,7 @@ public class EntryPointNecesidad implements EntryPoint {
 							}
 						});
 						
-						final Image eliminarI= new Image("/images/eliminar.png");
+						final Image eliminarI= new Image("images/eliminar.png");
 						
 						eliminarI.addClickHandler(new ClickHandler() {
 							

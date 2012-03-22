@@ -111,7 +111,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 				RootPanel.get("indices").clear();
 				vertical.clear();
 				RootPanel.get("indices").add(vertical);
-				Frame frame =new Frame("/gaficaidl.gidl.pdf");
+				Frame frame =new Frame("./gaficaidl.idlpdf");
 				frame.setSize("700px", "500px");
 				
 				vertical.add(frame);
@@ -127,7 +127,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 				RootPanel.get("indices").clear();
 				vertical.clear();
 				RootPanel.get("indices").add(vertical);
-				Frame frame =new Frame("/gaficaigr.gigr.pdf");
+				Frame frame =new Frame("./gaficaigr.igrpdf");
 				frame.setSize("700px", "500px");
 				
 				vertical.add(frame);
@@ -388,7 +388,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 				}
 			});
 			
-			Frame frame = new Frame("/idlgraficos.gidl.idldepartamentos?id="+dto.getId());
+			Frame frame = new Frame("./idlgraficos.idldepartamentos?id="+dto.getId());
 			frame.setSize("600px", "380px");
 			Grid aux=new Grid(2,1);
 			aux.setWidget(0, 0, grid);

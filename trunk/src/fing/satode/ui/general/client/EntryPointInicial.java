@@ -36,74 +36,74 @@ public class EntryPointInicial implements EntryPoint  {
 
 	 			    Command menuCommandSalir = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/Login.html");
+	 			 	        setWindowHref("../Login.html");
 	 			 	      }   };
 	 		 	    Command menuCommandUsuarios = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/UsuarioList.html");
+	 			 	        setWindowHref("../UsuarioList.html");
 	 			 	      }   };
 	 			 	Command menuCommandPerfil = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/PerfilList.html");
+	 			 	        setWindowHref("../PerfilList.html");
 	 			 	      }   };
 	 		 	 	Command menuCommandEvento = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/EventosList.html");
+	 			 	        setWindowHref("../EventosList.html");
 	 			 	      }   };   
 	 		 	 	Command menuCommandDesastre = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/DesastreList.html");
+	 			 	        setWindowHref("../DesastreList.html");
 	 			 	      }   };  
 	 			    Command menuCommandDeposito = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/DepositoList.html");}};// Create a menu bar
+	 			 	        setWindowHref("../DepositoList.html");}};// Create a menu bar
 	 			 	        
 	 			    Command menuCommandTipoSuministro = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/TipoSuministroList.html");}};// Create a menu bar
+	 			 	        setWindowHref("../TipoSuministroList.html");}};// Create a menu bar
 	 		        
 	 			 	Command menuCommandPuntoReferencia = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/PuntoReferenciaList.html");}};// Create a menu bar
+	 			 	        setWindowHref("../PuntoReferenciaList.html");}};// Create a menu bar
 	
 	 			 	Command menuCommandDoaciones = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/SuministroList.html");}};// Create a menu bar
+	 			 	        setWindowHref("../SuministroList.html");}};// Create a menu bar
 	 			 	        
 	 			 	Command menuCommandNecesidades = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/NecesidadList.html");}};// Create a menu bar
+	 			 	        setWindowHref("../NecesidadList.html");}};// Create a menu bar
 	 		       
 	 			 	Command menuCommandStockSuministros = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/StockSuministroList.html");}};// Create a menu bar	 	        
+	 			 	        setWindowHref("../StockSuministroList.html");}};// Create a menu bar	 	        
 	
 	 			 	Command menuCommandGestionNecesidad = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/GestionNecesidad.html");}};// Create a menu bar	 
+	 			 	        setWindowHref("../GestionNecesidad.html");}};// Create a menu bar	 
 	
 	 			 	Command menuCommandSolicitudEnvio = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/SolicitudEnvioList.html");}};// Create a menu bar	 
+	 			 	        setWindowHref("../SolicitudEnvioList.html");}};// Create a menu bar	 
 	
 	 			 	Command menuCommandTipoCosto = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/TipoCostoList.html");}};// Create a menu bar	 
+	 			 	        setWindowHref("../TipoCostoList.html");}};// Create a menu bar	 
 	
 	 			 	Command menuCommandCosto = new Command() {
 	 			    	 public void execute() {
-	 			 	        setWindowHref("/CostoList.html");}};// Create a menu bar	 
+	 			 	        setWindowHref("../CostoList.html");}};// Create a menu bar	 
 	 			 	Command  menuCommandPropiedadesSinistradas = new Command() {
 	 			 		    	 public void execute() {
-	 			 		 	        setWindowHref("/PropiedadesSiniestradasList.html");}};// Create a menu bar	         
+	 			 		 	        setWindowHref("../PropiedadesSiniestradasList.html");}};// Create a menu bar	         
 	 			 	        
 	 			 	Command  menuCommandIndices= new Command() {
 		 		    	 public void execute() {
-		 		 	        setWindowHref("/CalculoIndiceList.html");}};// Create a menu bar	         
+		 		 	        setWindowHref("../CalculoIndiceList.html");}};// Create a menu bar	         
 	 				
 	 			 	Command  menuCommandEstadoDesastre= new Command() {
 		 		    	 public void execute() {
-		 		 	        setWindowHref("/EstadoDesastre.html");}};// Create a menu bar	         
+		 		 	        setWindowHref("../EstadoDesastre.html");}};// Create a menu bar	         
 
 		 		 	MenuBar menu = new MenuBar();
 	 			    menu.setAutoOpen(true);
@@ -217,13 +217,13 @@ public class EntryPointInicial implements EntryPoint  {
 	 			    RootPanel.get("menu").add(menu);
  				}
  				else{
- 					setWindowHref("/Login.html");
+ 					setWindowHref("../Login.html");
  				}
  			}
  			
  			@Override
  			public void onFailure(Throwable caught) {
- 				setWindowHref("/Login.html");
+ 				setWindowHref("../Login.html");
  			}
  		});
 	 		 		

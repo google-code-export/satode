@@ -104,7 +104,7 @@ public class EntryPointDesastre implements EntryPoint {
 					desastres.setWidget(row, 6, new Label(String.valueOf(e.getEvento().getPerdidasDolares())));
 					
 					final Long id= e.getId();
-					final Image modificarI= new Image("/images/modificar.png");
+					final Image modificarI= new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -115,7 +115,7 @@ public class EntryPointDesastre implements EntryPoint {
 						}
 					});
 					
-					final Image eliminarI= new Image("/images/eliminar.png");
+					final Image eliminarI= new Image("images/eliminar.png");
 					
 					eliminarI.addClickHandler(new ClickHandler() {
 						

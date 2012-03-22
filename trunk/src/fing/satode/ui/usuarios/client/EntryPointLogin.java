@@ -58,7 +58,7 @@ public class EntryPointLogin   implements EntryPoint {
 					@Override
 					public void onSuccess(Boolean result) {
 						if(result){
-							setWindowHref("/Inicial.html");							 
+							setWindowHref("../Inicial.html");							 
 						}else{
 							DialogBox dialogBox = new DialogBox(true);
 							VerticalPanel panel = new VerticalPanel();

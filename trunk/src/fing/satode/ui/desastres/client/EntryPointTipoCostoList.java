@@ -83,7 +83,7 @@ public class EntryPointTipoCostoList implements EntryPoint {
 					tipocostoGrid.setWidget(row, 2, new Label(e.getDescripcion()));
 					
 					final Long id= e.getId();
-					final Image modificarI= new Image("/images/modificar.png");
+					final Image modificarI= new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -94,7 +94,7 @@ public class EntryPointTipoCostoList implements EntryPoint {
 						}
 					});
 					
-					final Image eliminarI= new Image("/images/eliminar.png");
+					final Image eliminarI= new Image("images/eliminar.png");
 					
 					eliminarI.addClickHandler(new ClickHandler() {
 						

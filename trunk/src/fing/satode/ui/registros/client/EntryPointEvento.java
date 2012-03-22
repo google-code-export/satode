@@ -107,7 +107,7 @@ public class EntryPointEvento implements EntryPoint {
 					eventos.setWidget(row, 6, new Label(String.valueOf(e.getPerdidasDolares())));
 					
 					final Long id= e.getId();
-					final Image modificarI= new Image("/images/modificar.png");
+					final Image modificarI= new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -118,7 +118,7 @@ public class EntryPointEvento implements EntryPoint {
 						}
 					});
 					
-					final Image eliminarI= new Image("/images/eliminar.png");
+					final Image eliminarI= new Image("images/eliminar.png");
 					
 					eliminarI.addClickHandler(new ClickHandler() {
 						
@@ -261,7 +261,7 @@ public class EntryPointEvento implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					// TODO Auto-generated method stub
-					Window.open("/docs/Eventos.html", "Documentación de los campos del registro de eventos", null);
+					Window.open("../docs/Eventos.html", "Documentación de los campos del registro de eventos", null);
 				}
 			});
 			
