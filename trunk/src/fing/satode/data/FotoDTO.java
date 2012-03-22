@@ -16,7 +16,7 @@ public class FotoDTO implements Serializable, IsSerializable {
 	private Long id;
 	private String url;
 	private String nombre;
-		
+			
 	public String getNombre() {
 		return nombre;
 	}
