@@ -82,7 +82,7 @@ public class EntryPointTipoSuministro implements EntryPoint {
 					tiposumninistros.setWidget(row, 3, new Label(e.getRefrigeracion()?"SI":"NO"));
 					tiposumninistros.setWidget(row, 4, new Label(e.getFechaVencimiento()?"SI":"NO"));
 					final Long id= e.getId();
-					final Image modificarI= new Image("/images/modificar.png");
+					final Image modificarI= new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -93,7 +93,7 @@ public class EntryPointTipoSuministro implements EntryPoint {
 						}
 					});
 					
-					final Image eliminarI= new Image("/images/eliminar.png");
+					final Image eliminarI= new Image("images/eliminar.png");
 					
 					eliminarI.addClickHandler(new ClickHandler() {
 						

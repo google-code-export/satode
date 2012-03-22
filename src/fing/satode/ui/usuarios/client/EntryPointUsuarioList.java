@@ -91,7 +91,7 @@ public class EntryPointUsuarioList implements EntryPoint {
 					usuarios.setWidget(row, 0, new Label(u.getUsuario()));
 					usuarios.setWidget(row, 1, new Label(u.getNombreCompleto()));
 					final Long id= u.getId();
-					final Image modificarI= new Image("/images/modificar.png");
+					final Image modificarI= new Image("images/modificar.png");
 					modificarI.addClickHandler(new ClickHandler() {
 						
 						@Override
@@ -101,7 +101,7 @@ public class EntryPointUsuarioList implements EntryPoint {
 						}
 					});
 					
-					final Image eliminarI= new Image("/images/eliminar.png");
+					final Image eliminarI= new Image("images/eliminar.png");
 					
 					eliminarI.addClickHandler(new ClickHandler() {
 						

@@ -163,7 +163,7 @@ public class EntryPointSolicitudEnvioList implements EntryPoint {
 					principal.setWidget(row, 2, new Label(EstadoSolicitudEnvio.getTXT(c.getEstado())));
 					principal.setWidget(row, 3, new Label(c.getPuntoEntrega().getId().toString()+"-"+c.getPuntoEntrega().getDepartamento().getNombre()+"-"+c.getPuntoEntrega().getCiudad().getNombre()+"-"+c.getPuntoEntrega().getDireccion()));
 					
-					final Image verI= new Image("/images/LOCATE.bmp");
+					final Image verI= new Image("images/LOCATE.bmp");
 					final Long id=c.getId();
 					
 					verI.addClickHandler(new ClickHandler() {

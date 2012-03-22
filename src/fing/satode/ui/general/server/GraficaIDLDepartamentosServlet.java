@@ -31,7 +31,7 @@ public class GraficaIDLDepartamentosServlet  extends HttpServlet {
 			 
 		    JasperPrint jasperPrint=null;;
 			try {
-				jasperPrint = JasperFillManager.fillReport(request.getRealPath("/reports/GrafIDLDeptos.jasper"), parameters,new DAOBase().sess().connection());
+				jasperPrint = JasperFillManager.fillReport(request.getRealPath("reports/GrafIDLDeptos.jasper"), parameters,new DAOBase().sess().connection());
 			} catch (HibernateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
