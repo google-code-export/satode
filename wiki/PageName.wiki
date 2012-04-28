@@ -1,32 +1,32 @@
 #labels Featured,Phase-Requirements,Phase-Design,Phase-Deploy,Phase-Implementation,Phase-Support
-
 Proyecto de grado
 Informe Final
 
 Manejo y Análisis de Información de Riesgos en Uruguay para un Sistema de Apoyo a la Toma de Decisiones
 
-
-
-
-
 Docentes-Tutores:
+
 Sandro Moscatelli
+
 Libertad Tansini
 
 Estudiantes:
+
 Fernando Carriquiry fcarriquiry@gmaiil.com
+
 Gabriel Fernández pocafernandez@gmail.com
 
 Resumen
+
 Los desastres tanto naturales como provocados por el humano son cada vez más frecuentes, estos van desde inundaciones que dejan sin hogar a cientos de personas, a terremotos que dejan miles de vidas pérdidas y cientos de familias destrozadas.
 Los desastres van más allá de pérdidas tangibles ya sean físicas o materiales, estos quedan inmersos en la sociedad, en el medio ambiente, causando pérdidas y daños a veces irreversibles.
 Por ello se debe contar con una buena gestión de riesgos y un plan de acción ante estos desastres. La gestión de riesgo, se basa en un conjunto de acciones que buscan reducir al máximo el riesgo de ocurrencia de un desastre, esta se centra en el análisis de los componentes del riesgo, vulnerabilidad y amenaza, buscando mecanismos para la reducción de los mismos y ya no sólo brindar atención luego del desastre sino gestionar su prevención mitigando las causas del mismo.
 En el presente proyecto se realizó un extenso análisis del estado de arte en cuanto a la gestión de riesgos a nivel nacional e internacional, mediante una amplia exploración bibliográfica y una reunión con el Sistema Nacional de Emergencia.
 Esto dejó ver la necesidad de contar con una herramienta que integre la prevención de los riesgos y la mitigación de los desastres, brindando información relevante a cada etapa de la gestión de riesgos de desastres.
 Para ello se definió un conjunto de requerimientos con los cuales debería contar la herramienta, se diseño e implementó un prototipo con un amplio set de funcionalidades que cubren gran parte de los requerimientos relevados.
+
 Índice
-Resumen	2
-Índice	3
+
 1.	Introducción	5
 1.1.	Objetivo General	5
 1.2.	Objetivos Específicos	5
