@@ -111,7 +111,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 				RootPanel.get("indices").clear();
 				vertical.clear();
 				RootPanel.get("indices").add(vertical);
-				Frame frame =new Frame("./gaficaidl.idlpdf");
+				Frame frame =new Frame("./graficaidl.idlpdf");
 				frame.setSize("700px", "500px");
 				
 				vertical.add(frame);
@@ -127,7 +127,7 @@ public class EntryPointCalculoIndiceList implements EntryPoint {
 				RootPanel.get("indices").clear();
 				vertical.clear();
 				RootPanel.get("indices").add(vertical);
-				Frame frame =new Frame("./gaficaigr.igrpdf");
+				Frame frame =new Frame("./graficaigr.igrpdf");
 				frame.setSize("700px", "500px");
 				
 				vertical.add(frame);
