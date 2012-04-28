@@ -864,38 +864,6 @@ Se destaca como un positivo, la experiencia generada en el equipo al aplicar los
 •	Aplicación de estándares y patrones.
 •	Generación de documentación estándar para la creación de software.
 
-7.	Conclusiones
-
-El proyecto estaba planteado de forma tal, que el objetivo principal era la definición de requerimientos para un sistema de apoyo a la toma de decisiones en la gestión de riesgos de desastres y abierto a los resultados arrojados en un estudio del estado del arte, se considera por tanto que este objetivo fue alcanzado satisfactoriamente. Se definieron gran parte de los requerimientos necesarios y se dejaron las bases planteadas para que en futuros trabajos se puedan ampliar los mismos, ya no atacando la generalidad sino concentrándose resolver un problema particular de la gestión de riesgo de desastre.
-El cronograma inicial contaba con ocho meses, divididos de la siguiente manera:
-
-
-•	Estudio del Estado del Arte (2 meses)
-•	Análisis y Especificación de requerimientos (1 mes)
-•	Diseño del sistema, de componentes, de la base de datos (1 mes)
-•	Implementación, Testeo y Ajustes (3 meses)
-•	Documentación final. (1 mes)
-
-Pero debido a la dimensión que tomó el proyecto el cronograma seguido fue el siguiente:
-
-•	Estudio del Estado del Arte (5 meses)
-•	Análisis y Especificación de requerimientos (3 mes)
-•	Diseño del sistema, de componentes, de la base de datos (1 mes)
-•	Implementación, Testeo y Ajustes (3 meses)
-•	Documentación final. (2 mes)
-
-El estado del arte se extendió 3 meses más, debido a que el proyecto estaba abierto a la investigación del estado del arte y se encontró una amplia gama de temas en los que se podía enfocar el proyecto. Contribuyó también al atraso del estado del arte, el tiempo para poder coordinar con el SINAE alguna reunión.
-Para el análisis y la especificación de requerimientos también fue necesario más tiempo de lo previsto debido a la falta de una contraparte. Debido a esto consultamos diversos documentos del SINAE utilizados en la gestión de algunos desastres, que se encontraban publicados en su sitio y por otra parte complementamos el análisis de requerimiento consultando otros sistemas que están en la misma línea.
-Como no contamos con información sobre el manejo de suministros que realiza el SINAE, debido a que no llevan ningún control y además no contamos con más entrevistas. Nos basamos en el sistema SUMA utilizado en varios desastres a nivel mundial. Es un sistema fabricado hace muchos años, por ejemplo los puntos de entrada graban directamente a disquete la información que debe ser integrada al SUMA CENTRAL para poder tener un conocimiento integral, además de ser una solución de escritorio. Nos pareció bueno tomar el conocimiento de sus funcionalidades e integrarlas a nuestros requerimientos y posteriormente al prototipo.
-Por otra parte nos sucedió algo similar con la información y requisitos sobre el registro de eventos. El SINAE nos comunicó que estaban interesados en llevar un registro de eventos y que en un futuro les gustaría integrar su información al la base de datos colaborativa DesInventar. Tomamos como base de la información la requerida por DesInventar, así de esta forma el SINAE puede contar con su propio sistema ya que no querían que DesInventar maneje su base de datos y tienen una fácil integración a DesInventar. Debido a que no contamos con un usuario con los privilegios suficientes, no pudimos confirmar si DesInventar posee algún mecanismo de importación de datos, pero si así fuera sería muy fácil comunicar la información de nuestro registro de eventos.
-En cuanto a la etapa de documentación final nos llevo 1 mes más debido a la falta de experiencia y conocimientos en cuanto a la creación de informes de tal característica.
-Este cambio en el cronograma nos forzó a dejar fuera del alcance pruebas del sistema como la de stress.
-El trabajo se realizó con el constante apoyo de los tutores, quienes guiaron los objetivos del mismo y dieron seguimiento de los avances. Luego del estudio del estado del arte se eliminaron los objetivos relevantes a la creación de un catalogo de información histórica, por falta de información de eventos y fenómenos adversos, si bien se trabajó en pos de la definición y prototipado de un registro de eventos que puede ser utilizado para guardar dicha información, no se logró encontrar fuentes heterogéneas de datos ya existentes. Se consultó al SINAE por información histórica y como respuesta se obtuvo que no llevan registro de los eventos y que sí está dentro de los objetivos futuros contar con ello.
-Por iniciativa de los estudiantes se logró concretar con dificultades una entrevista con el SINAE que fue enriquecedora a la hora de definir los requerimientos, que como contraparte llevó una gran pérdida de tiempo, ya que se demoró un mes en su coordinación debido a los tiempos del SINAE.
-Si bien nos hubiera gustado contar con una mayor disponibilidad por parte del SINAE, esto no fue posible dado a la precaria situación institucional con la que se encuentra. Según datos no oficiales, se conoce que se encuentra en un pozo político ya que se debe nombrar un director nacional y no se decide a quien nombrar, esto además va acompañado de un cambio estructural que tampoco se ha concretado. Luego de terminado el prototipo se intentó contactar en varias oportunidades vía email con el SINAE a fin de presentarle los resultados obtenidos pero no se concretó.
-La experiencia fue por demás enriquecedora para el grupo ya que se pudieron aplicar gran parte de los conocimientos adquiridos en la formación y se tuvo en todo momento la libertad de decidir en qué rumbo llevar el proyecto.
-En cuanto a conclusiones sobre la investigación realizada, pensamos que se a dejado una buena base de inició para cualquier proyecto que esté enmarcado en la gestión de riesgos de desastres y que se encontraron herramientas muy valiosas como los indicadores de riesgo desarrollados por el BID e IDEAS. También se deja al descubierto la falta de un sistema que brinde apoyo más que nada a la etapa de prevención de forma científica, analizando las causas reales de los desastres y brindando apoyo a la mitigación de los riesgos.
-En cuanto al contexto local vemos que hace falta mucho esfuerzo y que queda un gran trabajo por delante para mejorar las técnicas empleadas en la gestión de riesgos de desastres.
 
 8.	Trabajos Futuros
 
